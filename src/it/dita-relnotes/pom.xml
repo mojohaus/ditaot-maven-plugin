@@ -26,14 +26,6 @@
     This IT creates dita-ot release notes
   </description>
 
-  <dependencies>
-    <dependency>
-      <groupId>net.sourceforge.dita-ot</groupId>
-      <artifactId>dost</artifactId>
-      <version>1.5-M21</version>
-    </dependency>
-  </dependencies>
-
   <build>
 
     <defaultGoal>package</defaultGoal>
@@ -43,15 +35,6 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>dita-maven-plugin</artifactId>
-        <!-- 
-        <dependencies>
-          <dependency>
-            <groupId>net.sourceforge.dita-ot</groupId>
-            <artifactId>dost</artifactId>
-            <version>1.5-M21</version>
-          </dependency>
-        </dependencies>
-        -->
         <executions>
           <execution>
             <phase>package</phase>
@@ -60,8 +43,8 @@
             </goals>
             <configuration>
               <ditaProperties>
-                <outdir>${project.build.directory}\dita\out</outdir>
-                <i>${env.DITA_OT}\doc\DITA-readme.ditamap</i>
+                <outdir>${project.build.directory}/dita/out</outdir>
+                <i>${env.DITA_OT}/doc/DITA-readme.ditamap</i>
                 <transtype>pdf</transtype>
               </ditaProperties>
             </configuration>
