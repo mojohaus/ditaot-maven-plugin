@@ -79,6 +79,10 @@
     </developer>
 
   </developers>
+  
+  <properties>
+    <project.build.java.target>1.4</project.build.java.target>
+  </properties>
 
   <build>
 
@@ -106,15 +110,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
-        </configuration>
-      </plugin>
-
     </plugins>
 
   </build>
