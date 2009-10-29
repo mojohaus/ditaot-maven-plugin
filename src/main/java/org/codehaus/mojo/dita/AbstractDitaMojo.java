@@ -6,16 +6,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.project.MavenProject;
 import org.apache.maven.shared.model.fileset.FileSet;
 import org.apache.maven.shared.model.fileset.util.FileSetManager;
 import org.codehaus.plexus.util.cli.Arg;
-import org.codehaus.plexus.util.cli.CommandLineException;
-import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
-import org.codehaus.plexus.util.cli.DefaultConsumer;
 
 /*
  * Copyright 2000-2006 The Apache Software Foundation
@@ -31,11 +26,15 @@ import org.codehaus.plexus.util.cli.DefaultConsumer;
  * the License.
  */
 
+/**
+ * Base class of all dita-maven-plugin's DITA specific MOJOs
+ */
 public abstract class AbstractDitaMojo
-    extends AbstractMojo
+    extends AbstractProjectMojo
 {
     /**
      * DITA Open Toolkit directory. If not given, ${env.DITA_OT} will be used
+     * This parameter is ignored if exists in <i>ditaProperties</i>
      * 
      * @parameter expression="${dita.ditadir}"
      */
@@ -45,9 +44,19 @@ public abstract class AbstractDitaMojo
      * DITA Open Toolkit's tempdir
      * 
      * @parameter expression="${dita.tempdir}" default-value="${project.build.directory}/dita/temp"
+     * This parameter is ignored if exists in <i>ditaProperties</i>
      */
     protected File tempdir;
 
+    /**
+     * DITA Open Toolkit's outdir
+     * 
+     * @parameter expression="${dita.outdir}" default-value="${project.build.directory}/dita/out"
+     * This parameter is ignored if exists in <i>ditaProperties</i>
+     * 
+     */
+    protected File outdir;
+    
     /**
      * Add jar file under DITA Open Toolkit's lib directory to classpath
      * 
@@ -55,11 +64,6 @@ public abstract class AbstractDitaMojo
      */
     protected boolean useDitaClasspath;
     
-    /**
-     * @parameter expression="${project}"
-     */
-    protected MavenProject project;
-
     /**
      * @parameter expression="${project.compileClasspathElements}"
      */
@@ -160,30 +164,5 @@ public abstract class AbstractDitaMojo
         arg.setValue( "org.dita.dost.invoker.CommandLineInvoker" );
     }
 
-    protected void executeCommandline( Commandline cl )
-        throws MojoExecutionException
-    {
-        int ok;
 
-        try
-        {
-            DefaultConsumer stdout = new DefaultConsumer();
-
-            DefaultConsumer stderr = stdout;
-
-            this.getLog().info( cl.toString() );
-
-            ok = CommandLineUtils.executeCommandLine( cl, stdout, stderr );
-        }
-        catch ( CommandLineException ecx )
-        {
-            throw new MojoExecutionException( "Error executing command line", ecx );
-        }
-
-        if ( ok != 0 )
-        {
-            throw new MojoExecutionException( "Error executing command line. Exit code:" + ok );
-        }
-
-    }
 }

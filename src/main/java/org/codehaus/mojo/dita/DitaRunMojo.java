@@ -14,6 +14,7 @@ package org.codehaus.mojo.dita;
  * the License.
  */
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +33,23 @@ import org.codehaus.plexus.util.cli.Commandline;
 public class DitaRunMojo
     extends AbstractDitaMojo
 {
+    /**
+     * DITA Open Toolkit's main topic file
+     * This parameter is ignored if exists in <i>ditaProperties</i> via /i property
+     * 
+     * @parameter expression="${dita.topicfile}" default-value="${basedir}/src/main/dita/${project.artifactId}.ditamap"
+     */
+    protected File topicfile;
 
+    /**
+     * DITA Open Toolkit's transtype
+     * 
+     * @parameter expression="${dita.transtype}" default-value="pdf"
+     * This parameter is ignored if exists in <i>ditaProperties</i>
+     * 
+     */
+    protected String transtype;
+    
     /**
      * key/value pairs to be used to create  /key:value dita-ot java command line argument
      * To see a list of all possible key/value run mvn dita:dita-help -Dditadir=path/to/dita-ot
@@ -59,21 +76,24 @@ public class DitaRunMojo
         
     }
 
+    private void mergeDitaProperty( String name, String value )
+    {
+        if ( ditaProperties.get(  name ) == null )
+        {
+            ditaProperties.put( name, value );
+        }
+    }
     
     private void setupDitaArguments( Commandline cl )
         throws MojoExecutionException
     {
         ArrayList<String> params = new ArrayList<String>();
 
-        try
-        {
-            ditaProperties.put( "tempdir", this.tempdir.getCanonicalPath() );
-            ditaProperties.put( "ditadir", this.ditadir.getCanonicalPath() );
-        }
-        catch ( IOException e )
-        {
-            throw new MojoExecutionException( e.getMessage(), e );
-        }
+        mergeDitaProperty( "tempdir", this.tempdir.getAbsolutePath() );
+        mergeDitaProperty( "ditadir", this.ditadir.getAbsolutePath() );
+        mergeDitaProperty( "outdir", this.outdir.getAbsolutePath() );
+        mergeDitaProperty( "i", this.topicfile.getAbsolutePath() );
+        mergeDitaProperty( "transtype", this.transtype );
 
         for ( Iterator<String> i = ditaProperties.keySet().iterator(); i.hasNext(); )
         {
