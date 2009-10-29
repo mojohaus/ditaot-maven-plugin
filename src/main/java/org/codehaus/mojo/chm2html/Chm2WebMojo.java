@@ -1,4 +1,4 @@
-package org.codehaus.mojo.dita;
+package org.codehaus.mojo.chm2html;
 
 /*
  * Copyright 2000-2006 The Apache Software Foundation
@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.codehaus.mojo.dita.AbstractProjectMojo;
 import org.codehaus.plexus.util.cli.Commandline;
 
 /**
