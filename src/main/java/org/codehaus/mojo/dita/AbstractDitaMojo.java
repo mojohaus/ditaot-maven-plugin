@@ -9,7 +9,6 @@ import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.shared.model.fileset.FileSet;
 import org.apache.maven.shared.model.fileset.util.FileSetManager;
-import org.codehaus.plexus.util.cli.Arg;
 import org.codehaus.plexus.util.cli.Commandline;
 
 /*
@@ -100,7 +99,7 @@ public abstract class AbstractDitaMojo
     }
 
     /**
-     * setup CLASSPATH env so that ant can use it
+     * setup CLASSPATH env so that Ant can use it
      * 
      * @param cl
      */
@@ -114,12 +113,28 @@ public abstract class AbstractDitaMojo
     /**
      * Create classpath value
      * 
-     * @return
+     * @return String
      */
     protected String buildClasspathString()
     {
 
         StringBuilder classpath = new StringBuilder();
+
+        //Pick up dependency list. This requires packaging set to jar
+        Iterator<String> it = classpathElements.iterator();
+        while ( it.hasNext() )
+        {
+            String cpElement = it.next();
+            classpath.append( cpElement ).append( File.pathSeparator );
+        }
+
+        //Pick up plugin's dependency list. 
+        Iterator<Artifact> iter = pluginArtifacts.iterator();
+        while ( iter.hasNext() )
+        {
+            Artifact artifact = (Artifact) iter.next();
+            classpath.append( artifact.getFile().getPath() ).append( File.pathSeparator );
+        }
 
         if ( this.useDitaClasspath )
         {
@@ -139,29 +154,13 @@ public abstract class AbstractDitaMojo
                 classpath.append( jarFile.getAbsolutePath() ).append( File.pathSeparator );
             }
         }
-
-        Iterator<String> it = classpathElements.iterator();
-        while ( it.hasNext() )
-        {
-            String cpElement = it.next();
-            classpath.append( cpElement ).append( File.pathSeparator );
-        }
-
-        Iterator<Artifact> iter = pluginArtifacts.iterator();
-
-        while ( iter.hasNext() )
-        {
-            Artifact artifact = (Artifact) iter.next();
-            classpath.append( artifact.getFile().getPath() ).append( File.pathSeparator );
-        }
-
+        
         return classpath.toString();
     }
 
     protected void setupDitaMainClass( Commandline cl )
     {
-        Arg arg = cl.createArg();
-        arg.setValue( "org.dita.dost.invoker.CommandLineInvoker" );
+        cl.createArg().setValue( "org.dita.dost.invoker.CommandLineInvoker" );
     }
 
 

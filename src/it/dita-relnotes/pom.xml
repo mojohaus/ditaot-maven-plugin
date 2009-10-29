@@ -22,6 +22,7 @@
   <packaging>pom</packaging>
 
   <name>DITA Open Toolkit Release Notes</name>
+  
   <description>
     This IT creates dita-ot release notes
   </description>
@@ -35,24 +36,63 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>dita-maven-plugin</artifactId>
+        <version>1.0-alpha-1-SNAPSHOT</version>
         <executions>
+        
           <execution>
-            <phase>package</phase>
+            <id>for-fun</id>
+            <phase>generate-sources</phase>
             <goals>
-              <goal>print-help</goal>
               <goal>version</goal>
+              <goal>print-help</goal>
+            </goals>
+          </execution>
+          
+          <execution>
+            <id>dita2pdf</id>
+            <phase>generate-sources</phase>
+            <goals>
               <goal>run</goal>
             </goals>
             <configuration>
               <ditaProperties>
-                <outdir>${project.build.directory}/dita/out</outdir>
+                <outdir>${project.build.directory}/dita/pdf</outdir>
                 <i>${env.DITA_OT}/doc/DITA-readme.ditamap</i>
                 <transtype>pdf</transtype>
               </ditaProperties>
             </configuration>
           </execution>
+          
+          <execution>
+            <id>dita2chm</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <ditaProperties>
+                <outdir>${project.build.directory}/dita/htmlhelp</outdir>
+                <i>${env.DITA_OT}/doc/DITA-readme.ditamap</i>
+                <transtype>htmlhelp</transtype>
+              </ditaProperties>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>chm2web</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>chm2web</goal>
+            </goals>
+            <configuration>
+              <!-- use default configuration chm2web project file -->
+              <!-- if thing does well, target/dita-relnotes.jar has all html files -->
+            </configuration>
+          </execution>
         </executions>
       </plugin>
+      
+      <!-- after this, we can use buildhelper-maven-plugin to deploy the pdf -->
 
     </plugins>
 

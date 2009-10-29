@@ -1,0 +1,39 @@
+ ------
+ Introduction
+ ------
+ Dan T. Tran
+ <dantran@gmail.com>
+ ------
+ October 31, 2009
+ ------
+
+DITA Open Toolkit Maven Plugin
+
+	This plugin is a thin wrapper to DITA Open Toolkit's Java command line
+
+* Goals Overview
+
+  * {{{run-mojo.html}dita:run}} Execute Dita build.
+
+  * {{{version-mojo.html}dita:version}} Display DITA Open Toolkit's version.
+
+  * {{{print-help-mojo.html}dita:print-help}} Display DITA Open Toolkit's Java command line help output.
+
+  * {{{print-help-mojo.html}dita:chm2web}} Convert DITA Open Toolkit's Microsoft CHM file to HTML. 
+    Required commercial chm2web utility from {{{http://chm2web.aklabs.com}A!K Research Labs}}
+
+  []
+
+
+* Usage
+
+  Instructions on how to use the DITA Open Toolkit Maven Plugin can be found on the {{{usage.html}usage page}}.
+
+
+* Examples
+
+  * {{{https://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin/src/it/dita-relnotes}  an comprehensive example.}}
+
+  []
+
+
