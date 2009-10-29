@@ -34,12 +34,12 @@
 
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
-        <artifactId>dita-maven-plugin</artifactId>
+        <artifactId>dita-ot-maven-plugin</artifactId>
         <executions>
           <execution>
             <phase>package</phase>
             <goals>
-              <goal>dita-help</goal>
+              <goal>print-help</goal>
               <goal>version</goal>
               <goal>run</goal>
             </goals>

@@ -29,11 +29,12 @@
   </parent>
 
   <groupId>org.codehaus.mojo</groupId>
-  <artifactId>dita-maven-plugin</artifactId>
+  <artifactId>dita-ot-maven-plugin</artifactId>
   <version>1.0-alpha-1-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
 
-  <name>DITA Maven Plugin</name>
+  <name>DITA Open Toolkit Maven Plugin</name>
+  
   <description>
     Hibernate Tools is a toolset for Hibernate 3 and related projects. The tools provide Maven plugins for
     performing reverse engineering, code generation and interaction with Hibernate.
@@ -54,10 +55,10 @@
   </licenses>
 
   <scm>
-    <connection>scm:svn:http://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin</connection>
-    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin
+    <connection>scm:svn:http://svn.codehaus.org/mojo/trunk/sandbox/dita-ot-maven-plugin</connection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/trunk/dita-ot-maven-plugin
     </developerConnection>
-    <url>http://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin</url>
+    <url>http://svn.codehaus.org/mojo/trunk/sandbox/dita-ot-maven-plugin</url>
   </scm>
 
   <issueManagement>
@@ -69,7 +70,7 @@
 
     <developer>
       <id>dtran</id>
-      <name>dtran Reyes</name>
+      <name>Dan Tran</name>
       <email>dtran@gmail.com</email>
       <timezone>8</timezone>
       <roles>
