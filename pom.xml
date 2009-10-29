@@ -29,17 +29,17 @@
   </parent>
 
   <groupId>org.codehaus.mojo</groupId>
-  <artifactId>dita-ot-maven-plugin</artifactId>
+  <artifactId>dita-maven-plugin</artifactId>
   <version>1.0-alpha-1-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
 
   <name>DITA Open Toolkit Maven Plugin</name>
   
   <description>
-    Hibernate Tools is a toolset for Hibernate 3 and related projects. The tools provide Maven plugins for
-    performing reverse engineering, code generation and interaction with Hibernate.
+    The DITA Open Toolkit is an implementation of the OASIS DITA XML Specification. The Toolkit transforms DITA content into many deliverable formats
   </description>
-  <url>http://mojo.codehaus.org/dita-maven-plugin/</url>
+  
+  <url>http://mojo.codehaus.org/dita-ot-maven-plugin/</url>
   <inceptionYear>2009</inceptionYear>
 
   <prerequisites>
@@ -55,10 +55,10 @@
   </licenses>
 
   <scm>
-    <connection>scm:svn:http://svn.codehaus.org/mojo/trunk/sandbox/dita-ot-maven-plugin</connection>
-    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/trunk/dita-ot-maven-plugin
+    <connection>scm:svn:http://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin</connection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/trunk/sandbox/dita--maven-plugin
     </developerConnection>
-    <url>http://svn.codehaus.org/mojo/trunk/sandbox/dita-ot-maven-plugin</url>
+    <url>http://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin</url>
   </scm>
 
   <issueManagement>

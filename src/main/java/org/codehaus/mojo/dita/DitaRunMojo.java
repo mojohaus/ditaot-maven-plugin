@@ -35,7 +35,7 @@ public class DitaRunMojo
 
     /**
      * key/value pairs to be used to create  /key:value dita-ot java command line argument
-     * To see a list of all possible key/value mvn dita:dita-help -Dditadir=path/to/dita-ot
+     * To see a list of all possible key/value run mvn dita:dita-help -Dditadir=path/to/dita-ot
      * @parameter
      */
     private Map<String, String> ditaProperties = new HashMap<String, String>();
