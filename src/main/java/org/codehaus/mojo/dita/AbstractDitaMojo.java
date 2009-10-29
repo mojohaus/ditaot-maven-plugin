@@ -1,5 +1,22 @@
 package org.codehaus.mojo.dita;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.maven.artifact.Artifact;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.project.MavenProject;
+import org.apache.maven.shared.model.fileset.FileSet;
+import org.apache.maven.shared.model.fileset.util.FileSetManager;
+import org.codehaus.plexus.util.cli.Arg;
+import org.codehaus.plexus.util.cli.CommandLineException;
+import org.codehaus.plexus.util.cli.CommandLineUtils;
+import org.codehaus.plexus.util.cli.Commandline;
+import org.codehaus.plexus.util.cli.DefaultConsumer;
+
 /*
  * Copyright 2000-2006 The Apache Software Foundation
  * 
@@ -14,97 +31,47 @@ package org.codehaus.mojo.dita;
  * the License.
  */
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.project.MavenProject;
-import org.apache.maven.shared.model.fileset.FileSet;
-import org.apache.maven.shared.model.fileset.util.FileSetManager;
-import org.codehaus.plexus.util.cli.Arg;
-import org.codehaus.plexus.util.cli.CommandLineException;
-import org.codehaus.plexus.util.cli.CommandLineUtils;
-import org.codehaus.plexus.util.cli.Commandline;
-import org.codehaus.plexus.util.cli.DefaultConsumer;
-
-/**
- * Executes Dita Java command line
- * 
- * @goal dita
- */
-public class DitaMojo
+public abstract class AbstractDitaMojo
     extends AbstractMojo
 {
     /**
      * DITA Open Toolkit directory. If not given, ${env.DITA_OT} will be used
      * 
-     * @parameter
+     * @parameter expression="${dita.ditadir}"
      */
-    private File ditadir;
+    protected File ditadir;
 
     /**
      * DITA Open Toolkit's tempdir
      * 
-     * @parameter default-value="${project.build.directory}/dita/temp"
+     * @parameter expression="${dita.tempdir}" default-value="${project.build.directory}/dita/temp"
      */
-    private File tempdir;
+    protected File tempdir;
 
     /**
-     * DITA Open Toolkit's java command line argument
-     * @parameter
+     * Add jar file under DITA Open Toolkit's lib directory to classpath
+     * 
+     * @parameter expression="${dita.useDitaClasspath}" default-value="true"
      */
-    private Map<String, String> ditaProperties = new HashMap<String, String>();
-
-    /**
-     * @parameter expression="${project.compileClasspathElements}"
-     */
-    private List<String> classpathElements;
-
-    /**
-     * @parameter expression="${plugin.artifacts}"
-     */
-    private List<Artifact> pluginArtifacts;
+    protected boolean useDitaClasspath;
     
     /**
      * @parameter expression="${project}"
      */
-    private MavenProject project;
-    
+    protected MavenProject project;
+
     /**
-     * Add jar file under DITA Open Toolkit's lib directory to classpath
-     * @parameter default-value="true"
+     * @parameter expression="${project.compileClasspathElements}"
      */
-    private boolean useDitaClasspath;
-    
+    protected List<String> classpathElements;
 
-    public void execute()
-        throws MojoExecutionException
-    {
-        initialize();
+    /**
+     * @parameter expression="${plugin.artifacts}"
+     */
+    protected List<Artifact> pluginArtifacts;
 
-        Commandline cl = new Commandline( "java" );
-        
-        cl.setWorkingDirectory( project.getBasedir() );
-        
-        setupDitaMainClass( cl );
-        
-        setupDitaArguments( cl );
-        
-        setupClasspathEnv( cl );
-        
-        executeCommandline( cl );
-        
-        
-    }
 
-    private void initialize()
+    protected void initialize()
         throws MojoExecutionException
     {
         if ( ditadir == null )
@@ -130,24 +97,26 @@ public class DitaMojo
 
     /**
      * setup CLASSPATH env so that ant can use it
+     * 
      * @param cl
      */
-    private void setupClasspathEnv( Commandline cl )
+    protected void setupClasspathEnv( Commandline cl )
     {
-        String classpath = this.buildClasspathString() ;
+        String classpath = this.buildClasspathString();
         cl.addEnvironment( "CLASSPATH", classpath );
-        this.getLog().info(  "CLASSPATH: " + classpath );
+        this.getLog().debug( "CLASSPATH: " + classpath );
     }
-    
+
     /**
      * Create classpath value
+     * 
      * @return
      */
-    private String buildClasspathString()
+    protected String buildClasspathString()
     {
-        
+
         StringBuilder classpath = new StringBuilder();
-        
+
         if ( this.useDitaClasspath )
         {
             FileSetManager fileSetManager = new FileSetManager( this.getLog(), false );
@@ -157,16 +126,16 @@ public class DitaMojo
             ArrayList<String> includes = new ArrayList<String>();
             includes.add( "**/*.jar" );
             fileSet.setIncludes( includes );
-            
+
             String[] files = fileSetManager.getIncludedFiles( fileSet );
-            
+
             for ( int i = 0; i < files.length; ++i )
             {
                 File jarFile = new File( fileSet.getDirectory(), files[i] );
                 classpath.append( jarFile.getAbsolutePath() ).append( File.pathSeparator );
-            }            
+            }
         }
-        
+
         Iterator<String> it = classpathElements.iterator();
         while ( it.hasNext() )
         {
@@ -174,7 +143,6 @@ public class DitaMojo
             classpath.append( cpElement ).append( File.pathSeparator );
         }
 
-        
         Iterator<Artifact> iter = pluginArtifacts.iterator();
 
         while ( iter.hasNext() )
@@ -182,49 +150,17 @@ public class DitaMojo
             Artifact artifact = (Artifact) iter.next();
             classpath.append( artifact.getFile().getPath() ).append( File.pathSeparator );
         }
-        
-        
+
         return classpath.toString();
     }
 
-    private void setupDitaMainClass( Commandline cl )
+    protected void setupDitaMainClass( Commandline cl )
     {
         Arg arg = cl.createArg();
         arg.setValue( "org.dita.dost.invoker.CommandLineInvoker" );
     }
-    
-    private void setupDitaArguments( Commandline cl )
-        throws MojoExecutionException
-    {
-        ArrayList<String> params = new ArrayList<String>();
 
-        try
-        {
-            ditaProperties.put( "tempdir", this.tempdir.getCanonicalPath() );
-            ditaProperties.put( "ditadir", this.ditadir.getCanonicalPath() );
-        }
-        catch ( IOException e )
-        {
-            throw new MojoExecutionException( e.getMessage(), e );
-        }
-
-        for ( Iterator<String> i = ditaProperties.keySet().iterator(); i.hasNext(); )
-        {
-            String key = i.next();
-            String value = ditaProperties.get( key );
-            if ( value != null )
-            {
-                String param = "/" + key + ":" + value;
-                params.add( param );
-                this.getLog().info( "Add command argument: " + param );
-            }
-        }
-        
-        cl.addArguments( params.toArray( new String[0] ) );
-
-    }
-    
-    private void executeCommandline( Commandline cl )
+    protected void executeCommandline( Commandline cl )
         throws MojoExecutionException
     {
         int ok;
@@ -248,7 +184,6 @@ public class DitaMojo
         {
             throw new MojoExecutionException( "Error executing command line. Exit code:" + ok );
         }
-        
+
     }
-    
 }

@@ -39,7 +39,9 @@
           <execution>
             <phase>package</phase>
             <goals>
-              <goal>dita</goal>
+              <goal>dita-help</goal>
+              <goal>version</goal>
+              <goal>run</goal>
             </goals>
             <configuration>
               <ditaProperties>
