@@ -42,17 +42,17 @@ public abstract class AbstractDitaMojo
 
     /**
      * DITA Open Toolkit's tempdir
+     * This parameter is ignored if exists in <i>ditaProperties</i>
      * 
      * @parameter expression="${dita.tempdir}" default-value="${project.build.directory}/dita/temp"
-     * This parameter is ignored if exists in <i>ditaProperties</i>
      */
     protected File tempdir;
 
     /**
      * DITA Open Toolkit's outdir
+     * This parameter is ignored if exists in <i>ditaProperties</i>
      * 
      * @parameter expression="${dita.outdir}" default-value="${project.build.directory}/dita/out"
-     * This parameter is ignored if exists in <i>ditaProperties</i>
      * 
      */
     protected File outdir;
