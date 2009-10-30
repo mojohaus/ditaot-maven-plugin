@@ -15,6 +15,7 @@ package org.codehaus.mojo.dita;
  */
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +23,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.codehaus.plexus.util.FileUtils;
+import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 
 /**
@@ -34,7 +37,7 @@ public class DitaRunMojo
     extends AbstractDitaMojo
 {
     /**
-     * DITA Open Toolkit's main topic file This parameter is ignored if exists in
+     * DITA Open Toolkit's main topic file. This parameter is ignored if exists in
      * <i>ditaProperties</i> via /i property
      * 
      * @parameter expression="${dita.ditamap}"
@@ -45,7 +48,7 @@ public class DitaRunMojo
     private File ditamap;
 
     /**
-     * DITA Open Toolkit's transtype This parameter is ignored if exists in <i>ditaProperties</i>
+     * DITA Open Toolkit's transtype. This parameter is ignored if exists in <i>ditaProperties</i>
      * 
      * @parameter expression="${dita.transtype}" default-value="pdf"
      * @since 1.0-alpha-1
@@ -54,7 +57,7 @@ public class DitaRunMojo
     private String transtype;
 
     /**
-     * DITA Open Toolkit's logdir This parameter is ignored if exists in <i>ditaProperties</i>
+     * DITA Open Toolkit's logdir. This parameter is ignored if exists in <i>ditaProperties</i>
      * 
      * @parameter expression="${dita.logdir}" default-value="${project.build.directory}/dita/log"
      * @since 1.0-alpha-1
@@ -63,7 +66,7 @@ public class DitaRunMojo
     private File logdir;
 
     /**
-     * key/value pairs to be used to create /key:value dita-ot java command line argument To see a
+     * key/value pairs to be used to create /key:value dita-ot java command line argument. To see a
      * list of all possible key/value run mvn dita:dita-help -Dditadir=path/to/dita-ot
      * 
      * @parameter
@@ -90,7 +93,7 @@ public class DitaRunMojo
         }
 
         initialize();
-        
+
         validateDitaDirectory();
 
         Commandline cl = new Commandline( "java" );
@@ -110,6 +113,8 @@ public class DitaRunMojo
 
         executeCommandline( cl );
 
+        checkForAntError();
+
     }
 
     private void initialize()
@@ -119,6 +124,32 @@ public class DitaRunMojo
         {
             this.ditadir = new File( ditaProperties.get( "ditadir" ) );
         }
+
+        if ( ditaProperties.get( "outdir" ) != null )
+        {
+            this.outdir = new File( ditaProperties.get( "outdir" ) );
+        }
+
+        if ( ditaProperties.get( "logdir" ) != null )
+        {
+            this.logdir = new File( ditaProperties.get( "logdir" ) );
+        }
+
+        if ( ditaProperties.get( "logdir" ) != null )
+        {
+            this.logdir = new File( ditaProperties.get( "logdir" ) );
+        }
+
+        if ( ditaProperties.get( "tempdir" ) != null )
+        {
+            this.tempdir = new File( ditaProperties.get( "tempdir" ) );
+        }
+
+        if ( ditaProperties.get( "transtype" ) != null )
+        {
+            this.transtype = ditaProperties.get( "transtype" );
+        }
+
     }
 
     private void mergeDitaProperty( String name, String value )
@@ -178,4 +209,42 @@ public class DitaRunMojo
             throw new MojoExecutionException( e.getMessage(), e );
         }
     }
+
+    /**
+     * Provide internal way to detect dita-ot's ant build error since java command line does not
+     * detect Ant build failure
+     * 
+     * @throws MojoExecutionException
+     */
+    private void checkForAntError()
+        throws MojoExecutionException
+    {
+        String bookname = StringUtils.split( this.ditamap.getName(), "." )[0];
+        
+        File logFile = new File( this.logdir, bookname + "_" + this.transtype + ".log" );
+
+        try
+        {
+            String logContent = FileUtils.fileRead( logFile );
+            if ( logContent.contains( "BUILD FAILURE" ) )
+            {
+                throw new MojoExecutionException( "Internal error, check log: " + logFile );
+            }
+            
+            if ( ! logContent.contains( "BUILD SUCCESSFUL" ) )
+            {
+                throw new MojoExecutionException( "Internal error, check log: " + logFile );
+            }
+                        
+        }
+        catch ( FileNotFoundException e )
+        {
+            throw new MojoExecutionException( e.getMessage(), e );
+        }
+        catch ( IOException e  )
+        {
+            throw new MojoExecutionException( "Internal error, check log: " + logFile );
+        }
+    }
+
 }
