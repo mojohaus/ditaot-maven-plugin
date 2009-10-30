@@ -19,7 +19,7 @@ import org.codehaus.plexus.util.cli.Commandline;
 
 
 /**
- * Show DITA Open Toolkit's Java command version
+ * Display DITA Open Toolkit's Java command version
  * 
  * @goal version
  * @requiresProject false

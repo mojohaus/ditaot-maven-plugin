@@ -25,7 +25,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.cli.Commandline;
 
 /**
- * Executes Dita Java command line to transform dita files to desired output format
+ * Execute Dita Java command line to transform dita files to desired output format.
  * 
  * @goal run
  * @requiresProject false

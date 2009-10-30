@@ -15,7 +15,6 @@ package org.codehaus.mojo.chm2html;
  */
 
 import java.io.File;
-import java.io.IOException;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.mojo.dita.AbstractProjectMojo;
