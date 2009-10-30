@@ -35,6 +35,7 @@ public class DitaShowHelpMojo
         if ( skip )
         {
             this.getLog().info( "Skipped" );
+            return;
         }
         
         validateDitaDirectory();

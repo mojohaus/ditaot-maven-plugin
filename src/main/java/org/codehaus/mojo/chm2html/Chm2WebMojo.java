@@ -59,6 +59,7 @@ public class Chm2WebMojo
         if ( skip )
         {
             this.getLog().info( "Skipped" );
+            return;
         }
         
         if ( !chm2webExe.exists() && ignoreIfChm2WebNotExist )

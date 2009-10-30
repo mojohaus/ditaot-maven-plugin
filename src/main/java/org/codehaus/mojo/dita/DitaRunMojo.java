@@ -86,6 +86,7 @@ public class DitaRunMojo
         if ( skip )
         {
             this.getLog().info( "Skipped" );
+            return;
         }
 
         initialize();

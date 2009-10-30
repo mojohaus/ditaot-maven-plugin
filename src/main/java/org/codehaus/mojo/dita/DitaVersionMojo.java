@@ -34,6 +34,7 @@ public class DitaVersionMojo
         if ( skip )
         {
             this.getLog().info( "Skipped" );
+            return;
         }
         
         validateDitaDirectory();
