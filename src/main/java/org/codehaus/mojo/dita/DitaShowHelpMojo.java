@@ -32,7 +32,12 @@ public class DitaShowHelpMojo
     public void execute()
         throws MojoExecutionException
     {
-        initialize();
+        if ( skip )
+        {
+            this.getLog().info( "Skipped" );
+        }
+        
+        validateDitaDirectory();
 
         Commandline cl = new Commandline( "java" );
         

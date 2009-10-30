@@ -46,15 +46,21 @@ public class Chm2WebMojo
     private boolean ignoreIfChm2WebNotExist;
 
     /**
-     * @parameter expression="${chm2web.project}"
+     * Chm2Web configuration file
+     * @parameter expression="${chm2web.descriptor}"
      *            default-value="${basedir}/${project.artifactId}.chm2web"
      * @since 1.0-alpha-1
      */
-    private File chm2webProjectFile;
+    private File descriptor;
 
     public void execute()
         throws MojoExecutionException
     {
+        if ( skip )
+        {
+            this.getLog().info( "Skipped" );
+        }
+        
         if ( !chm2webExe.exists() && ignoreIfChm2WebNotExist )
         {
             return;
@@ -63,7 +69,7 @@ public class Chm2WebMojo
         Commandline cl = new Commandline();
 
         cl.setExecutable( chm2webExe.getAbsolutePath() );
-        cl.createArg().setFile( chm2webProjectFile );
+        cl.createArg().setFile( descriptor );
         cl.createArg().setValue( "/q" );
         cl.createArg().setValue( "/d" );
 

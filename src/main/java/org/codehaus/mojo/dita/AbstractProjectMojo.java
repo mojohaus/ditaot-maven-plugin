@@ -28,7 +28,16 @@ import org.codehaus.plexus.util.cli.DefaultConsumer;
 public abstract class AbstractProjectMojo
     extends AbstractMojo
 {
+    
     /**
+     * Skip the execution
+     * @parameter expression="${dita.skip}" default-value="${false}"
+     * @since 1.0-alpha-1
+     */
+    protected boolean skip;
+    
+    /**
+     * Internal
      * @parameter expression="${project}"
      * @since 1.0-alpha-1
      */

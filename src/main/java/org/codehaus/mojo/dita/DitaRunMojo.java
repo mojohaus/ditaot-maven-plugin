@@ -37,22 +37,30 @@ public class DitaRunMojo
      * DITA Open Toolkit's main topic file This parameter is ignored if exists in
      * <i>ditaProperties</i> via /i property
      * 
-     * @parameter expression="${dita.topicfile}"
+     * @parameter expression="${dita.ditamap}"
      *            default-value="${basedir}/src/main/dita/${project.artifactId}.ditamap"
      * @since 1.0-alpha-1
-     *            
+     * 
      */
-    private File topicfile;
+    private File ditamap;
 
     /**
-     * DITA Open Toolkit's transtype
-     * This parameter is ignored if exists in <i>ditaProperties</i>
+     * DITA Open Toolkit's transtype This parameter is ignored if exists in <i>ditaProperties</i>
      * 
-     * @parameter expression="${dita.transtype}" default-value="pdf" 
+     * @parameter expression="${dita.transtype}" default-value="pdf"
      * @since 1.0-alpha-1
      * 
      */
     private String transtype;
+
+    /**
+     * DITA Open Toolkit's logdir This parameter is ignored if exists in <i>ditaProperties</i>
+     * 
+     * @parameter expression="${dita.logdir}" default-value="${project.build.directory}/dita/log"
+     * @since 1.0-alpha-1
+     * 
+     */
+    private File logdir;
 
     /**
      * key/value pairs to be used to create /key:value dita-ot java command line argument To see a
@@ -62,11 +70,11 @@ public class DitaRunMojo
      * @since 1.0-alpha-1
      */
     private Map<String, String> ditaProperties = new HashMap<String, String>();
-    
+
     /**
      * Use DITA Open Toolkit's tools/ant
      * 
-     * @parameter expression="${dita.useDitaAnt}" default-value="true" 
+     * @parameter expression="${dita.useDitaAnt}" default-value="true"
      * @since 1.0-alpha-1
      * 
      */
@@ -75,7 +83,14 @@ public class DitaRunMojo
     public void execute()
         throws MojoExecutionException
     {
+        if ( skip )
+        {
+            this.getLog().info( "Skipped" );
+        }
+
         initialize();
+        
+        validateDitaDirectory();
 
         Commandline cl = new Commandline( "java" );
 
@@ -96,6 +111,15 @@ public class DitaRunMojo
 
     }
 
+    private void initialize()
+        throws MojoExecutionException
+    {
+        if ( ditaProperties.get( "ditadir" ) != null )
+        {
+            this.ditadir = new File( ditaProperties.get( "ditadir" ) );
+        }
+    }
+
     private void mergeDitaProperty( String name, String value )
     {
         if ( ditaProperties.get( name ) == null )
@@ -112,8 +136,9 @@ public class DitaRunMojo
         mergeDitaProperty( "tempdir", this.tempdir.getAbsolutePath() );
         mergeDitaProperty( "ditadir", this.ditadir.getAbsolutePath() );
         mergeDitaProperty( "outdir", this.outdir.getAbsolutePath() );
-        mergeDitaProperty( "i", this.topicfile.getAbsolutePath() );
+        mergeDitaProperty( "i", this.ditamap.getAbsolutePath() );
         mergeDitaProperty( "transtype", this.transtype );
+        mergeDitaProperty( "logdir", this.logdir.getAbsolutePath() );
 
         for ( Iterator<String> i = ditaProperties.keySet().iterator(); i.hasNext(); )
         {
@@ -138,14 +163,14 @@ public class DitaRunMojo
         {
             File antHome = new File( this.ditadir, "tools/ant" );
             File antBin = new File( antHome, "bin" );
-            
+
             String antPath = antHome.getCanonicalPath();
             cl.addEnvironment( "ANT_HOME", antPath );
-            this.getLog().debug(  "ANT_HOME=" + antPath );
+            this.getLog().debug( "ANT_HOME=" + antPath );
 
             String newPath = antBin.getCanonicalPath() + File.pathSeparator + System.getenv( "PATH" );
             cl.addEnvironment( "PATH", newPath );
-            this.getLog().debug(  "PATH=" + newPath );
+            this.getLog().debug( "PATH=" + newPath );
         }
         catch ( IOException e )
         {

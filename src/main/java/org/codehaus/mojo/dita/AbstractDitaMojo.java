@@ -80,7 +80,7 @@ public abstract class AbstractDitaMojo
     protected List<Artifact> pluginArtifacts;
 
 
-    protected void initialize()
+    protected void validateDitaDirectory()
         throws MojoExecutionException
     {
         if ( ditadir == null )
