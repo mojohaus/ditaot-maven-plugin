@@ -9,7 +9,7 @@
 
 DITA Open Toolkit Maven Plugin
 
-	This plugin is a thin wrapper to DITA Open Toolkit's Java command line
+	This plugin is a thin wrapper of DITA Open Toolkit's Java command line
 
 * Goals Overview
 
@@ -20,7 +20,7 @@ DITA Open Toolkit Maven Plugin
   * {{{print-help-mojo.html}dita:print-help}} Display DITA Open Toolkit's Java command line help output.
 
   * {{{print-help-mojo.html}dita:chm2web}} Convert DITA Open Toolkit's Microsoft CHM file to HTML. 
-    Required commercial chm2web utility from {{{http://chm2web.aklabs.com}A!K Research Labs}}
+    Require commercial chm2web utility from {{{http://chm2web.aklabs.com}A!K Research Labs}}
 
   []
 
@@ -32,7 +32,7 @@ DITA Open Toolkit Maven Plugin
 
 * Examples
 
-  * {{{https://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin/src/it/dita-relnotes}  an comprehensive example.}}
+  * {{{https://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin/src/it/dita-relnotes}  A comprehensive example.}}
 
   []
 

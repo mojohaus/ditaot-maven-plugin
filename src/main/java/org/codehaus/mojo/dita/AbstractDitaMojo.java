@@ -36,6 +36,7 @@ public abstract class AbstractDitaMojo
      * This parameter is ignored if exists in <i>ditaProperties</i>
      * 
      * @parameter expression="${dita.ditadir}"
+     * @since 1.0-alpha-1
      */
     protected File ditadir;
 
@@ -44,6 +45,7 @@ public abstract class AbstractDitaMojo
      * This parameter is ignored if exists in <i>ditaProperties</i>
      * 
      * @parameter expression="${dita.tempdir}" default-value="${project.build.directory}/dita/temp"
+     * @since 1.0-alpha-1
      */
     protected File tempdir;
 
@@ -52,6 +54,7 @@ public abstract class AbstractDitaMojo
      * This parameter is ignored if exists in <i>ditaProperties</i>
      * 
      * @parameter expression="${dita.outdir}" default-value="${project.build.directory}/dita/out"
+     * @since 1.0-alpha-1
      * 
      */
     protected File outdir;
@@ -60,16 +63,19 @@ public abstract class AbstractDitaMojo
      * Add jar file under DITA Open Toolkit's lib directory to classpath
      * 
      * @parameter expression="${dita.useDitaClasspath}" default-value="true"
+     * @since 1.0-alpha-1
      */
     protected boolean useDitaClasspath;
     
     /**
      * @parameter expression="${project.compileClasspathElements}"
+     * @since 1.0-alpha-1
      */
     protected List<String> classpathElements;
 
     /**
      * @parameter expression="${plugin.artifacts}"
+     * @since 1.0-alpha-1
      */
     protected List<Artifact> pluginArtifacts;
 

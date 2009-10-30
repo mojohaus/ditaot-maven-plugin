@@ -30,6 +30,7 @@ public abstract class AbstractProjectMojo
 {
     /**
      * @parameter expression="${project}"
+     * @since 1.0-alpha-1
      */
     protected MavenProject project;
 

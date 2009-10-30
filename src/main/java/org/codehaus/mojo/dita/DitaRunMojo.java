@@ -39,6 +39,8 @@ public class DitaRunMojo
      * 
      * @parameter expression="${dita.topicfile}"
      *            default-value="${basedir}/src/main/dita/${project.artifactId}.ditamap"
+     * @since 1.0-alpha-1
+     *            
      */
     private File topicfile;
 
@@ -47,6 +49,7 @@ public class DitaRunMojo
      * This parameter is ignored if exists in <i>ditaProperties</i>
      * 
      * @parameter expression="${dita.transtype}" default-value="pdf" 
+     * @since 1.0-alpha-1
      * 
      */
     private String transtype;
@@ -56,6 +59,7 @@ public class DitaRunMojo
      * list of all possible key/value run mvn dita:dita-help -Dditadir=path/to/dita-ot
      * 
      * @parameter
+     * @since 1.0-alpha-1
      */
     private Map<String, String> ditaProperties = new HashMap<String, String>();
     
@@ -63,6 +67,7 @@ public class DitaRunMojo
      * Use DITA Open Toolkit's tools/ant
      * 
      * @parameter expression="${dita.useDitaAnt}" default-value="true" 
+     * @since 1.0-alpha-1
      * 
      */
     private boolean useDitaAnt;

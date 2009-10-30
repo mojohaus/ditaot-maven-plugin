@@ -33,6 +33,7 @@ public class Chm2WebMojo
     /**
      * @parameter expression="${chm2web.exe}"
      *            default-value="c:\\Program Files\\A!K Research Labs\\chm2web\\chm2web.exe"
+     * @since 1.0-alpha-1
      */
     private File chm2webExe;
 
@@ -40,20 +41,21 @@ public class Chm2WebMojo
      * Allow skipping the conversion when chm2web is not available.
      * 
      * @parameter expression="${chm2web.ignoreIfExeNotExist}" default-value="false"
+     * @since 1.0-alpha-1
      */
     private boolean ignoreIfChm2WebNotExist;
 
     /**
      * @parameter expression="${chm2web.project}"
      *            default-value="${basedir}/${project.artifactId}.chm2web"
+     * @since 1.0-alpha-1
      */
     private File chm2webProjectFile;
-
 
     public void execute()
         throws MojoExecutionException
     {
-        if ( ! chm2webExe.exists() && ignoreIfChm2WebNotExist )
+        if ( !chm2webExe.exists() && ignoreIfChm2WebNotExist )
         {
             return;
         }
