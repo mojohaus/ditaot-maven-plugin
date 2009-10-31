@@ -113,7 +113,7 @@ Usage
             </goals>
             <configuration>
               <chm2webExe>path/to/your/chm2web.exe</chm2webExe>
-              <chm2webProject>path/to/your/chm2web profile file</chm2webProject>
+              <descriptor>path/to/your/chm2web profile file</descriptor>
               <!-- 
                  please refer to chm2web on configure your chm2web's project file to
                  1. Pickup input file as ${project.build.directory}/dita/out/DITA-readme.chm

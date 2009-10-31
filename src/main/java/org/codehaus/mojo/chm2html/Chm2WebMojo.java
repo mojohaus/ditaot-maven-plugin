@@ -48,7 +48,7 @@ public class Chm2WebMojo
     /**
      * Chm2Web configuration file
      * @parameter expression="${chm2web.descriptor}"
-     *            default-value="${basedir}/${project.artifactId}.chm2web"
+     *            default-value="${basedir}/src/main/chm2web/${project.artifactId}.chm2web"
      * @since 1.0-alpha-1
      */
     private File descriptor;

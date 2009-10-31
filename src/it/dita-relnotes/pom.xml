@@ -85,6 +85,7 @@
               <goal>chm2web</goal>
             </goals>
             <configuration>
+              <descriptor>${basedir}/${project.artifactId}.chm2web</descriptor>
               <!-- use default configuration chm2web project file -->
               <!-- if thing does well, target/dita-relnotes.jar has all html files -->
             </configuration>

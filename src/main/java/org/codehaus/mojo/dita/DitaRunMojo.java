@@ -145,6 +145,11 @@ public class DitaRunMojo
             this.tempdir = new File( ditaProperties.get( "tempdir" ) );
         }
 
+        if ( ditaProperties.get( "i" ) != null )
+        {
+            this.ditamap = new File( ditaProperties.get( "i" ) );
+        }
+        
         if ( ditaProperties.get( "transtype" ) != null )
         {
             this.transtype = ditaProperties.get( "transtype" );
@@ -226,7 +231,7 @@ public class DitaRunMojo
         try
         {
             String logContent = FileUtils.fileRead( logFile );
-            if ( logContent.contains( "BUILD FAILURE" ) )
+            if ( logContent.contains( "BUILD FAIL" ) )
             {
                 throw new MojoExecutionException( "Internal error, check log: " + logFile );
             }
