@@ -9,7 +9,7 @@
 
 DITA Open Toolkit Maven Plugin
 
-	This plugin is a thin wrapper of DITA Open Toolkit's Java command line
+	This plugin is a thin wrapper of DITA Open Toolkit's Ant command line
 
 * Goals Overview
 

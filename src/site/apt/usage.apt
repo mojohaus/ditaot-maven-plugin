@@ -12,7 +12,7 @@ Usage
   The following contains a list of requirements in order to use this plugin.
   
   * A full version of DITA Open Toolkit 1.4.3+  must be installed on your
-    system.  You can pass the installation path to plugin configuration directly 
+    build host.  You can pass the installation path to plugin configuration directly 
     or through environment variable <DITA_OT>.
 
 * DITA to PDF or xhtml
@@ -42,11 +42,11 @@ Usage
               <goal>run</goal>
             </goals>
             <configuration>
-              <ditaProperties>
-                <outdir>${project.build.directory}/dita/pdf</outdir>
-                <i>${env.DITA_OT}/doc/DITA-readme.ditamap</i>
+              <antProperties>
+                <output.dir>${project.build.directory}/dita/pdf</output.dir>
+                <args.input>${env.DITA_OT}/doc/DITA-readme.ditamap</arg.input>
                 <transtype>pdf</transtype>
-              </ditaProperties>
+              </antProperties>
             </configuration>
           </execution>
           [...]
@@ -62,9 +62,9 @@ Usage
   
 * DITA to CHM to HTML
 
-  The following shows a example on how to transfer your DITA source to a web format, by having
-  DITA Open Toolkit to transform it to Microsoft CHM file, then use <chm2web> goal to convert
-  CHM file to a HTML files, a finally compress them into a jar file to be deployed.
+  The following shows an example on how to transform your DITA source to a web format, by having
+  DITA Open Toolkit to transform your dita files to Microsoft CHM file, then use <chm2web> goal to convert
+  CHM file to HTML files, a finally compress them into a jar file to be deployed by build-helper-maven-plugin
   
   Additional external tools are required for this example:
   
@@ -97,11 +97,11 @@ Usage
               <goal>run</goal>
             </goals>
             <configuration>
-              <ditaProperties>
-                <outdir>${project.build.directory}/dita/htmlhelp</outdir>
-                <i>${env.DITA_OT}/doc/DITA-readme.ditamap</i>
+              <antProperties>
+                <output.dir>${project.build.directory}/dita/htmlhelp</output.dir>
+                <args.input>${env.DITA_OT}/doc/DITA-readme.ditamap</args.input>
                 <transtype>htmlhelp</transtype>
-              </ditaProperties>
+              </antProperties>
             </configuration>
           </execution>
           

@@ -38,6 +38,7 @@ public class DitaShowHelpMojo
             return;
         }
         
+        setupDitaDirectory();        
         validateDitaDirectory();
 
         Commandline cl = new Commandline( "java" );
@@ -58,7 +59,7 @@ public class DitaShowHelpMojo
         throws MojoExecutionException
     {
         cl.createArg().setValue( "-h" );
-        cl.createArg().setValue( "/ditadir:" + this.ditadir );
+        cl.createArg().setValue( "/ditadir:" + this.ditaDirectory );
     }
     
 }

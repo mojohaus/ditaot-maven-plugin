@@ -85,6 +85,8 @@
   </properties>
 
   <build>
+  
+    <defaultGoal>install</defaultGoal>
 
     <plugins>
 

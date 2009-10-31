@@ -33,31 +33,12 @@ public abstract class AbstractDitaMojo
 {
     /**
      * DITA Open Toolkit directory. If not given, ${env.DITA_OT} will be used
-     * This parameter is ignored if exists in <i>ditaProperties</i>
+     * This parameter is ignored if exists in <i>antProperties</i> in dita:run goal under <i>dita.dir</i> property
      * 
      * @parameter expression="${dita.ditadir}"
      * @since 1.0-alpha-1
      */
-    protected File ditadir;
-
-    /**
-     * DITA Open Toolkit's tempdir
-     * This parameter is ignored if exists in <i>ditaProperties</i>
-     * 
-     * @parameter expression="${dita.tempdir}" default-value="${project.build.directory}/dita/temp"
-     * @since 1.0-alpha-1
-     */
-    protected File tempdir;
-
-    /**
-     * DITA Open Toolkit's outdir
-     * This parameter is ignored if exists in <i>ditaProperties</i>
-     * 
-     * @parameter expression="${dita.outdir}" default-value="${project.build.directory}/dita/out"
-     * @since 1.0-alpha-1
-     * 
-     */
-    protected File outdir;
+    protected File ditaDirectory;
     
     /**
      * Add jar file under DITA Open Toolkit's lib directory to classpath
@@ -79,27 +60,31 @@ public abstract class AbstractDitaMojo
      */
     protected List<Artifact> pluginArtifacts;
 
-
-    protected void validateDitaDirectory()
-        throws MojoExecutionException
+    protected void setupDitaDirectory()
     {
-        if ( ditadir == null )
+        if ( ditaDirectory == null )
         {
             String tmp = System.getenv( "DITA_OT" );
             if ( tmp != null )
             {
-                ditadir = new File( tmp );
+                ditaDirectory = new File( tmp );
             }
         }
+        
+    }
 
-        if ( ditadir == null )
+    protected void validateDitaDirectory()
+        throws MojoExecutionException
+    {
+
+        if ( ditaDirectory == null )
         {
             throw new MojoExecutionException( "ditadir or env.DITA_OT configuration not set." );
         }
 
-        if ( !ditadir.isDirectory() )
+        if ( !ditaDirectory.isDirectory() )
         {
-            throw new MojoExecutionException( "DITA Open Toolkit at " + ditadir + " not found. " );
+            throw new MojoExecutionException( "DITA Open Toolkit at " + ditaDirectory + " not found. " );
         }
 
     }
@@ -147,7 +132,7 @@ public abstract class AbstractDitaMojo
             FileSetManager fileSetManager = new FileSetManager( this.getLog(), false );
 
             FileSet fileSet = new FileSet();
-            fileSet.setDirectory( this.ditadir.getAbsolutePath() + "/lib" );
+            fileSet.setDirectory( this.ditaDirectory.getAbsolutePath() + "/lib" );
             ArrayList<String> includes = new ArrayList<String>();
             includes.add( "**/*.jar" );
             fileSet.setIncludes( includes );

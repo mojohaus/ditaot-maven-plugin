@@ -17,14 +17,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>net.sourceforge.dita-ot</groupId>
-  <artifactId>ditaot-relnotes</artifactId>
+  <artifactId>ditaot-userguide</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>DITA Open Toolkit Release Notes</name>
+  <name>DITA Open Toolkit User Guide</name>
   
   <description>
-    This IT creates dita-ot release notes
+    Use this pom to build DITA Open Toolkit User Guide
   </description>
 
   <build>
@@ -40,60 +40,22 @@
         <executions>
         
           <execution>
-            <id>for-fun</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>version</goal>
-              <goal>print-help</goal>
-            </goals>
-          </execution>
-          
-          <execution>
             <id>dita2pdf</id>
             <phase>generate-sources</phase>
             <goals>
               <goal>run</goal>
             </goals>
             <configuration>
+              <antOpts>-Xmx1200m</antOpts>
               <antProperties>
-                <output.dir>${project.build.directory}/dita/pdf</output.dir>
-                <args.input>${env.DITA_OT}/doc/DITA-readme.ditamap</args.input>
+                <args.input>${env.DITA_OT}/doc/langref/ditaref-book.ditamap</args.input>
                 <transtype>pdf</transtype>
               </antProperties>
             </configuration>
           </execution>
           
-          <execution>
-            <id>dita2chm</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <antProperties>
-                <output.dir>${project.build.directory}/dita/htmlhelp</output.dir>
-                <args.input>${env.DITA_OT}/doc/DITA-readme.ditamap</args.input>
-                <transtype>htmlhelp</transtype>
-              </antProperties>
-            </configuration>
-          </execution>
-
-          <execution>
-            <id>chm2web</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>chm2web</goal>
-            </goals>
-            <configuration>
-              <descriptor>${basedir}/${project.artifactId}.chm2web</descriptor>
-              <!-- use default configuration chm2web project file -->
-              <!-- if thing does well, target/dita-relnotes.jar has all html files -->
-            </configuration>
-          </execution>
         </executions>
       </plugin>
-      
-      <!-- after this, we can use buildhelper-maven-plugin to deploy the pdf -->
 
     </plugins>
 

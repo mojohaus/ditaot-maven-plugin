@@ -37,6 +37,7 @@ public class DitaVersionMojo
             return;
         }
         
+        setupDitaDirectory();        
         validateDitaDirectory();
 
         Commandline cl = new Commandline( "java" );
@@ -57,7 +58,7 @@ public class DitaVersionMojo
         throws MojoExecutionException
     {
         cl.createArg().setValue( "-version" );
-        cl.createArg().setValue( "/ditadir:" + this.ditadir );
+        cl.createArg().setValue( "/ditadir:" + this.ditaDirectory );
     }
     
 }

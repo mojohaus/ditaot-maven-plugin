@@ -15,20 +15,31 @@ package org.codehaus.mojo.dita;
  */
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.maven.plugin.MojoExecutionException;
-import org.codehaus.plexus.util.FileUtils;
-import org.codehaus.plexus.util.StringUtils;
+import org.codehaus.plexus.util.IOUtil;
+import org.codehaus.plexus.util.Os;
+import org.codehaus.plexus.util.cli.CommandLineException;
+import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 
 /**
- * Execute Dita Java command line to transform dita files to desired output format.
+ * <p>
+ * Execute DITA Open Toolkit's Ant command line to transform dita files to desired output format.
+ * </p>
+ * <p>
+ * Behind the scene, <i>antProperties</i> are temporarily stored under ${logDirectory}/properties.temp and invokde
+ * </p>
+ * <p>
+ *    ant -f ${ditaDirectory}/build.xml -propertyFile ${logDirectory}/properties.temp
+ * </p>
+ * 
  * 
  * @goal run
  * @requiresProject false
@@ -36,9 +47,10 @@ import org.codehaus.plexus.util.cli.Commandline;
 public class DitaRunMojo
     extends AbstractDitaMojo
 {
+
     /**
-     * DITA Open Toolkit's main topic file. This parameter is ignored if exists in
-     * <i>ditaProperties</i> via /i property
+     * DITA Open Toolkit's main ditamap file. This parameter is ignored if exists in
+     * <i>antProperties</i> via <i>args.input</i> property
      * 
      * @parameter expression="${dita.ditamap}"
      *            default-value="${basedir}/src/main/dita/${project.artifactId}.ditamap"
@@ -46,9 +58,40 @@ public class DitaRunMojo
      * 
      */
     private File ditamap;
+    
+    /**
+     * DITA Open Toolkit's basedir. This parameter is ignored if exists in <i>antProperties</i> via
+     * <i>basedir</i> property
+     * 
+     * @parameter expression="${dita.basedir}" default-value="${basedir}"
+     * @since 1.0-alpha-1
+     * 
+     */
+    private File basedir;
+    
+    /**
+     * DITA Open Toolkit's tempdir
+     * This parameter is ignored if exists in <i>antProperties</i>
+     * 
+     * @parameter expression="${dita.tempdir}" default-value="${project.build.directory}/dita/temp"
+     * @since 1.0-alpha-1
+     */
+    protected File tempDirectory;
 
     /**
-     * DITA Open Toolkit's transtype. This parameter is ignored if exists in <i>ditaProperties</i>
+     * DITA Open Toolkit's outdir
+     * This parameter is ignored if exists in <i>antProperties</i>
+     * 
+     * @parameter expression="${dita.outdir}" default-value="${project.build.directory}/dita/out"
+     * @since 1.0-alpha-1
+     * 
+     */
+    protected File outputDirectory;
+    
+    
+    /**
+     * DITA Open Toolkit's transtype. This parameter is ignored if exists in <i>antProperties</i>
+     * via <i>transtype</i> property
      * 
      * @parameter expression="${dita.transtype}" default-value="pdf"
      * @since 1.0-alpha-1
@@ -57,22 +100,22 @@ public class DitaRunMojo
     private String transtype;
 
     /**
-     * DITA Open Toolkit's logdir. This parameter is ignored if exists in <i>ditaProperties</i>
+     * DITA Open Toolkit's logdir. This parameter is ignored if exists in <i>antProperties</i> via
+     * <i>args.logdir</i> property
      * 
      * @parameter expression="${dita.logdir}" default-value="${project.build.directory}/dita/log"
      * @since 1.0-alpha-1
      * 
      */
-    private File logdir;
+    private File logDirectory;
 
     /**
-     * key/value pairs to be used to create /key:value dita-ot java command line argument. To see a
-     * list of all possible key/value run mvn dita:dita-help -Dditadir=path/to/dita-ot
+     * Ant key/value pair properties
      * 
      * @parameter
      * @since 1.0-alpha-1
      */
-    private Map<String, String> ditaProperties = new HashMap<String, String>();
+    private Map<String, String> antProperties = new HashMap<String, String>();
 
     /**
      * Use DITA Open Toolkit's tools/ant
@@ -82,6 +125,17 @@ public class DitaRunMojo
      * 
      */
     private boolean useDitaAnt;
+
+    /**
+     * ANT_OPTS this parameter overrides the current env.ANT_OPTS if given
+     * 
+     * @parameter expression="${dita.antOpts}"
+     * @since 1.0-alpha-1
+     * 
+     */
+    private String antOpts;
+
+    // /////////////////////////////////////////////////////////////////////////
 
     public void execute()
         throws MojoExecutionException
@@ -94,120 +148,142 @@ public class DitaRunMojo
 
         initialize();
 
-        validateDitaDirectory();
+        Commandline cl = new Commandline();
 
-        Commandline cl = new Commandline( "java" );
-
+        cl.setExecutable( getAntExecutable().getAbsolutePath() );
         cl.setWorkingDirectory( project.getBasedir() );
-
-        setupDitaMainClass( cl );
-
-        setupDitaArguments( cl );
 
         setupClasspathEnv( cl );
 
-        if ( useDitaAnt )
-        {
-            setupDitaOpenToolkitAnt( cl );
-        }
+        setupAntEnv( cl );
+
+        setupAntArguments( cl );
 
         executeCommandline( cl );
-
-        checkForAntError();
 
     }
 
     private void initialize()
         throws MojoExecutionException
     {
-        if ( ditaProperties.get( "ditadir" ) != null )
-        {
-            this.ditadir = new File( ditaProperties.get( "ditadir" ) );
-        }
+        setupDitaDirectory();
 
-        if ( ditaProperties.get( "outdir" ) != null )
+        if ( antProperties.get( "dita.dir" ) != null )
         {
-            this.outdir = new File( ditaProperties.get( "outdir" ) );
+            this.ditaDirectory = new File( antProperties.get( "dita.dir" ) );
         }
-
-        if ( ditaProperties.get( "logdir" ) != null )
-        {
-            this.logdir = new File( ditaProperties.get( "logdir" ) );
-        }
-
-        if ( ditaProperties.get( "logdir" ) != null )
-        {
-            this.logdir = new File( ditaProperties.get( "logdir" ) );
-        }
-
-        if ( ditaProperties.get( "tempdir" ) != null )
-        {
-            this.tempdir = new File( ditaProperties.get( "tempdir" ) );
-        }
-
-        if ( ditaProperties.get( "i" ) != null )
-        {
-            this.ditamap = new File( ditaProperties.get( "i" ) );
-        }
+        antProperties.put( "dita.dir", this.ditaDirectory.getAbsolutePath() );
         
-        if ( ditaProperties.get( "transtype" ) != null )
+        validateDitaDirectory();
+        
+        if ( antProperties.get( "basedir" ) != null )
         {
-            this.transtype = ditaProperties.get( "transtype" );
+            this.basedir = new File( antProperties.get( "basedir" ) );
         }
+        antProperties.put( "basedir", this.basedir.getAbsolutePath() );
+        
+
+        if ( antProperties.get( "output.dir" ) != null )
+        {
+            this.outputDirectory = new File( antProperties.get( "output.dir" ) );
+        }
+        antProperties.put( "output.dir", this.outputDirectory.getAbsolutePath() );
+
+        if ( antProperties.get( "dita.temp.dir" ) != null )
+        {
+            this.tempDirectory = new File( antProperties.get( "dita.temp.dir" ) );
+        }
+        antProperties.put( "dita.temp.dir", this.tempDirectory.getAbsolutePath() );
+
+        if ( antProperties.get( "args.logdir" ) != null )
+        {
+            this.logDirectory = new File( antProperties.get( "args.logdir" ) );
+        }
+        antProperties.put( "args.logdir", this.logDirectory.getAbsolutePath() );
+
+        if ( antProperties.get( "args.input" ) != null )
+        {
+            this.ditamap = new File( antProperties.get( "args.input" ) );
+        }
+        antProperties.put( "args.input", this.ditamap.getAbsolutePath() );
+
+        if ( antProperties.get( "transtype" ) != null )
+        {
+            this.transtype = antProperties.get( "transtype" );
+        }
+        antProperties.put( "transtype", this.transtype );
 
     }
 
-    private void mergeDitaProperty( String name, String value )
-    {
-        if ( ditaProperties.get( name ) == null )
-        {
-            ditaProperties.put( name, value );
-        }
-    }
-
-    private void setupDitaArguments( Commandline cl )
+    private void setupAntEnv( Commandline cl )
         throws MojoExecutionException
     {
-        ArrayList<String> params = new ArrayList<String>();
+        cl.addEnvironment( "ANT_HOME", this.getAntPath() );
 
-        mergeDitaProperty( "tempdir", this.tempdir.getAbsolutePath() );
-        mergeDitaProperty( "ditadir", this.ditadir.getAbsolutePath() );
-        mergeDitaProperty( "outdir", this.outdir.getAbsolutePath() );
-        mergeDitaProperty( "i", this.ditamap.getAbsolutePath() );
-        mergeDitaProperty( "transtype", this.transtype );
-        mergeDitaProperty( "logdir", this.logdir.getAbsolutePath() );
+        if ( antOpts != null )
+        {
+            cl.addEnvironment( "ANT_OPTS", antOpts );
+        }
 
-        for ( Iterator<String> i = ditaProperties.keySet().iterator(); i.hasNext(); )
+    }
+
+    private void setupAntArguments( Commandline cl )
+        throws MojoExecutionException
+    {
+        cl.createArg().setValue( "-f" );
+        cl.createArg().setValue( getDitaBuildXmlPath() );
+
+        cl.createArg().setValue( "-propertyfile" );
+        cl.createArg().setValue( setupAntProperties() );
+    }
+
+    /**
+     * 
+     * @return canonical path to temporary properties ant file
+     * @throws MojoExecutionException
+     */
+    private String setupAntProperties()
+        throws MojoExecutionException
+    {
+        Properties inputProperties = new Properties();
+
+        for ( Iterator<String> i = antProperties.keySet().iterator(); i.hasNext(); )
         {
             String key = i.next();
-            String value = ditaProperties.get( key );
+            String value = antProperties.get( key );
             if ( value != null )
             {
-                String param = "/" + key + ":" + value;
-                params.add( param );
-                this.getLog().debug( "Add command argument: " + param );
+                inputProperties.put( key, value );
             }
         }
 
-        cl.addArguments( params.toArray( new String[0] ) );
+        FileOutputStream os = null;
+        try
+        {
+            File tmpFile = new File( this.tempDirectory, "properties.temp" );
+            tmpFile.getParentFile().mkdirs();
 
+            os = new FileOutputStream( tmpFile );
+            inputProperties.store( os, null );
+
+            return tmpFile.getCanonicalPath();
+        }
+        catch ( Exception e )
+        {
+            throw new MojoExecutionException( e.getMessage(), e );
+        }
+        finally
+        {
+            IOUtil.close( os );
+        }
     }
 
-    private void setupDitaOpenToolkitAnt( Commandline cl )
+    private String getDitaBuildXmlPath()
         throws MojoExecutionException
     {
         try
         {
-            File antHome = new File( this.ditadir, "tools/ant" );
-            File antBin = new File( antHome, "bin" );
-
-            String antPath = antHome.getCanonicalPath();
-            cl.addEnvironment( "ANT_HOME", antPath );
-            this.getLog().debug( "ANT_HOME=" + antPath );
-
-            String newPath = antBin.getCanonicalPath() + File.pathSeparator + System.getenv( "PATH" );
-            cl.addEnvironment( "PATH", newPath );
-            this.getLog().debug( "PATH=" + newPath );
+            return new File( ditaDirectory, "build.xml" ).getCanonicalPath();
         }
         catch ( IOException e )
         {
@@ -215,41 +291,76 @@ public class DitaRunMojo
         }
     }
 
-    /**
-     * Provide internal way to detect dita-ot's ant build error since java command line does not
-     * detect Ant build failure
-     * 
-     * @throws MojoExecutionException
-     */
-    private void checkForAntError()
+    private String getAntPath()
         throws MojoExecutionException
     {
-        String bookname = StringUtils.split( this.ditamap.getName(), "." )[0];
-        
-        File logFile = new File( this.logdir, bookname + "_" + this.transtype + ".log" );
+        File antHome = null;
+
+        String antPath = System.getenv( "ANT_HOME" );
+        if ( antPath != null )
+        {
+            antHome = new File( antPath );
+        }
+
+        if ( useDitaAnt )
+        {
+            antHome = new File( this.ditaDirectory, "tools/ant" );
+        }
 
         try
         {
-            String logContent = FileUtils.fileRead( logFile );
-            if ( logContent.contains( "BUILD FAIL" ) )
-            {
-                throw new MojoExecutionException( "Internal error, check log: " + logFile );
-            }
-            
-            if ( ! logContent.contains( "BUILD SUCCESSFUL" ) )
-            {
-                throw new MojoExecutionException( "Internal error, check log: " + logFile );
-            }
-                        
+            return antHome.getCanonicalPath();
         }
-        catch ( FileNotFoundException e )
+        catch ( IOException e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }
-        catch ( IOException e  )
+    }
+
+    private File getAntExecutable()
+        throws MojoExecutionException
+    {
+        String antFileName = "ant";
+
+        if ( Os.isFamily( "windows" ) )
         {
-            throw new MojoExecutionException( "Internal error, check log: " + logFile );
+            antFileName += ".bat";
         }
+
+        return new File( this.getAntPath(), "bin/" + antFileName );
+
+    }
+
+    protected void executeCommandline( Commandline cl )
+        throws MojoExecutionException
+    {
+        int ok;
+
+        try
+        {
+            AntOutputConsumer stdout = new AntOutputConsumer();
+
+            AntOutputConsumer stderr = stdout;
+
+            this.getLog().info( cl.toString() );
+
+            ok = CommandLineUtils.executeCommandLine( cl, stdout, stderr );
+
+            if ( stdout.isFailure() )
+            {
+                throw new MojoExecutionException( "BUILD FAILED" );
+            }
+        }
+        catch ( CommandLineException ecx )
+        {
+            throw new MojoExecutionException( "Error executing command line", ecx );
+        }
+
+        if ( ok != 0 )
+        {
+            throw new MojoExecutionException( "Error executing command line. Exit code:" + ok );
+        }
+
     }
 
 }
