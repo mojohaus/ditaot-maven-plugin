@@ -34,7 +34,7 @@ import org.codehaus.plexus.util.cli.Commandline;
  * Execute DITA Open Toolkit's Ant command line to transform dita files to desired output format.
  * </p>
  * <p>
- * Behind the scene, <i>antProperties</i> are temporarily stored under ${logDirectory}/properties.temp and invokde
+ * Behind the scene, <i>antProperties</i> are temporarily stored under ${logDirectory}/properties.temp to be used with
  * </p>
  * <p>
  *    ant -f ${ditaDirectory}/build.xml -propertyFile ${logDirectory}/properties.temp

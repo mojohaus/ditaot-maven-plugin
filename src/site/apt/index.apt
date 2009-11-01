@@ -9,7 +9,8 @@
 
 DITA Open Toolkit Maven Plugin
 
-	This plugin is a thin wrapper of DITA Open Toolkit's Ant command line
+	This plugin is a thin wrapper of DITA Open Toolkit's Ant command line. In addition, it also has extra goals to 
+	convert the DITA's Microsoft CHM output to a pure HTML output, and configure Eclipse IDE to allow editing and building DITA.
 
 * Goals Overview
 
@@ -17,10 +18,13 @@ DITA Open Toolkit Maven Plugin
 
   * {{{version-mojo.html}dita:version}} Display DITA Open Toolkit's version.
 
-  * {{{print-help-mojo.html}dita:print-help}} Display DITA Open Toolkit's Java command line help output.
+  * {{{print-help-mojo.html}dita:print-help}} Display DITA Open Toolkit's common Ant properties usage.
 
-  * {{{print-help-mojo.html}dita:chm2web}} Convert DITA Open Toolkit's Microsoft CHM file to HTML. 
-    Require commercial chm2web utility from {{{http://chm2web.aklabs.com}A!K Research Labs}}
+  * {{{chm2web-mojo.html}dita:chm2web}} Convert DITA Open Toolkit's Microsoft CHM output file, produced by htmlhelp transtype, 
+    to pure HTML set of files. Require commercial chm2web utility from {{{http://chm2web.aklabs.com}A!K Research Labs}}
+
+  * {{{print-help-mojo.html}dita:eclipse}} Generate {{{http://www.dita-op.org}DITA Open Plaform }} Eclipse configuration
+    to allow editing, previewing, and building DITA with DITA Open Tookit.
 
   []
 

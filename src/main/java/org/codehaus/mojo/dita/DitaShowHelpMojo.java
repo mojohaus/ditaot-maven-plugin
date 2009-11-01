@@ -19,7 +19,7 @@ import org.codehaus.plexus.util.cli.Commandline;
 
 
 /**
- * Display DITA Open Toolkit's Java command line help output. 
+ * Display DITA Open Toolkit's common Ant properties usage.
  * This can be used a reference for <i>ditaProperties</i> used by dita:run goal
  * 
  * @goal print-help

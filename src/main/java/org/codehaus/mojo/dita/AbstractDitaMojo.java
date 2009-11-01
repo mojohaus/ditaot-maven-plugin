@@ -49,12 +49,14 @@ public abstract class AbstractDitaMojo
     protected boolean useDitaClasspath;
     
     /**
+     * Internal
      * @parameter expression="${project.compileClasspathElements}"
      * @since 1.0-alpha-1
      */
     protected List<String> classpathElements;
 
     /**
+     * Internal
      * @parameter expression="${plugin.artifacts}"
      * @since 1.0-alpha-1
      */

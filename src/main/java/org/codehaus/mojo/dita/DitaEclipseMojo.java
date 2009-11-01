@@ -30,8 +30,8 @@ import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
 /**
- * Generate and/or merge DITA Open Platform Eclipse project configuration with existing Eclipse
- * project.
+ * Generate <a href="DITA Open Platform">http://www.dita-op.org</a>'s Eclipse configuration
+ *  to allow editing, previewing, and building DITA with DITA Open Tooklit under Eclipse IDE.
  * 
  * @goal eclipse
  * @requiresProject true

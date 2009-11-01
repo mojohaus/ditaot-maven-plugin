@@ -21,7 +21,8 @@ import org.codehaus.mojo.dita.AbstractProjectMojo;
 import org.codehaus.plexus.util.cli.Commandline;
 
 /**
- * Convert htmlhelp's chm format to pure html format using chm2web utility from A!K Research Labs.
+ * Convert DITA Open Toolkit's Microsoft CHM output file, produced by htmlhelp transtype, 
+    to pure HTML set of files. Require commercial chm2web utility from <a href="http://chm2web.aklabs.com">A!K Research Labs</a>
  * 
  * @goal chm2web
  * @requiresProject false
