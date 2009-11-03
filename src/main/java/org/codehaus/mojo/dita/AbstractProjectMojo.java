@@ -82,7 +82,7 @@ public abstract class AbstractProjectMojo
 
             DefaultConsumer stderr = stdout;
 
-            this.getLog().info( cl.toString() );
+            this.getLog().debug( cl.toString() );
 
             ok = CommandLineUtils.executeCommandLine( cl, stdout, stderr );
         }

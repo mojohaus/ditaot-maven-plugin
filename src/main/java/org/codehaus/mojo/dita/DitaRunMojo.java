@@ -257,6 +257,7 @@ public class DitaRunMojo
         if ( antOpts != null )
         {
             cl.addEnvironment( "ANT_OPTS", antOpts );
+            this.getLog().debug(  "ANT_OPT=" + antOpts );
         }
 
     }
@@ -376,7 +377,7 @@ public class DitaRunMojo
 
             AntOutputConsumer stderr = stdout;
 
-            this.getLog().info( cl.toString() );
+            this.getLog().debug( cl.toString() );
 
             ok = CommandLineUtils.executeCommandLine( cl, stdout, stderr );
 

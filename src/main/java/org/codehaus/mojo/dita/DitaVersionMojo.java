@@ -32,6 +32,7 @@ import org.codehaus.plexus.util.cli.Commandline;
  * 
  * @goal version
  * @requiresProject false
+ * @phase validate
  */
 public class DitaVersionMojo
     extends AbstractDitaMojo
@@ -53,7 +54,7 @@ public class DitaVersionMojo
      * @since 1.0-beta-1
      * 
      */
-    private boolean displayDitaOTVersion = true;
+    private boolean displayDitaOTVersion;
     
     /**
      * Relative path to DITA-OT custom version properties file path 
@@ -63,6 +64,15 @@ public class DitaVersionMojo
      * 
      */
     private String ditaotVersionPath;
+    
+    /**
+     * If given, it will be compared with ${dita.dir}/${ditaotVersionPath}'s version properties 
+     * 
+     * @parameter 
+     * @since 1.0-beta-1
+     * 
+     */
+    private String expectedCustomVersion;
 
     public void execute()
         throws MojoExecutionException
@@ -133,6 +143,7 @@ public class DitaVersionMojo
             IOUtil.close( is );
         }
 
+        this.getLog().debug( "Set " + this.versionName + " to " + version );
         project.getProperties().put( this.versionName, version );
 
     }
