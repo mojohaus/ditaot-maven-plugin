@@ -36,7 +36,7 @@ public abstract class AbstractDitaMojo
      * This parameter is ignored if exists in <i>antProperties</i> in dita:run goal under <i>dita.dir</i> property
      * 
      * @parameter expression="${dita.ditadir}"
-     * @since 1.0-alpha-1
+     * @since 1.0-beta-1
      */
     protected File ditaDirectory;
     
@@ -44,14 +44,14 @@ public abstract class AbstractDitaMojo
      * Add jar file under DITA Open Toolkit's lib directory to classpath
      * 
      * @parameter expression="${dita.useDitaClasspath}" default-value="true"
-     * @since 1.0-alpha-1
+     * @since 1.0-beta-1
      */
     protected boolean useDitaClasspath;
     
     /**
      * Internal
      * @parameter expression="${project.compileClasspathElements}"
-     * @since 1.0-alpha-1
+     * @since 1.0-beta-1
      */
     protected List<String> classpathElements;
 

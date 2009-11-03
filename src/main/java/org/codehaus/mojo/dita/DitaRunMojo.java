@@ -96,7 +96,7 @@ public class DitaRunMojo
      * via <i>transtype</i> property
      * 
      * @parameter expression="${dita.transtype}" default-value="pdf"
-     * @since 1.0-alpha-1
+     * @since since 1.0-beta-1
      * 
      */
     private String transtype;
@@ -106,7 +106,7 @@ public class DitaRunMojo
      * <i>args.logdir</i> property
      * 
      * @parameter expression="${dita.logdir}" default-value="${project.build.directory}/dita/log"
-     * @since 1.0-alpha-1
+     * @since since 1.0-beta-1
      * 
      */
     private File logDirectory;
@@ -115,7 +115,7 @@ public class DitaRunMojo
      * Ant key/value pair properties
      * 
      * @parameter
-     * @since 1.0-alpha-1
+     * @since since 1.0-beta-1
      */
     private Map<String, String> antProperties = new HashMap<String, String>();
 
@@ -123,7 +123,7 @@ public class DitaRunMojo
      * Use DITA Open Toolkit's tools/ant
      * 
      * @parameter expression="${dita.useDitaAnt}" default-value="true"
-     * @since 1.0-alpha-1
+     * @since since 1.0-beta-1
      * 
      */
     private boolean useDitaAnt;
@@ -132,7 +132,7 @@ public class DitaRunMojo
      * ANT_OPTS this parameter overrides the current env.ANT_OPTS if given
      * 
      * @parameter expression="${dita.antOpts}"
-     * @since 1.0-alpha-1
+     * @since since 1.0-beta-1
      * 
      */
     private String antOpts;
@@ -142,7 +142,7 @@ public class DitaRunMojo
      * project.
      * 
      * @parameter expression="${dita.attach}" default-value="false"
-     * @since 1.0-alpha-1
+     * @since since 1.0-beta-1
      */
     private boolean attach = false;
 
@@ -150,7 +150,7 @@ public class DitaRunMojo
      * Output file classifier to be attached to the project.
      * 
      * @parameter expression="${dita.outputDirectory}" 
-     * @since 1.0-alpha-1
+     * @since since 1.0-beta-1
      */
     private String attachClassifier;
 
@@ -159,7 +159,7 @@ public class DitaRunMojo
      * the attachType will be hard coded to pdf and not modifiable
      * 
      * @parameter expression="${dita.attachType}" default-value="jar"
-     * @since 1.0-alpha-1
+     * @since since 1.0-beta-1
      */
     private String attachType;
     

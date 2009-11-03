@@ -35,7 +35,7 @@ public class Chm2WebMojo
     /**
      * @parameter expression="${chm2web.exe}"
      *            default-value="c:\\Program Files\\A!K Research Labs\\chm2web\\chm2web.exe"
-     * @since 1.0-alpha-1
+     * @since 1.0-beta-1
      */
     private File chm2webExe;
 
@@ -43,7 +43,7 @@ public class Chm2WebMojo
      * Allow skipping the conversion when chm2web is not available.
      * 
      * @parameter expression="${chm2web.ignoreIfExeNotExist}" default-value="false"
-     * @since 1.0-alpha-1
+     * @since 1.0-beta-1
      */
     private boolean ignoreIfChm2WebNotExist;
 
@@ -52,7 +52,7 @@ public class Chm2WebMojo
      * 
      * @parameter expression="${chm2web.descriptor}"
      *            default-value="${basedir}/src/main/chm2web/${project.artifactId}.chm2web"
-     * @since 1.0-alpha-1
+     * @since 1.0-beta-1
      */
     private File descriptor;
 
@@ -61,7 +61,7 @@ public class Chm2WebMojo
      * project.
      * 
      * @parameter expression="${chm2web.attach}" default-value="false"
-     * @since 1.0-alpha-1
+     * @since 1.0-beta-1
      */
     private boolean attach = false;
 
@@ -71,7 +71,7 @@ public class Chm2WebMojo
      * 
      * @parameter expression="${chm2web.outputDirectory}"
      *            default-value="${project.build.directory}/chm2web"
-     * @since 1.0-alpha-1
+     * @since 1.0-beta-1
      */
     private File outputDirectory;
 
@@ -79,7 +79,7 @@ public class Chm2WebMojo
      * Output file classifier to be attached to the project.
      * 
      * @parameter expression="${chm2web.attachClassifier}" 
-     * @since 1.0-alpha-1
+     * @since 1.0-beta-1
      */
     private String attachClassifier;
 
@@ -87,7 +87,7 @@ public class Chm2WebMojo
      * Output file extension to be attached to the project.
      * 
      * @parameter expression="${chm2web.attachType}" default-value="jar"
-     * @since 1.0-alpha-1
+     * @since 1.0-beta-1
      */
     private String attachType;
 

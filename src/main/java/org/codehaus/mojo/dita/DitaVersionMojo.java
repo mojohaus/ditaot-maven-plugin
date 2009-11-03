@@ -14,12 +14,21 @@ package org.codehaus.mojo.dita;
  * the License.
  */
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import org.apache.maven.plugin.MojoExecutionException;
+import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.cli.Commandline;
 
-
 /**
- * Display DITA Open Toolkit's Java command version
+ * Display DITA Open Toolkit's Java command version, pull customized version in
+ * ${dita.dir}/version.custom.perperties into Maven's <i>ditaot.version</i>. It is mainly used by
+ * maven-enforcer-plugin for build validation purpose.
  * 
  * @goal version
  * @requiresProject false
@@ -27,6 +36,33 @@ import org.codehaus.plexus.util.cli.Commandline;
 public class DitaVersionMojo
     extends AbstractDitaMojo
 {
+
+    /**
+     * Maven project property name to store custom version value
+     * 
+     * @parameter expression="${dita.versionName}" default-value="dita.custom.version"
+     * @since 1.0-beta-1
+     * 
+     */
+    private String versionName;
+
+    /**
+     * Display DITA Open Toolkit's built-in version
+     * 
+     * @parameter expression="${dita.displayDitaOTVersion}" default-value="true"
+     * @since 1.0-beta-1
+     * 
+     */
+    private boolean displayDitaOTVersion = true;
+    
+    /**
+     * Relative path to DITA-OT custom version properties file path 
+     * 
+     * @parameter expression="${dita.displayDitaOTVersion}" default-value="custom.version.properties"
+     * @since 1.0-beta-1
+     * 
+     */
+    private String ditaotVersionPath;
 
     public void execute()
         throws MojoExecutionException
@@ -36,29 +72,76 @@ public class DitaVersionMojo
             this.getLog().info( "Skipped" );
             return;
         }
-        
-        setupDitaDirectory();        
+
+        setupDitaDirectory();
         validateDitaDirectory();
 
+        if ( displayDitaOTVersion )
+        {
+            this.displayDitaOTBuiltinVersion();
+        }
+
+        loadCustomVersion();
+    }
+    
+    private void displayDitaOTBuiltinVersion()
+      throws MojoExecutionException
+    {
         Commandline cl = new Commandline( "java" );
-        
+
         cl.setWorkingDirectory( project.getBasedir() );
-        
+
         setupDitaMainClass( cl );
-        
+
         setupDitaArguments( cl );
-        
+
         setupClasspathEnv( cl );
-        
+
         executeCommandline( cl );
+
     }
 
-    
+    private void loadCustomVersion()
+        throws MojoExecutionException
+    {
+        String version = "UNKNOWN";
+
+        InputStream is = null;
+
+        try
+        {
+            File customVerionFile = new File( this.ditaDirectory, ditaotVersionPath );
+            is = new FileInputStream( customVerionFile );
+            Properties props = new Properties();
+            props.load( is );
+
+            if ( props.get( "version" ) != null )
+            {
+                version = (String) props.get( "version" );
+            }
+        }
+        catch ( FileNotFoundException e )
+        {
+
+        }
+        catch ( IOException e )
+        {
+            throw new MojoExecutionException( e.getMessage(), e );
+        }
+        finally
+        {
+            IOUtil.close( is );
+        }
+
+        project.getProperties().put( this.versionName, version );
+
+    }
+
     private void setupDitaArguments( Commandline cl )
         throws MojoExecutionException
     {
         cl.createArg().setValue( "-version" );
         cl.createArg().setValue( "/ditadir:" + this.ditaDirectory );
     }
-    
+
 }
