@@ -17,9 +17,7 @@ package org.codehaus.mojo.dita;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Properties;
 
 import org.apache.maven.plugin.MojoExecutionException;
@@ -35,10 +33,11 @@ import org.codehaus.plexus.util.cli.Commandline;
  * Execute DITA Open Toolkit's Ant command line to transform dita files to desired output format.
  * </p>
  * <p>
- * Behind the scene, <i>antProperties</i> are temporarily stored under ${logDirectory}/properties.temp to be used with
+ * Behind the scene, <i>antProperties</i> are temporarily stored under
+ * ${logDirectory}/properties.temp to be used with
  * </p>
  * <p>
- *    ant -f ${ditaDirectory}/build.xml -propertyFile ${logDirectory}/properties.temp
+ * ant -f ${ditaDirectory}/build.xml -propertyFile ${logDirectory}/properties.temp
  * </p>
  * 
  * 
@@ -49,75 +48,18 @@ import org.codehaus.plexus.util.cli.Commandline;
 public class DitaRunMojo
     extends AbstractDitaMojo
 {
+    private static final String DITA_BUILD_DIR = "basedir";
 
-    /**
-     * DITA Open Toolkit's main ditamap file. This parameter is ignored if exists in
-     * <i>antProperties</i> via <i>args.input</i> property
-     * 
-     * @parameter expression="${dita.ditamap}"
-     *            default-value="${basedir}/src/main/dita/${project.artifactId}.ditamap"
-     * @since 1.0-alpha-1
-     * 
-     */
-    private File ditamap;
-    
-    /**
-     * DITA Open Toolkit's basedir. This parameter is ignored if exists in <i>antProperties</i> via
-     * <i>basedir</i> property
-     * 
-     * @parameter expression="${dita.basedir}" default-value="${basedir}"
-     * @since 1.0-alpha-1
-     * 
-     */
-    private File basedir;
-    
-    /**
-     * DITA Open Toolkit's tempdir
-     * This parameter is ignored if exists in <i>antProperties</i>
-     * 
-     * @parameter expression="${dita.tempdir}" default-value="${project.build.directory}/dita/temp"
-     * @since 1.0-alpha-1
-     */
-    private File tempDirectory;
+    private static final String DITA_TMP_DIR = "dita.temp.dir";
 
-    /**
-     * DITA Open Toolkit's outdir
-     * This parameter is ignored if exists in <i>antProperties</i>
-     * 
-     * @parameter expression="${dita.outdir}" default-value="${project.build.directory}/dita/out"
-     * @since 1.0-alpha-1
-     * 
-     */
-    private File outputDirectory;
-    
-    
-    /**
-     * DITA Open Toolkit's transtype. This parameter is ignored if exists in <i>antProperties</i>
-     * via <i>transtype</i> property
-     * 
-     * @parameter expression="${dita.transtype}" default-value="pdf"
-     * @since since 1.0-beta-1
-     * 
-     */
-    private String transtype;
+    private static final String DITA_OUT_DIR = "output.dir";
 
-    /**
-     * DITA Open Toolkit's logdir. This parameter is ignored if exists in <i>antProperties</i> via
-     * <i>args.logdir</i> property
-     * 
-     * @parameter expression="${dita.logdir}" default-value="${project.build.directory}/dita/log"
-     * @since since 1.0-beta-1
-     * 
-     */
-    private File logDirectory;
+    private static final String DITA_LOG_DIR = "args.log";
 
-    /**
-     * Ant key/value pair properties
-     * 
-     * @parameter
-     * @since since 1.0-beta-1
-     */
-    private Map<String, String> antProperties = new HashMap<String, String>();
+    private static final String DITA_MAP = "args.input";
+
+    private static final String DITA_TRANSTYPE = "transtype";
+
 
     /**
      * Use DITA Open Toolkit's tools/ant
@@ -136,7 +78,7 @@ public class DitaRunMojo
      * 
      */
     private String antOpts;
-    
+
     /**
      * Controls whether this plugin tries to archive the output directory and attach archive to the
      * project.
@@ -149,20 +91,19 @@ public class DitaRunMojo
     /**
      * Output file classifier to be attached to the project.
      * 
-     * @parameter expression="${dita.outputDirectory}" 
+     * @parameter expression="${dita.outputDirectory}"
      * @since since 1.0-beta-1
      */
     private String attachClassifier;
 
     /**
-     * Output file extension to be attached to the project. When transtype is one of pdf types,
-     * the attachType will be hard coded to pdf and not modifiable
+     * Output file extension to be attached to the project. When transtype is one of pdf types, the
+     * attachType will be hard coded to pdf and not modifiable
      * 
      * @parameter expression="${dita.attachType}" default-value="jar"
      * @since since 1.0-beta-1
      */
     private String attachType;
-    
 
     // /////////////////////////////////////////////////////////////////////////
 
@@ -189,7 +130,7 @@ public class DitaRunMojo
         setupAntArguments( cl );
 
         executeCommandline( cl );
-        
+
         if ( attach )
         {
             attachTheOuput();
@@ -197,55 +138,34 @@ public class DitaRunMojo
 
     }
 
+    protected void setupDefaultAntDirectory( String antPropertyName, File defaultDirectory )
+    {
+        setupDefaultAntProperty( antPropertyName, defaultDirectory.getAbsolutePath() );
+    }
+
+    protected void setupDefaultAntProperty( String antPropertyName, String value )
+    {
+        if ( antProperties.get( antPropertyName ) == null )
+        {
+            antProperties.put( antPropertyName, value );
+        }
+    }
+
     private void initialize()
         throws MojoExecutionException
     {
         setupDitaDirectory();
 
-        if ( antProperties.get( "dita.dir" ) != null )
-        {
-            this.ditaDirectory = new File( antProperties.get( "dita.dir" ) );
-        }
-        antProperties.put( "dita.dir", this.ditaDirectory.getAbsolutePath() );
-        
-        validateDitaDirectory();
-        
-        if ( antProperties.get( "basedir" ) != null )
-        {
-            this.basedir = new File( antProperties.get( "basedir" ) );
-        }
-        antProperties.put( "basedir", this.basedir.getAbsolutePath() );
-        
+        setupDefaultAntDirectory( DITA_BUILD_DIR, project.getBasedir() );
 
-        if ( antProperties.get( "output.dir" ) != null )
-        {
-            this.outputDirectory = new File( antProperties.get( "output.dir" ) );
-        }
-        antProperties.put( "output.dir", this.outputDirectory.getAbsolutePath() );
+        File ditaBuildDir = new File( project.getBuild().getDirectory(), "dita" );
 
-        if ( antProperties.get( "dita.temp.dir" ) != null )
-        {
-            this.tempDirectory = new File( antProperties.get( "dita.temp.dir" ) );
-        }
-        antProperties.put( "dita.temp.dir", this.tempDirectory.getAbsolutePath() );
-
-        if ( antProperties.get( "args.logdir" ) != null )
-        {
-            this.logDirectory = new File( antProperties.get( "args.logdir" ) );
-        }
-        antProperties.put( "args.logdir", this.logDirectory.getAbsolutePath() );
-
-        if ( antProperties.get( "args.input" ) != null )
-        {
-            this.ditamap = new File( antProperties.get( "args.input" ) );
-        }
-        antProperties.put( "args.input", this.ditamap.getAbsolutePath() );
-
-        if ( antProperties.get( "transtype" ) != null )
-        {
-            this.transtype = antProperties.get( "transtype" );
-        }
-        antProperties.put( "transtype", this.transtype );
+        setupDefaultAntDirectory( DITA_OUT_DIR, new File( ditaBuildDir, "out" ) );
+        setupDefaultAntDirectory( DITA_TMP_DIR, new File( ditaBuildDir, "temp" ) );
+        setupDefaultAntDirectory( DITA_LOG_DIR, new File( ditaBuildDir, "log" ) );
+        setupDefaultAntProperty( DITA_TRANSTYPE, "pdf" );
+        setupDefaultAntProperty( DITA_MAP, project.getBasedir() + "/src/main/dita/" + project.getArtifactId()
+            + ".ditamap" );
 
     }
 
@@ -257,7 +177,7 @@ public class DitaRunMojo
         if ( antOpts != null )
         {
             cl.addEnvironment( "ANT_OPTS", antOpts );
-            this.getLog().debug(  "ANT_OPT=" + antOpts );
+            this.getLog().debug( "ANT_OPT=" + antOpts );
         }
 
     }
@@ -295,7 +215,7 @@ public class DitaRunMojo
         FileOutputStream os = null;
         try
         {
-            File tmpFile = new File( this.tempDirectory, "properties.temp" );
+            File tmpFile = new File( antProperties.get( "dita.temp.dir" ), "properties.temp" );
             tmpFile.getParentFile().mkdirs();
 
             os = new FileOutputStream( tmpFile );
@@ -397,40 +317,45 @@ public class DitaRunMojo
         }
 
     }
-    
+
     private void attachTheOuput()
         throws MojoExecutionException
     {
-        if ( "pdf".equals( this.transtype ) || "pdf2".equals( this.transtype ) || "legacypdf".equals( this.transtype ) )
+        File outputDir = new File( antProperties.get( DITA_OUT_DIR ) );
+        
+        String transtype = antProperties.get(  DITA_TRANSTYPE );
+        
+        if ( "pdf".equals( transtype ) || "pdf2".equals( transtype ) || "legacypdf".equals( transtype ) )
         {
-            attachSingleOuput( attachClassifier, "pdf" );
+            attachSingleOuput( attachClassifier, "pdf", outputDir );
         }
-        else if ( "htmlhelp".equals( this.transtype ) )
+        else if ( "htmlhelp".equals( transtype ) )
         {
-            attachSingleOuput( attachClassifier, "pdf" );
+            attachSingleOuput( attachClassifier, "chm", outputDir );
         }
         else
         {
-            this.archiveAndAttachTheOutput( this.outputDirectory, attachClassifier, attachType );
+            this.archiveAndAttachTheOutput( outputDir, attachClassifier, attachType );
         }
     }
-    
-    private void attachSingleOuput( String classifier, String type  )
+
+    private void attachSingleOuput( String classifier, String type, File outputDir )
         throws MojoExecutionException
     {
-        String [] tokens = StringUtils.split( ditamap.getName(), "." );
+        File ditamap = new File ( antProperties.get( DITA_MAP ) );
+        
+        String[] tokens = StringUtils.split( ditamap.getName(), "." );
         String fileName = "";
-        for ( int i = 0; i < tokens.length - 1 ; ++i )
+        for ( int i = 0; i < tokens.length - 1; ++i )
         {
             fileName += tokens[i] + ".";
         }
         fileName += type;
 
-        File ditaOutputFile = new File( this.outputDirectory, fileName );
+        File ditaOutputFile = new File( outputDir, fileName );
         checkForDuplicateAttachArtifact( ditaOutputFile );
         attachArtifact( classifier, type, ditaOutputFile );
-        
+
     }
-    
 
 }

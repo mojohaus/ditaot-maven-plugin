@@ -39,7 +39,6 @@ public class DitaShowHelpMojo
         }
         
         setupDitaDirectory();        
-        validateDitaDirectory();
 
         Commandline cl = new Commandline( "java" );
         

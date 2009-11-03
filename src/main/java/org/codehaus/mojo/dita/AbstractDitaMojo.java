@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.shared.model.fileset.FileSet;
 import org.apache.maven.shared.model.fileset.util.FileSetManager;
@@ -32,15 +31,6 @@ public abstract class AbstractDitaMojo
     extends AbstractProjectMojo
 {
     /**
-     * DITA Open Toolkit directory. If not given, ${env.DITA_OT} will be used
-     * This parameter is ignored if exists in <i>antProperties</i> in dita:run goal under <i>dita.dir</i> property
-     * 
-     * @parameter expression="${dita.ditadir}"
-     * @since 1.0-beta-1
-     */
-    protected File ditaDirectory;
-    
-    /**
      * Add jar file under DITA Open Toolkit's lib directory to classpath
      * 
      * @parameter expression="${dita.useDitaClasspath}" default-value="true"
@@ -55,33 +45,37 @@ public abstract class AbstractDitaMojo
      */
     protected List<String> classpathElements;
 
+    ////////////////////////////////////////////////////////////////////////
+    // internal
+    ////////////////////////////////////////////////////////////////////////
+    /**
+     * DITA Open Toolkit directory. If not given, ${env.DITA_OT} will be used
+     * This parameter is ignored if exists in <i>antProperties</i> in dita:run goal under <i>dita.dir</i> property
+     * 
+     * @parameter expression="${dita.ditadir}"
+     * @since 1.0-beta-1
+     */
+    protected File ditaDirectory;
+    
     protected void setupDitaDirectory()
+      throws MojoExecutionException
     {
-        if ( ditaDirectory == null )
+        if ( antProperties.get( "dita.dir" ) == null )
         {
-            String tmp = System.getenv( "DITA_OT" );
-            if ( tmp != null )
-            {
-                ditaDirectory = new File( tmp );
-            }
+            antProperties.put( "dita.dir", System.getenv( "DITA_OT" ) );
+        }
+
+        if ( antProperties.get( "dita.dir" ) == null )
+        {
+            throw new MojoExecutionException( "antProperties' dita.dir or env.DITA_OT configuration not set." );
         }
         
-    }
-
-    protected void validateDitaDirectory()
-        throws MojoExecutionException
-    {
-
-        if ( ditaDirectory == null )
-        {
-            throw new MojoExecutionException( "ditadir or env.DITA_OT configuration not set." );
-        }
+        this.ditaDirectory = new File( antProperties.get( "dita.dir" ) );
 
         if ( !ditaDirectory.isDirectory() )
         {
             throw new MojoExecutionException( "DITA Open Toolkit at " + ditaDirectory + " not found. " );
         }
-
     }
 
     /**

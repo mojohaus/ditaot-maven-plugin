@@ -63,15 +63,6 @@ public class DitaVersionMojo
      * 
      */
     private String ditaotVersionPath;
-    
-    /**
-     * If given, it will be compared with ${dita.dir}/${ditaotVersionPath}'s version properties 
-     * 
-     * @parameter 
-     * @since 1.0-beta-1
-     * 
-     */
-    private String expectedCustomVersion;
 
     public void execute()
         throws MojoExecutionException
@@ -83,7 +74,6 @@ public class DitaVersionMojo
         }
 
         setupDitaDirectory();
-        validateDitaDirectory();
 
         if ( displayDitaOTVersion )
         {

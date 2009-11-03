@@ -46,8 +46,10 @@
               <goal>run</goal>
             </goals>
             <configuration>
-              <ditamap>${env.DITA_OT}/doc/DITA-readme.ditamap</ditamap>
-              <transtype>pdf</transtype>
+              <antProperties>
+                <args.input>${env.DITA_OT}/doc/DITA-readme.ditamap</args.input>
+                <transtype>pdf</transtype>
+              </antProperties>
               <attach>true</attach>
             </configuration>
           </execution>
