@@ -55,13 +55,6 @@ public abstract class AbstractDitaMojo
      */
     protected List<String> classpathElements;
 
-    /**
-     * Internal
-     * @parameter expression="${plugin.artifacts}"
-     * @since 1.0-alpha-1
-     */
-    protected List<Artifact> pluginArtifacts;
-
     protected void setupDitaDirectory()
     {
         if ( ditaDirectory == null )
@@ -113,20 +106,12 @@ public abstract class AbstractDitaMojo
 
         StringBuilder classpath = new StringBuilder();
 
-        //Pick up dependency list. This requires packaging set to jar
+        //Pick up dependency list. 
         Iterator<String> it = classpathElements.iterator();
         while ( it.hasNext() )
         {
             String cpElement = it.next();
             classpath.append( cpElement ).append( File.pathSeparator );
-        }
-
-        //Pick up plugin's dependency list. 
-        Iterator<Artifact> iter = pluginArtifacts.iterator();
-        while ( iter.hasNext() )
-        {
-            Artifact artifact = (Artifact) iter.next();
-            classpath.append( artifact.getFile().getPath() ).append( File.pathSeparator );
         }
 
         if ( this.useDitaClasspath )

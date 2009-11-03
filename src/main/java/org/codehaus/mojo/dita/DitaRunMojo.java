@@ -44,6 +44,7 @@ import org.codehaus.plexus.util.cli.Commandline;
  * 
  * @goal run
  * @requiresProject false
+ * @requiresDependencyResolution compile
  */
 public class DitaRunMojo
     extends AbstractDitaMojo

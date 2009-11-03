@@ -26,6 +26,15 @@
   <description>
     This IT creates dita-ot release notes
   </description>
+  
+  <dependencies>
+    <dependency>
+      <groupId>net.sourceforge.jtds</groupId>
+      <artifactId>jtds</artifactId>
+      <version>1.2.4</version>
+    </dependency>
+  </dependencies>
+  
 
   <build>
 
