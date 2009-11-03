@@ -25,6 +25,7 @@ import java.util.Properties;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.Os;
+import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
@@ -400,20 +401,33 @@ public class DitaRunMojo
     {
         if ( "pdf".equals( this.transtype ) || "pdf2".equals( this.transtype ) || "legacypdf".equals( this.transtype ) )
         {
-            File ditaOutputFile = new File( this.outputDirectory, ditamap + ".pdf" );
-            checkForDuplicateAttachArtifact( ditaOutputFile );
-            attachArtifact( "pdf", attachClassifier, ditaOutputFile );
+            attachSingleOuput( "pdf", attachClassifier );
         }
         else if ( "htmlhelp".equals( this.transtype ) )
         {
-            File ditaOutputFile = new File( this.outputDirectory, ditamap  + ".chm" );
-            checkForDuplicateAttachArtifact( ditaOutputFile );
-            attachArtifact( "chm", attachClassifier, ditaOutputFile );
+            attachSingleOuput( "chm", attachClassifier );
         }
         else
         {
             this.archiveAndAttachTheOutput( this.outputDirectory, attachClassifier, attachType );
         }
+    }
+    
+    private void attachSingleOuput( String classifier, String type )
+        throws MojoExecutionException
+    {
+        String [] tokens = StringUtils.split( ditamap.getName(), "." );
+        String fileName = "";
+        for ( int i = 0; i < tokens.length - 1 ; ++i )
+        {
+            fileName += tokens[i] + ".";
+        }
+        fileName += type;
+
+        File ditaOutputFile = new File( this.outputDirectory, fileName );
+        checkForDuplicateAttachArtifact( ditaOutputFile );
+        attachArtifact( type, attachClassifier, ditaOutputFile );
+        
     }
     
 
