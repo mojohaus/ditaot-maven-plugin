@@ -102,7 +102,7 @@ public abstract class AbstractProjectMojo
         throws MojoExecutionException
     {
         String archiveOutputFileName = this.project.getArtifactId();
-        if ( StringUtils.isBlank( classifier ) )
+        if ( ! StringUtils.isBlank( classifier ) )
         {
             archiveOutputFileName = "-" + classifier;
         }
@@ -124,11 +124,11 @@ public abstract class AbstractProjectMojo
             throw new MojoExecutionException( e.getMessage(), e );
         }
 
-        projectHelper.attachArtifact( project, type, classifier, archiveOutputFile );
+        attachArtifact( classifier, type, archiveOutputFile );
 
     }
     
-    protected void attachArtifact( String type, String classifier, File file )
+    protected void attachArtifact( String classifier, String type, File file )
     {
         this.getLog().info(  "Attaching: " + file + " using type: " + type + " and classifier: " + classifier  );
         if ( StringUtils.isBlank( classifier ) )

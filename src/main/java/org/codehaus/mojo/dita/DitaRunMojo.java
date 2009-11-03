@@ -401,11 +401,11 @@ public class DitaRunMojo
     {
         if ( "pdf".equals( this.transtype ) || "pdf2".equals( this.transtype ) || "legacypdf".equals( this.transtype ) )
         {
-            attachSingleOuput( "pdf", attachClassifier );
+            attachSingleOuput( attachClassifier, "pdf" );
         }
         else if ( "htmlhelp".equals( this.transtype ) )
         {
-            attachSingleOuput( "chm", attachClassifier );
+            attachSingleOuput( attachClassifier, "pdf" );
         }
         else
         {
@@ -413,7 +413,7 @@ public class DitaRunMojo
         }
     }
     
-    private void attachSingleOuput( String classifier, String type )
+    private void attachSingleOuput( String classifier, String type  )
         throws MojoExecutionException
     {
         String [] tokens = StringUtils.split( ditamap.getName(), "." );
@@ -426,7 +426,7 @@ public class DitaRunMojo
 
         File ditaOutputFile = new File( this.outputDirectory, fileName );
         checkForDuplicateAttachArtifact( ditaOutputFile );
-        attachArtifact( type, attachClassifier, ditaOutputFile );
+        attachArtifact( classifier, type, ditaOutputFile );
         
     }
     

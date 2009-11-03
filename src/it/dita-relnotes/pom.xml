@@ -60,6 +60,8 @@
                 <args.input>${env.DITA_OT}/doc/DITA-readme.ditamap</args.input>
                 <transtype>pdf</transtype>
               </antProperties>
+              <skip>false</skip>
+              <attach>true</attach>
             </configuration>
           </execution>
           
@@ -70,6 +72,8 @@
               <goal>run</goal>
             </goals>
             <configuration>
+              <skip>false</skip>
+              <attach>false</attach>
               <antProperties>
                 <output.dir>${project.build.directory}/dita/htmlhelp</output.dir>
                 <args.input>${env.DITA_OT}/doc/DITA-readme.ditamap</args.input>
@@ -85,9 +89,10 @@
               <goal>chm2web</goal>
             </goals>
             <configuration>
+              <skip>false</skip>
               <descriptor>${basedir}/${project.artifactId}.chm2web</descriptor>
-              <!-- use default configuration chm2web project file -->
-              <!-- if thing does well, target/dita-relnotes.jar has all html files -->
+              <outputDirectory>${project.build.directory}/dita/htmlhelp</outputDirectory>
+              <attach>true</attach>
             </configuration>
           </execution>
         </executions>
