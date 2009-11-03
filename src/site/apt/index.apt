@@ -36,7 +36,9 @@ DITA Open Toolkit Maven Plugin
 
 * Examples
 
-  * {{{https://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin/src/it/dita-relnotes}  A comprehensive example.}}
+  * {{{https://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin/src/it/dita-to-htmlhelp-to-web}  Transform DITA to Microsoft Help, then to HTML example.}}
+
+  * {{{https://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin/src/it/dita-to-pdf}  Transform DITA to PDF.}}
 
   []
 

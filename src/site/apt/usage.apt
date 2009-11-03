@@ -15,7 +15,7 @@ Usage
     build host.  You can pass the installation path to plugin configuration directly 
     or through environment variable <DITA_OT>.
 
-* DITA to PDF or xhtml
+* DITA to PDF
 
   The following shows a example on how to transform your DITA source to a PDF format
   
@@ -64,7 +64,7 @@ Usage
 
   The following shows an example on how to transform your DITA source to a web format, by having
   DITA Open Toolkit to transform your dita files to Microsoft CHM file, then use <chm2web> goal to convert
-  CHM file to HTML files, a finally compress them into a jar file to be deployed by build-helper-maven-plugin
+  CHM file to HTML files, zip the produced html files, and setup maven to deploy it
   
   Additional external tools are required for this example:
   
@@ -73,13 +73,13 @@ Usage
     
   * chm2web utility 
   
-  Full working example is at {{{https://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin/src/it/dita-relnotes}
-  https://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin/src/it/dita-relnotes}}
+  Full working example is at {{{https://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin/src/it/dita-to-htmlhelp-to-web}
+  https://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin/src/it/dita-to-htmlhelp-to-web}}
    
 ---------------------------
 <project>
   [...] 
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
   [...]
   <build>
     [...]
@@ -114,12 +114,7 @@ Usage
             <configuration>
               <chm2webExe>path/to/your/chm2web.exe</chm2webExe>
               <descriptor>path/to/your/chm2web profile file</descriptor>
-              <!-- 
-                 please refer to chm2web on configure your chm2web's project file to
-                 1. Pickup input file as ${project.build.directory}/dita/out/DITA-readme.chm
-                 2. Output directory is set to ${project.build.directory}/classes 
-                    maven-jar-plugin can package them out at the implicit package phase
-               -->
+              <attach>true</attach>
             </configuration>
           </execution>
           [...]
