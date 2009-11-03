@@ -76,7 +76,7 @@ public class DitaRunMojo
      * @parameter expression="${dita.tempdir}" default-value="${project.build.directory}/dita/temp"
      * @since 1.0-alpha-1
      */
-    protected File tempDirectory;
+    private File tempDirectory;
 
     /**
      * DITA Open Toolkit's outdir
@@ -86,7 +86,7 @@ public class DitaRunMojo
      * @since 1.0-alpha-1
      * 
      */
-    protected File outputDirectory;
+    private File outputDirectory;
     
     
     /**
@@ -134,6 +134,33 @@ public class DitaRunMojo
      * 
      */
     private String antOpts;
+    
+    /**
+     * Controls whether this plugin tries to archive the output directory and attach archive to the
+     * project.
+     * 
+     * @parameter expression="${dita.attach}" default-value="false"
+     * @since 1.0-alpha-1
+     */
+    private boolean attach = false;
+
+    /**
+     * Output file classifier to be attached to the project.
+     * 
+     * @parameter expression="${dita.outputDirectory}" 
+     * @since 1.0-alpha-1
+     */
+    private String attachClassifier;
+
+    /**
+     * Output file extension to be attached to the project. When transtype is one of pdf types,
+     * the attachType will be hard coded to pdf and not modifiable
+     * 
+     * @parameter expression="${dita.attachType}" default-value="jar"
+     * @since 1.0-alpha-1
+     */
+    private String attachType;
+    
 
     // /////////////////////////////////////////////////////////////////////////
 
@@ -160,6 +187,11 @@ public class DitaRunMojo
         setupAntArguments( cl );
 
         executeCommandline( cl );
+        
+        if ( attach )
+        {
+            attachTheOuput();
+        }
 
     }
 
@@ -362,5 +394,27 @@ public class DitaRunMojo
         }
 
     }
+    
+    private void attachTheOuput()
+        throws MojoExecutionException
+    {
+        if ( "pdf".equals( this.transtype ) || "pdf2".equals( this.transtype ) || "legacypdf".equals( this.transtype ) )
+        {
+            File ditaOutputFile = new File( this.outputDirectory, ditamap + ".pdf" );
+            checkForDuplicateAttachArtifact( ditaOutputFile );
+            attachArtifact( "pdf", attachClassifier, ditaOutputFile );
+        }
+        else if ( "htmlhelp".equals( this.transtype ) )
+        {
+            File ditaOutputFile = new File( this.outputDirectory, ditamap  + ".chm" );
+            checkForDuplicateAttachArtifact( ditaOutputFile );
+            attachArtifact( "chm", attachClassifier, ditaOutputFile );
+        }
+        else
+        {
+            this.archiveAndAttachTheOutput( this.outputDirectory, attachClassifier, attachType );
+        }
+    }
+    
 
 }

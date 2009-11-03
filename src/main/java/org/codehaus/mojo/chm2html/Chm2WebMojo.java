@@ -21,8 +21,9 @@ import org.codehaus.mojo.dita.AbstractProjectMojo;
 import org.codehaus.plexus.util.cli.Commandline;
 
 /**
- * Convert DITA Open Toolkit's Microsoft CHM output file, produced by htmlhelp transtype, 
-    to pure HTML set of files. Require commercial chm2web utility from <a href="http://chm2web.aklabs.com">A!K Research Labs</a>
+ * Convert DITA Open Toolkit's Microsoft CHM output file, produced by htmlhelp transtype, to pure
+ * HTML set of files. Require commercial chm2web utility from <a
+ * href="http://chm2web.aklabs.com">A!K Research Labs</a>
  * 
  * @goal chm2web
  * @requiresProject false
@@ -48,11 +49,47 @@ public class Chm2WebMojo
 
     /**
      * Chm2Web configuration file
+     * 
      * @parameter expression="${chm2web.descriptor}"
      *            default-value="${basedir}/src/main/chm2web/${project.artifactId}.chm2web"
      * @since 1.0-alpha-1
      */
     private File descriptor;
+
+    /**
+     * Controls whether this plugin tries to archive the output directory and attach archive to the
+     * project.
+     * 
+     * @parameter expression="${chm2web.attach}" default-value="false"
+     * @since 1.0-alpha-1
+     */
+    private boolean attach = false;
+
+    /**
+     * Chm2Web output directory. Must match with the output directory found in your chm2web's
+     * descriptor file.
+     * 
+     * @parameter expression="${chm2web.outputDirectory}"
+     *            default-value="${project.build.directory}/chm2web"
+     * @since 1.0-alpha-1
+     */
+    private File outputDirectory;
+
+    /**
+     * Output file classifier to be attached to the project.
+     * 
+     * @parameter expression="${chm2web.outputDirectory}" default-value="jar"
+     * @since 1.0-alpha-1
+     */
+    private String attachClassifier;
+
+    /**
+     * Output file extension to be attached to the project.
+     * 
+     * @parameter expression="${chm2web.attachType}" default-value="jar"
+     * @since 1.0-alpha-1
+     */
+    private String attachType;
 
     public void execute()
         throws MojoExecutionException
@@ -62,7 +99,7 @@ public class Chm2WebMojo
             this.getLog().info( "Skipped" );
             return;
         }
-        
+
         if ( !chm2webExe.exists() && ignoreIfChm2WebNotExist )
         {
             return;
@@ -78,6 +115,12 @@ public class Chm2WebMojo
         cl.setWorkingDirectory( project.getBasedir() );
 
         executeCommandline( cl );
+
+        if ( attach )
+        {
+            archiveAndAttachTheOutput( this.outputDirectory, attachClassifier, attachType );
+        }
     }
+
 
 }

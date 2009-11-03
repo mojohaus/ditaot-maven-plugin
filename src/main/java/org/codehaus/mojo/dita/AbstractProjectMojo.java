@@ -1,8 +1,18 @@
 package org.codehaus.mojo.dita;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
+import org.apache.maven.project.MavenProjectHelper;
+import org.codehaus.mojo.truezip.Fileset;
+import org.codehaus.mojo.truezip.util.TrueZip;
+import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
@@ -28,20 +38,38 @@ import org.codehaus.plexus.util.cli.DefaultConsumer;
 public abstract class AbstractProjectMojo
     extends AbstractMojo
 {
-    
+
     /**
      * Skip the execution
+     * 
      * @parameter expression="${dita.skip}" default-value="${false}"
      * @since 1.0-alpha-1
      */
     protected boolean skip;
-    
+
     /**
      * Internal
+     * 
      * @parameter expression="${project}"
      * @since 1.0-alpha-1
      */
     protected MavenProject project;
+
+    /**
+     * Internal Maven component to install/deploy the installer(s)
+     * 
+     * @component
+     * @readonly
+     */
+    protected MavenProjectHelper projectHelper;
+
+    /**
+     * Internal component for archiving purposes
+     * 
+     * @component
+     * @since alpha-1
+     */
+    protected TrueZip truezip;
 
     protected void executeCommandline( Commandline cl )
         throws MojoExecutionException
@@ -69,4 +97,65 @@ public abstract class AbstractProjectMojo
         }
 
     }
+
+    protected void archiveAndAttachTheOutput( File outputDirectory, String classifier, String type )
+        throws MojoExecutionException
+    {
+        String archiveOutputFileName = this.project.getArtifactId();
+        if ( StringUtils.isBlank( classifier ) )
+        {
+            archiveOutputFileName = "-" + classifier;
+        }
+        archiveOutputFileName = "." + type;
+
+        File archiveOutputFile = new File( this.project.getBuild().getDirectory(), archiveOutputFileName );
+
+        checkForDuplicateAttachArtifact( archiveOutputFile );
+
+        Fileset fileset = new Fileset();
+        fileset.setDirectory( outputDirectory.getAbsolutePath() );
+        fileset.setOutputDirectory( archiveOutputFile.getAbsolutePath() );
+        try
+        {
+            truezip.copy( fileset );
+        }
+        catch ( IOException e )
+        {
+            throw new MojoExecutionException( e.getMessage(), e );
+        }
+
+        projectHelper.attachArtifact( project, type, classifier, archiveOutputFile );
+
+    }
+    
+    protected void attachArtifact( String type, String classifier, File file )
+    {
+        this.getLog().info(  "Attaching: " + file + " using type: " + type + " and classifier: " + classifier  );
+        if ( StringUtils.isBlank( classifier ) )
+        {
+            projectHelper.attachArtifact( project, type, file );
+        }
+        else
+        {
+            projectHelper.attachArtifact( project, type, classifier, file );
+        }
+    }
+
+    protected void checkForDuplicateAttachArtifact( File attachFile )
+        throws MojoExecutionException
+    {
+        List attachedArtifacts = project.getAttachedArtifacts();
+
+        Iterator iter = attachedArtifacts.iterator();
+
+        while ( iter.hasNext() )
+        {
+            Artifact artifact = (Artifact) iter.next();
+            if ( attachFile.equals( artifact.getFile() ) )
+            {
+                throw new MojoExecutionException( "Duplicate file attachment found: " + attachFile );
+            }
+        }
+    }
+
 }
