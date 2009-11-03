@@ -24,7 +24,7 @@ Usage
 ---------------------------
 <project>
   [...] 
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
   [...]
   <build>
     [...]
