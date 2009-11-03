@@ -48,13 +48,6 @@ public abstract class AbstractDitaMojo
     ////////////////////////////////////////////////////////////////////////
     // internal
     ////////////////////////////////////////////////////////////////////////
-    /**
-     * DITA Open Toolkit directory. If not given, ${env.DITA_OT} will be used
-     * This parameter is ignored if exists in <i>antProperties</i> in dita:run goal under <i>dita.dir</i> property
-     * 
-     * @parameter expression="${dita.ditadir}"
-     * @since 1.0-beta-1
-     */
     protected File ditaDirectory;
     
     protected void setupDitaDirectory()
