@@ -33,7 +33,7 @@ Usage
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>dita-maven-plugin</artifactId>
-        <version>1.0-alpha-1-SNAPSHOT</version>
+        <version>1.0-beta-1-SNAPSHOT</version>
         <executions>
           <execution>
             <id>dita2chm</dita>
@@ -88,7 +88,7 @@ Usage
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>dita-maven-plugin</artifactId>
-        <version>1.0-alpha-1-SNAPSHOT</version>
+        <version>1.0-beta-1-SNAPSHOT</version>
         <executions>
           <execution>
             <id>dita2chm</dita>

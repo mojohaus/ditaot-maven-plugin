@@ -130,7 +130,6 @@ public abstract class AbstractProjectMojo
     
     protected void attachArtifact( String classifier, String type, File file )
     {
-        this.getLog().info(  "Attaching: " + file + " using type: " + type + " and classifier: " + classifier  );
         if ( StringUtils.isBlank( classifier ) )
         {
             projectHelper.attachArtifact( project, type, file );
