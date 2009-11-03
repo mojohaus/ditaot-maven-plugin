@@ -104,9 +104,9 @@ public abstract class AbstractProjectMojo
         String archiveOutputFileName = this.project.getArtifactId();
         if ( ! StringUtils.isBlank( classifier ) )
         {
-            archiveOutputFileName = "-" + classifier;
+            archiveOutputFileName += "-" + classifier;
         }
-        archiveOutputFileName = "." + type;
+        archiveOutputFileName += "." + type;
 
         File archiveOutputFile = new File( this.project.getBuild().getDirectory(), archiveOutputFileName );
 

@@ -36,8 +36,8 @@ ServerSidePHP=0
 ServerSidePath=http://localhost/
 
 [MAIN]
-SourceFile=target\dita\htmlhelp\DITA-readme.chm
-TargetFolder=target\classes
+SourceFile=target\dita\out\DITA-readme.chm
+TargetFolder=target\chm2web
 IndexFileName=index.html
 HelpChangeExt=0
 HelpChangeExtOn=html

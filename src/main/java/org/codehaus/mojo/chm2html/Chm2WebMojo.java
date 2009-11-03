@@ -78,7 +78,7 @@ public class Chm2WebMojo
     /**
      * Output file classifier to be attached to the project.
      * 
-     * @parameter expression="${chm2web.outputDirectory}" 
+     * @parameter expression="${chm2web.attachClassifier}" 
      * @since 1.0-alpha-1
      */
     private String attachClassifier;

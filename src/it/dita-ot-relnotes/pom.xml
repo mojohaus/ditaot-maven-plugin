@@ -17,23 +17,18 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>net.sourceforge.dita-ot</groupId>
-  <artifactId>ditaot-relnotes</artifactId>
+  <artifactId>dita-ot-relnotes</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>DITA Open Toolkit Release Notes</name>
   
   <description>
-    This IT creates dita-ot release notes
+    This IT contains example how to transfer DITA to htmlhelp ( ie Microsoft CHM format),
+    then CHM to pure HTML files, finally zip up the HTML files through a jar, and
+    finally attach to jar file to Maven to be installed/deployed at install/deploy phase respectively.
+    Note, please refer to plugin documentation of a list implicit default configuration
   </description>
-  
-  <dependencies>
-    <dependency>
-      <groupId>net.sourceforge.jtds</groupId>
-      <artifactId>jtds</artifactId>
-      <version>1.2.4</version>
-    </dependency>
-  </dependencies>
   
 
   <build>
@@ -47,33 +42,6 @@
         <artifactId>dita-maven-plugin</artifactId>
         <version>1.0-alpha-1-SNAPSHOT</version>
         <executions>
-        
-          <execution>
-            <id>for-fun</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>version</goal>
-              <goal>print-help</goal>
-            </goals>
-          </execution>
-          
-          <execution>
-            <id>dita2pdf</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <antProperties>
-                <output.dir>${project.build.directory}/dita/pdf</output.dir>
-                <args.input>${env.DITA_OT}/doc/DITA-readme.ditamap</args.input>
-                <transtype>pdf</transtype>
-              </antProperties>
-              <skip>false</skip>
-              <attach>true</attach>
-            </configuration>
-          </execution>
-          
           <execution>
             <id>dita2chm</id>
             <phase>generate-sources</phase>
@@ -81,10 +49,7 @@
               <goal>run</goal>
             </goals>
             <configuration>
-              <skip>false</skip>
-              <attach>false</attach>
               <antProperties>
-                <output.dir>${project.build.directory}/dita/htmlhelp</output.dir>
                 <args.input>${env.DITA_OT}/doc/DITA-readme.ditamap</args.input>
                 <transtype>htmlhelp</transtype>
               </antProperties>
@@ -98,16 +63,11 @@
               <goal>chm2web</goal>
             </goals>
             <configuration>
-              <skip>false</skip>
-              <descriptor>${basedir}/${project.artifactId}.chm2web</descriptor>
-              <outputDirectory>${project.build.directory}/dita/htmlhelp</outputDirectory>
               <attach>true</attach>
             </configuration>
           </execution>
         </executions>
       </plugin>
-      
-      <!-- after this, we can use buildhelper-maven-plugin to deploy the pdf -->
 
     </plugins>
 
