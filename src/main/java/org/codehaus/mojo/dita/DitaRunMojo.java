@@ -37,7 +37,7 @@ import org.codehaus.plexus.util.cli.Commandline;
  * ${logDirectory}/properties.temp to be used with
  * </p>
  * <p>
- * ant -f ${ditaDirectory}/build.xml -propertyFile ${logDirectory}/properties.temp
+ * ant -f ${dita.dir}/build.xml -propertyFile ${args.log}/properties.temp
  * </p>
  * 
  * 
@@ -71,7 +71,8 @@ public class DitaRunMojo
     private boolean useDitaAnt;
 
     /**
-     * ANT_OPTS this parameter overrides the current env.ANT_OPTS if given
+     * ANT_OPTS this parameter overrides the current env.ANT_OPTS if given. 
+     * Typical usage is to setup JVM's heap space 
      * 
      * @parameter expression="${dita.antOpts}"
      * @since since 1.0-beta-1
@@ -91,14 +92,14 @@ public class DitaRunMojo
     /**
      * Output file classifier to be attached to the project.
      * 
-     * @parameter expression="${dita.outputDirectory}"
+     * @parameter expression="${dita.attachClassifier}"
      * @since since 1.0-beta-1
      */
     private String attachClassifier;
 
     /**
-     * Output file extension to be attached to the project. When transtype is one of pdf types, the
-     * attachType will be hard coded to pdf and not modifiable
+     * Output file extension to be attached to the project. When transtype is one of pdf types or <i>htmlhelp</i>, 
+     * the attachType will be hard coded to <i>pdf</i> and <i>chm</i> respectively.
      * 
      * @parameter expression="${dita.attachType}" default-value="jar"
      * @since since 1.0-beta-1

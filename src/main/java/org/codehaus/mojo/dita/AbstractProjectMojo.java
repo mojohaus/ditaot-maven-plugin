@@ -74,31 +74,6 @@ public abstract class AbstractProjectMojo
     protected TrueZip truezip;
     
     
-    
-    /**
-     * Ant key/value pair properties. 
-     * <p>Default properties for all dita's goals
-     *   <ul>
-     *     <li>dita.dir=${env.DITA_OT}</li>
-     *   </ul>
-     * </p>
-     * <p>
-     *   <ul>
-     *   <li>basedir=${project.basedir}</li>
-     *   <li>output.dir=${project.build.directory}/dita/out</li>
-     *   <li>dita.temp.dir=${project.build.directory}/dita/temp</li>
-     *   <li>args.logdir=${project.build.directory}/dita/log</li>
-     *   <li>args.input=${project.basedir}/src/main/dita/${artifactId}.ditamap</li>
-     *   <li>transtype=pdf</li>
-     *   </ul>
-     * </p>
-     *   
-     * @parameter
-     * @since since 1.0-beta-1
-     */
-    protected Map<String, String> antProperties = new HashMap<String, String>();
-    
-
     protected void executeCommandline( Commandline cl )
         throws MojoExecutionException
     {

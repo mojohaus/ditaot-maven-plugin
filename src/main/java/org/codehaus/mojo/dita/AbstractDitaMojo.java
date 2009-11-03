@@ -2,8 +2,10 @@ package org.codehaus.mojo.dita;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.shared.model.fileset.FileSet;
@@ -31,7 +33,7 @@ public abstract class AbstractDitaMojo
     extends AbstractProjectMojo
 {
     /**
-     * Add jar file under DITA Open Toolkit's lib directory to classpath
+     * Add jar files under DITA Open Toolkit's lib directory to execution classpath
      * 
      * @parameter expression="${dita.useDitaClasspath}" default-value="true"
      * @since 1.0-beta-1
@@ -39,12 +41,35 @@ public abstract class AbstractDitaMojo
     protected boolean useDitaClasspath;
     
     /**
-     * Internal
+     * Internal. Compile time project dependencies to be add ed to Ant's classpath
      * @parameter expression="${project.compileClasspathElements}"
      * @since 1.0-beta-1
      */
     protected List<String> classpathElements;
 
+    
+    /**
+     * Ant key/value pair properties. 
+     * 
+     * Default properties for all dita's goals
+     *   <ul>
+     *     <li>dita.dir=${env.DITA_OT}</li>
+     *   </ul>
+     * Default properties for <i>dita:run</i> goal
+     *   <ul>
+     *   <li>basedir=${project.basedir}</li>
+     *   <li>output.dir=${project.build.directory}/dita/out</li>
+     *   <li>dita.temp.dir=${project.build.directory}/dita/temp</li>
+     *   <li>args.logdir=${project.build.directory}/dita/log</li>
+     *   <li>args.input=${project.basedir}/src/main/dita/${artifactId}.ditamap</li>
+     *   <li>transtype=pdf</li>
+     *   </ul>
+     *   
+     * @parameter
+     * @since since 1.0-beta-1
+     */
+    protected Map<String, String> antProperties = new HashMap<String, String>();
+    
     ////////////////////////////////////////////////////////////////////////
     // internal
     ////////////////////////////////////////////////////////////////////////
