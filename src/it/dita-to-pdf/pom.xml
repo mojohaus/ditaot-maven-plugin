@@ -17,23 +17,19 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>net.sourceforge.dita-ot</groupId>
-  <artifactId>dita-ot-relnotes</artifactId>
+  <artifactId>dita-ot-taskbook</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>DITA Open Toolkit Release Notes</name>
+  <name>DITA Open Toolkit Sample - TaskBook </name>
   
   <description>
-    This IT contains example how to transform DITA to pdf.
+    This example shows how to transform DITA to PDF, and how to customer DITA-OT FO plugin  
   </description>
-  
 
   <build>
-
     <defaultGoal>package</defaultGoal>
-
     <plugins>
-
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>dita-maven-plugin</artifactId>
@@ -41,24 +37,28 @@
         <executions>
           <execution>
             <id>dita2pdf</id>
-            <phase>generate-sources</phase>
+            <phase>package</phase>
             <goals>
               <goal>run</goal>
             </goals>
             <configuration>
               <antProperties>
-                <args.input>${env.DITA_OT}/doc/DITA-readme.ditamap</args.input>
-                <transtype>pdf</transtype>
+              <args.input>${env.DITA_OT}/samples/taskbook.ditamap</args.input>
+                <transtype>pdf2</transtype>
+                <dita.extname>dita</dita.extname>
+                <pdf.formatter>${pdf.formatter}</pdf.formatter>
+                <customization.dir>${basedir}/src/main/fo/cfg</customization.dir>
+                <clean.temp>true</clean.temp>
               </antProperties>
-              <attach>true</attach>
+              <antOpts>-Xmx500m</antOpts>
             </configuration>
           </execution>
         </executions>
       </plugin>
 
     </plugins>
-
   </build>
+
 
 
 </project>
