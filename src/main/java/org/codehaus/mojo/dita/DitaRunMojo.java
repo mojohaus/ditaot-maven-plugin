@@ -60,7 +60,6 @@ public class DitaRunMojo
 
     private static final String DITA_TRANSTYPE = "transtype";
 
-
     /**
      * Use DITA Open Toolkit's tools/ant
      * 
@@ -71,8 +70,27 @@ public class DitaRunMojo
     private boolean useDitaAnt;
 
     /**
-     * ANT_OPTS this parameter overrides the current env.ANT_OPTS if given. 
-     * Typical usage is to setup JVM's heap space 
+     * Point to Ant installation directory. If given, it will override <i>useDitaAnt</i> and
+     * ${env.ANT_HOME}
+     * 
+     * @parameter expression="${dita.antHome}" 
+     * @since since 1.0-beta-1
+     * 
+     */
+    private File antHome;
+
+    /**
+     * If given, will be added to Ant command line
+     * 
+     * @parameter expression="${dita.antArguments}"
+     * @since since 1.0-beta-1
+     * 
+     */
+    private String antArguments;
+
+    /**
+     * ANT_OPTS this parameter overrides the current env.ANT_OPTS if given. Typical usage is to
+     * setup JVM's heap space
      * 
      * @parameter expression="${dita.antOpts}"
      * @since since 1.0-beta-1
@@ -98,8 +116,8 @@ public class DitaRunMojo
     private String attachClassifier;
 
     /**
-     * Output file extension to be attached to the project. When transtype is one of pdf types or <i>htmlhelp</i>, 
-     * the attachType will be hard coded to <i>pdf</i> and <i>chm</i> respectively.
+     * Output file extension to be attached to the project. When transtype is one of pdf types or
+     * <i>htmlhelp</i>, the attachType will be hard coded to <i>pdf</i> and <i>chm</i> respectively.
      * 
      * @parameter expression="${dita.attachType}" default-value="jar"
      * @since since 1.0-beta-1
@@ -157,6 +175,8 @@ public class DitaRunMojo
     {
         setupDitaDirectory();
 
+        setupAntDirectory();
+        
         setupDefaultAntDirectory( DITA_BUILD_DIR, project.getBasedir() );
 
         File ditaBuildDir = new File( project.getBuild().getDirectory(), "dita" );
@@ -165,9 +185,41 @@ public class DitaRunMojo
         setupDefaultAntDirectory( DITA_TMP_DIR, new File( ditaBuildDir, "temp" ) );
         setupDefaultAntDirectory( DITA_LOG_DIR, new File( ditaBuildDir, "log" ) );
         setupDefaultAntProperty( DITA_TRANSTYPE, "pdf" );
-        setupDefaultAntProperty( DITA_MAP, project.getBasedir() + "/src/main/dita/" + project.getArtifactId()
+
+        File defaultDitaMapFile = new File( project.getBasedir(), "/src/main/dita/" + project.getArtifactId()
             + ".ditamap" );
 
+        setupDefaultAntProperty( DITA_MAP, defaultDitaMapFile.getAbsolutePath() );
+
+    }
+
+    protected void setupAntDirectory()
+        throws MojoExecutionException
+    {
+        if ( this.antHome == null )
+        {
+            if ( useDitaAnt )
+            {
+                antHome = new File( this.ditaDirectory, "tools/ant" );
+            }
+            else
+            {
+                String antPath = System.getenv( "ANT_HOME" );
+                if ( antPath == null )
+                {
+                    throw new MojoExecutionException( "env.ANT_HOME not found." );
+                }
+                
+                antHome = new File( antPath );
+                
+            }
+        }
+        
+        if ( !antHome.isDirectory() )
+        {
+            throw new MojoExecutionException( this.getAntPath() + " ditaDirectory not found. " );
+        }
+        
     }
 
     private void setupAntEnv( Commandline cl )
@@ -186,6 +238,11 @@ public class DitaRunMojo
     private void setupAntArguments( Commandline cl )
         throws MojoExecutionException
     {
+        if ( !StringUtils.isBlank( antArguments ) )
+        {
+            cl.addArguments( StringUtils.split( antArguments ) );
+        }
+
         cl.createArg().setValue( "-f" );
         cl.createArg().setValue( getDitaBuildXmlPath() );
 
@@ -250,19 +307,6 @@ public class DitaRunMojo
     private String getAntPath()
         throws MojoExecutionException
     {
-        File antHome = null;
-
-        String antPath = System.getenv( "ANT_HOME" );
-        if ( antPath != null )
-        {
-            antHome = new File( antPath );
-        }
-
-        if ( useDitaAnt )
-        {
-            antHome = new File( this.ditaDirectory, "tools/ant" );
-        }
-
         try
         {
             return antHome.getCanonicalPath();
@@ -323,9 +367,9 @@ public class DitaRunMojo
         throws MojoExecutionException
     {
         File outputDir = new File( antProperties.get( DITA_OUT_DIR ) );
-        
-        String transtype = antProperties.get(  DITA_TRANSTYPE );
-        
+
+        String transtype = antProperties.get( DITA_TRANSTYPE );
+
         if ( "pdf".equals( transtype ) || "pdf2".equals( transtype ) || "legacypdf".equals( transtype ) )
         {
             attachSingleOuput( attachClassifier, "pdf", outputDir );
@@ -343,8 +387,8 @@ public class DitaRunMojo
     private void attachSingleOuput( String classifier, String type, File outputDir )
         throws MojoExecutionException
     {
-        File ditamap = new File ( antProperties.get( DITA_MAP ) );
-        
+        File ditamap = new File( antProperties.get( DITA_MAP ) );
+
         String[] tokens = StringUtils.split( ditamap.getName(), "." );
         String fileName = "";
         for ( int i = 0; i < tokens.length - 1; ++i )

@@ -26,6 +26,32 @@
   <description>
     This example shows how to transform DITA to PDF, and how to customer DITA-OT FO plugin  
   </description>
+  
+  <dependencies>
+    <dependency>
+      <groupId>net.sourceforge.saxon</groupId>
+      <artifactId>saxon</artifactId>
+      <version>9.1.0.7</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.saxon</groupId>
+      <artifactId>saxon</artifactId>
+      <classifier>dom</classifier>
+      <version>9.1.0.7</version>
+    </dependency>
+    <dependency>
+      <groupId>com.ibm.icu</groupId>
+      <artifactId>icu4j</artifactId>
+      <version>3.4.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>fop</artifactId>
+      <version>0.95-1</version>
+    </dependency>
+    
+  </dependencies>
+  
 
   <build>
     <defaultGoal>package</defaultGoal>
@@ -42,8 +68,10 @@
               <goal>run</goal>
             </goals>
             <configuration>
+              <useDitaAnt>false</useDitaAnt>
+              <antArguments></antArguments>
               <antProperties>
-              <args.input>${env.DITA_OT}/samples/taskbook.ditamap</args.input>
+              <args.input>c:/dev/dita-ot/dita-ot1.5/samples/taskbook.ditamap</args.input>
                 <transtype>pdf2</transtype>
                 <dita.extname>dita</dita.extname>
                 <pdf.formatter>${pdf.formatter}</pdf.formatter>
