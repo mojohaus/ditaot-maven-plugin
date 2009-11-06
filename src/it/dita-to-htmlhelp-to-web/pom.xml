@@ -50,7 +50,7 @@
             </goals>
             <configuration>
               <antProperties>
-                <args.input>${env.DITA_OT}/doc/DITA-readme.ditamap</args.input>
+                <args.input>${env.DITA_HOME}/doc/DITA-readme.ditamap</args.input>
                 <transtype>htmlhelp</transtype>
               </antProperties>
             </configuration>

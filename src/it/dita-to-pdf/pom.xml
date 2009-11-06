@@ -73,7 +73,7 @@
               <useDitaAnt>false</useDitaAnt>
               <antArguments></antArguments>
               <antProperties>
-              <args.input>c:/dev/dita-ot/dita-ot1.5/samples/taskbook.ditamap</args.input>
+              <args.input>${env.DITA_HOME}/samples/taskbook.ditamap</args.input>
                 <transtype>pdf2</transtype>
                 <dita.extname>dita</dita.extname>
                 <pdf.formatter>${pdf.formatter}</pdf.formatter>
