@@ -27,6 +27,7 @@
     This example shows how to transform DITA to PDF, and how to customer DITA-OT FO plugin  
   </description>
   
+  <!--  add this if using standard package 
   <dependencies>
     <dependency>
       <groupId>net.sourceforge.saxon</groupId>
@@ -52,7 +53,8 @@
     
   </dependencies>
   
-
+ -->
+ 
   <build>
     <defaultGoal>package</defaultGoal>
     <plugins>

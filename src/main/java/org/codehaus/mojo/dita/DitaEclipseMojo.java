@@ -40,6 +40,16 @@ public class DitaEclipseMojo
     extends AbstractProjectMojo
 {
 
+    /**
+     * If given, will be added to Ant command line
+     * 
+     * @parameter expression="${dita.projectName}" default-value="${project.artifactId}"
+     * @since since 1.0-beta-1
+     * 
+     */
+    private String projectName;
+    
+    
     public void execute()
         throws MojoExecutionException
     {
@@ -147,7 +157,7 @@ public class DitaEclipseMojo
     {
         Document doc = DocumentFactory.getInstance().createDocument();
         Element root = doc.addElement( "projectDescription" );
-        root.addElement( "name" ).setText( project.getArtifactId() );
+        root.addElement( "name" ).setText( projectName );
         root.addElement( "comment" );
         root.addElement( "projects" );
         

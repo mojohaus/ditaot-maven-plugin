@@ -53,7 +53,7 @@ public abstract class AbstractDitaMojo
      * 
      * Default properties for all dita's goals
      *   <ul>
-     *     <li>dita.dir=${env.DITA_OT}</li>
+     *     <li>dita.dir=${env.DITA_HOME}</li>
      *   </ul>
      * Default properties for <i>dita:run</i> goal
      *   <ul>
@@ -80,12 +80,12 @@ public abstract class AbstractDitaMojo
     {
         if ( antProperties.get( "dita.dir" ) == null )
         {
-            antProperties.put( "dita.dir", System.getenv( "DITA_OT" ) );
+            antProperties.put( "dita.dir", System.getenv( "DITA_HOME" ) );
         }
 
         if ( antProperties.get( "dita.dir" ) == null )
         {
-            throw new MojoExecutionException( "antProperties' dita.dir or env.DITA_OT configuration not set." );
+            throw new MojoExecutionException( "antProperties' dita.dir or env.DITA_HOME configuration not set." );
         }
         
         this.ditaDirectory = new File( antProperties.get( "dita.dir" ) );
