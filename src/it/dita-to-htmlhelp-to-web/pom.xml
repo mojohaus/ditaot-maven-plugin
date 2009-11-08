@@ -52,6 +52,8 @@
               <antProperties>
                 <args.input>${env.DITA_HOME}/doc/DITA-readme.ditamap</args.input>
                 <transtype>htmlhelp</transtype>
+                <!-- Microsoft help compiler always return 1 as good exit code -->
+                <failonerror>false</failonerror>
               </antProperties>
             </configuration>
           </execution>

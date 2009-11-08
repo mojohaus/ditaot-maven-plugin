@@ -4,6 +4,8 @@ import org.codehaus.plexus.util.cli.StreamConsumer;
 
 /**
  * Used by dita:run to check for Ant execution error
+ * This is workaround where Ant does not exit with none zero code when build fails on Windows 
+ * platform.
  *
  */
 public class AntOutputConsumer

@@ -33,22 +33,26 @@
       <groupId>net.sourceforge.saxon</groupId>
       <artifactId>saxon</artifactId>
       <version>9.1.0.7</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.saxon</groupId>
       <artifactId>saxon</artifactId>
       <classifier>dom</classifier>
       <version>9.1.0.7</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>com.ibm.icu</groupId>
       <artifactId>icu4j</artifactId>
       <version>3.4.4</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.apache.xmlgraphics</groupId>
       <artifactId>fop</artifactId>
       <version>0.95-1</version>
+      <optional>true</optional>
     </dependency>
     
   </dependencies>

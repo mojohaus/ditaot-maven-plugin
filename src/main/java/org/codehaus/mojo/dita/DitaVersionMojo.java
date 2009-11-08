@@ -26,7 +26,7 @@ import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.cli.Commandline;
 
 /**
- * Display DITA Open Toolkit's built-in version, with option to insert a custom version found under ${ditaDirectory}/ditaotVersionPath, via
+ * Display DITA Open Toolkit's built-in version, with option to insert a custom version found under ${dita.dir}/ditaotVersionPath, via
  * <i>version</i> property to Maven's <i>${versionName}</i>. It is mainly used with maven-enforcer-plugin for build validation purpose.
  * 
  * @goal version

@@ -30,14 +30,14 @@ import org.codehaus.plexus.util.cli.Commandline;
 
 /**
  * <p>
- * Execute DITA Open Toolkit's Ant command line to transform dita files to desired output format.
+ * Execute DITA Open Toolkit's Ant command line to transform DITA files to desired output format.
  * </p>
  * <p>
  * Behind the scene, <i>antProperties</i> are temporarily stored under
- * ${logDirectory}/properties.temp to be used with
+ * ${dita.temp.dir}/properties.temp to be used with
  * </p>
  * <p>
- * ant -f ${dita.dir}/build.xml -propertyFile ${args.log}/properties.temp
+ * ant -f ${dita.temp.dir}/build.xml -propertyFile ${dita.temp.dir}/properties.temp
  * </p>
  * 
  * 
@@ -59,6 +59,8 @@ public class DitaRunMojo
     private static final String DITA_MAP = "args.input";
 
     private static final String DITA_TRANSTYPE = "transtype";
+    
+    private static final String DITA_FAILONERROR = "failonerror";
 
     /**
      * Use DITA Open Toolkit's tools/ant
@@ -80,7 +82,7 @@ public class DitaRunMojo
     private File antHome;
 
     /**
-     * If given, will be added to Ant command line
+     * If given, will be added to Ant command line. Use this for trouble shooting purpose
      * 
      * @parameter expression="${dita.antArguments}"
      * @since since 1.0-beta-1
@@ -89,8 +91,8 @@ public class DitaRunMojo
     private String antArguments;
 
     /**
-     * ANT_OPTS this parameter overrides the current env.ANT_OPTS if given. Typical usage is to
-     * setup JVM's heap space
+     * Equivalent with ANT_OPTS environement. This parameter overrides the current env.ANT_OPTS if given. 
+     * Typical usage is to setup JVM's heap space ( example -Xmx500m )
      * 
      * @parameter expression="${dita.antOpts}"
      * @since since 1.0-beta-1
@@ -99,8 +101,8 @@ public class DitaRunMojo
     private String antOpts;
 
     /**
-     * Controls whether this plugin tries to archive the output directory and attach archive to the
-     * project.
+     * Controls whether this goal tries to compress the output directory and attach compressed
+     * output file to the project for install and deploy purposes.
      * 
      * @parameter expression="${dita.attach}" default-value="false"
      * @since since 1.0-beta-1
@@ -116,7 +118,7 @@ public class DitaRunMojo
     private String attachClassifier;
 
     /**
-     * Output file extension to be attached to the project. When transtype is one of pdf types or
+     * Output file extension to be attached to the project. When transtype is one of the pdf types or
      * <i>htmlhelp</i>, the attachType will be hard coded to <i>pdf</i> and <i>chm</i> respectively.
      * 
      * @parameter expression="${dita.attachType}" default-value="jar"
@@ -185,6 +187,7 @@ public class DitaRunMojo
         setupDefaultAntDirectory( DITA_TMP_DIR, new File( ditaBuildDir, "temp" ) );
         setupDefaultAntDirectory( DITA_LOG_DIR, new File( ditaBuildDir, "log" ) );
         setupDefaultAntProperty( DITA_TRANSTYPE, "pdf" );
+        setupDefaultAntProperty( DITA_FAILONERROR, "true" );
 
         File defaultDitaMapFile = new File( project.getBasedir(), "/src/main/dita/" + project.getArtifactId()
             + ".ditamap" );

@@ -31,7 +31,7 @@ import org.dom4j.io.XMLWriter;
 
 /**
  * Generate <a href="DITA Open Platform">http://www.dita-op.org</a>'s Eclipse configuration
- *  to allow editing, previewing, and building DITA with DITA Open Toolkit under Eclipse IDE.
+ *  to allow editing, previewing DITA under Eclipse IDE.
  * 
  * @goal eclipse
  * @requiresProject false

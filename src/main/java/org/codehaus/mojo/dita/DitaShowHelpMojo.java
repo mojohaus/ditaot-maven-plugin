@@ -20,7 +20,7 @@ import org.codehaus.plexus.util.cli.Commandline;
 
 /**
  * Display DITA Open Toolkit's common Ant properties usage.
- * This can be used a reference for <i>ditaProperties</i> used by dita:run goal
+ * This can be used a reference for <i>antProperties</i> used by dita:run goal.
  * 
  * @goal print-help
  * @requiresProject false

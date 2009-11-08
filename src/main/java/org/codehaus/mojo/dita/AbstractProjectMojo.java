@@ -2,10 +2,8 @@ package org.codehaus.mojo.dita;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
@@ -143,12 +141,13 @@ public abstract class AbstractProjectMojo
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected void checkForDuplicateAttachArtifact( File attachFile )
         throws MojoExecutionException
     {
-        List attachedArtifacts = project.getAttachedArtifacts();
+        List<Artifact> attachedArtifacts = ( List<Artifact> )project.getAttachedArtifacts();
 
-        Iterator iter = attachedArtifacts.iterator();
+        Iterator<Artifact> iter = attachedArtifacts.iterator();
 
         while ( iter.hasNext() )
         {

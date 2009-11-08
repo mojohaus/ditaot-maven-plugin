@@ -48,7 +48,7 @@
             <configuration>
               <antOpts>-Xmx1200m</antOpts>
               <antProperties>
-                <args.input>${env.DITA_OT}/doc/langref/ditaref-book.ditamap</args.input>
+                <args.input>${env.DITA_HOME}/doc/langref/ditaref-book.ditamap</args.input>
                 <transtype>pdf</transtype>
               </antProperties>
             </configuration>
