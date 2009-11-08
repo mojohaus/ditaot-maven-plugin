@@ -17,8 +17,8 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.codehaus.mojo</groupId>
-    <artifactId>mojo-sandbox-parent</artifactId>
-    <version>5</version>
+    <artifactId>mojo-parent</artifactId>
+    <version>22</version>
   </parent>
 
   <groupId>org.codehaus.mojo</groupId>
@@ -48,10 +48,9 @@
   </licenses>
 
   <scm>
-    <connection>scm:svn:http://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin</connection>
-    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/trunk/sandbox/dita--maven-plugin
-    </developerConnection>
-    <url>http://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin</url>
+    <connection>scm:svn:http://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin</connection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/trunk/mojo/dita--maven-plugin</developerConnection>
+    <url>http://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin</url>
   </scm>
 
   <issueManagement>
@@ -137,15 +136,10 @@
     </dependency>
 
     <dependency>
-      <groupId>org.codehaus.mojo</groupId>
-      <artifactId>truezip-maven-plugin</artifactId>
-      <version>1.0-beta-3</version>
-    </dependency>
-
-    <dependency>
       <groupId>jaxen</groupId>
       <artifactId>jaxen</artifactId>
       <version>1.1.1</version>
+      <scope>runtime</scope>
       <exclusions>
         <exclusion>
           <groupId>jdom</groupId>
@@ -176,6 +170,16 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
+      <version>2.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-model</artifactId>
+      <version>2.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-artifact</artifactId>
       <version>2.0.6</version>
     </dependency>
 

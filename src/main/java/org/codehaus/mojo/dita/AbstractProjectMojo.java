@@ -42,8 +42,8 @@ public abstract class AbstractProjectMojo
     /**
      * Skip the execution
      * 
-     * @parameter expression="${dita.skip}" default-value="${false}"
-     * @since 1.0-alpha-1
+     * @parameter expression="${dita.skip}" default-value="false"
+     * @since 1.0-beta-1
      */
     protected boolean skip;
 
@@ -51,7 +51,8 @@ public abstract class AbstractProjectMojo
      * Internal
      * 
      * @parameter expression="${project}"
-     * @since 1.0-alpha-1
+     * @readonly
+     * @since 1.0-beta-1
      */
     protected MavenProject project;
 
@@ -67,7 +68,8 @@ public abstract class AbstractProjectMojo
      * Internal component for archiving purposes
      * 
      * @component
-     * @since alpha-1
+     * @readonly
+     * @since beta-1
      */
     protected TrueZip truezip;
     

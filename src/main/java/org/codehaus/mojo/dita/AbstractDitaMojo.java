@@ -67,7 +67,7 @@ public abstract class AbstractDitaMojo
      *   </ul>
      *   
      * @parameter
-     * @since since 1.0-beta-1
+     * @since 1.0-beta-1
      */
     protected Map<String, String> antProperties = new HashMap<String, String>();
     
