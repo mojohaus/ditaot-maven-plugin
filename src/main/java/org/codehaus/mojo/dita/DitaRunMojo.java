@@ -37,7 +37,7 @@ import org.codehaus.plexus.util.cli.Commandline;
  * ${dita.temp.dir}/properties.temp to be used with
  * </p>
  * <p>
- * ant -f ${dita.temp.dir}/build.xml -propertyFile ${dita.temp.dir}/properties.temp
+ * ant -f ${dita.dir}/build.xml -propertyFile ${dita.temp.dir}/properties.temp
  * </p>
  * 
  * 
