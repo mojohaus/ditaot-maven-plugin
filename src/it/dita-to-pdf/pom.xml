@@ -70,15 +70,14 @@
               <goal>run</goal>
             </goals>
             <configuration>
-              <useDitaAnt>false</useDitaAnt>
+              <useDitaAnt>true</useDitaAnt>
               <antArguments></antArguments>
               <antProperties>
               <args.input>${env.DITA_HOME}/samples/taskbook.ditamap</args.input>
                 <transtype>pdf2</transtype>
                 <dita.extname>dita</dita.extname>
-                <pdf.formatter>${pdf.formatter}</pdf.formatter>
                 <customization.dir>${basedir}/src/main/fo/cfg</customization.dir>
-                <clean.temp>true</clean.temp>
+                <clean.temp>yes</clean.temp>
               </antProperties>
               <antOpts>-Xmx500m</antOpts>
             </configuration>

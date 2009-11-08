@@ -4,30 +4,28 @@
 
 
     <!-- 
-       Strings used in the headers and footers of pages.
-    -->
-
-    <!-- 
        Newly added Strings
     -->
-    <variable id="Book ID">15-32100-79408-20090311</variable>
-    <variable id="Site URL">http://mojo.codehaus.org</variable>
-    <variable id="Feedback URL">http://mojo.codehaus.org</variable>
+    <variable id="trademarkChar">™</variable>
+    <variable id="trademarksStr">Trademarks</variable>
+    <variable id="versionStr">Version</variable>
+    <variable id="feedbackStr">Feedback</variable>
+    <variable id="productVersion">1.0</variable>
+    <variable id="bookId">15-32X00-79408-200Y0311</variable>
+    
+    <variable id="notices.copyright.text">
+      Add your copy right text here
+    </variable>
+    
+    <variable id="notices.trademarks.label">Trademarks</variable>
+    
+    <variable id="notices.trademarks.text">
+      Add your trademarks text here
+    </variable>
+    
+    <variable id="notices.regulatoryCompliance.label">Regulatory compliance</variable>
+    <variable id="notices.regulatoryCompliance.text">FCC Class A Part 15 CSA/CUS</variable>
 
-    <!-- Product name to be placed inside headers etc. -->
-    <variable id="Product Name">TaskBook</variable>
-
-    <!-- The footer that appears on odd-numbered pages. -->
-    <variable id="Body odd footer">TaskBook</variable>
-
-    <!-- The footer that appears on even-numbered pages. -->
-    <variable id="Body even footer">TaskBook</variable>
-
-    <!-- The footer that appears on the first page of a chapter. -->
-    <variable id="Body first footer"/>
-
-    <!-- The header that appears on the first page of a chapter. -->
-    <variable id="Body first header"/>
 
     <!-- The header that appears on odd-numbered pages. -->
     <variable id="Body odd header"><param ref-name="heading"/></variable>
@@ -35,31 +33,19 @@
     <!-- The header that appears on even-numbered pages. -->
     <variable id="Body even header"><param ref-name="heading"/></variable>
 
-    <!-- The footer that appears on Preface odd-numbered pages. -->
-    <variable id="Preface odd footer"/>
-
-    <!-- The footer that appears on Preface even-numbered pages. -->
-    <variable id="Preface even footer"/>
-
-    <!-- The footer that appears on the first page of a Preface -->
-    <variable id="Preface first footer"/>
-
-    <!-- The header that appears on Preface odd-numbered pages. -->
-    <variable id="Preface odd header"><param ref-name="prodname"/>&#xA0;|&#xA0;<param ref-name="heading"/>&#xA0;|&#xA0;<param ref-name="pagenum"/></variable>
-
     <!-- The header that appears on Preface even-numbered pages. -->
-    <variable id="Preface even header"><param ref-name="pagenum"/>&#xA0;|&#xA0;<param ref-name="prodname"/></variable>
+    <variable id="Preface even header"/>
 
     <!-- The header that appears on Preface first page. -->
     <variable id="Preface first header"/>
 
     <!-- The footer that appears on the odd-numbered table of contents
          pages. --> 
-    <variable id="Toc odd footer">TaskBook</variable>
+    <variable id="Toc odd footer"><param ref-name="prodname"/></variable>
 
     <!-- The footer that appears on the even-numbered table of contents
          pages. --> 
-    <variable id="Toc even footer">TaskBook</variable>
+    <variable id="Toc even footer"><param ref-name="prodname"/></variable>
 
     <!-- The header that appears on the odd-numbered table of contents
          pages. --> 
@@ -230,34 +216,34 @@
     <variable id="This link">this link</variable>
 
     <!-- Image path to use for a note of "note" type. -->
-    <variable id="note Note Image Path">Configuration/OpenTopic/cfg/common/artwork/hand.gif</variable>
+    <variable id="note Note Image Path">Customization/OpenTopic/common/artwork/note_icon.png</variable>
 
     <!-- Image path to use for a note of "attention" type. -->
-    <variable id="attention Note Image Path">Configuration/OpenTopic/cfg/common/artwork/warning.gif</variable>
+    <variable id="attention Note Image Path">Customization/OpenTopic/common/artwork/warning.gif</variable>
 
     <!-- Image path to use for a note of "caution" type. -->
-    <variable id="caution Note Image Path">Configuration/OpenTopic/cfg/common/artwork/warning.gif</variable>
+    <variable id="caution Note Image Path">Customization/OpenTopic/common/artwork/caution_icon.png</variable>
 
     <!-- Image path to use for a note of "danger" type. -->
-    <variable id="danger Note Image Path">Configuration/OpenTopic/cfg/common/artwork/warning.gif</variable>
+    <variable id="danger Note Image Path">Customization/OpenTopic/common/artwork/caution_icon.png</variable>
 
     <!-- Image path to use for a note of "fastpath" type. -->
-    <variable id="fastpath Note Image Path">Configuration/OpenTopic/cfg/common/artwork/hand.gif</variable>
+    <variable id="fastpath Note Image Path">Customization/OpenTopic/common/artwork/note_icon.png</variable>
 
     <!-- Image path to use for a note of "important" type. -->
-    <variable id="important Note Image Path">Configuration/OpenTopic/cfg/common/artwork/hand.gif</variable>
+    <variable id="important Note Image Path">Customization/OpenTopic/common/artwork/note_icon.png</variable>
 
     <!-- Image path to use for a note of "remember" type. -->
-    <variable id="remember Note Image Path">Configuration/OpenTopic/cfg/common/artwork/hand.gif</variable>
+    <variable id="remember Note Image Path">Customization/OpenTopic/common/artwork/note_icon.png</variable>
 
     <!-- Image path to use for a note of "restriction" type. -->
-    <variable id="restriction Note Image Path">Configuration/OpenTopic/cfg/common/artwork/hand.gif</variable>
+    <variable id="restriction Note Image Path">Customization/OpenTopic/common/artwork/note_icon.png</variable>
 
     <!-- Image path to use for a note of "tip" type. -->
-    <variable id="tip Note Image Path">Configuration/OpenTopic/cfg/common/artwork/hand.gif</variable>
+    <variable id="tip Note Image Path">Customization/OpenTopic/common/artwork/note_icon.png</variable>
 
     <!-- Image path to use for a note of "other" type. -->
-    <variable id="other Note Image Path">Configuration/OpenTopic/cfg/common/artwork/hand.gif</variable>
+    <variable id="other Note Image Path">Customization/OpenTopic/common/artwork/note_icon.png</variable>
 
     <!--
         String used for links in end of document in XHTML
