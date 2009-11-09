@@ -70,11 +70,6 @@ public abstract class AbstractProjectMojo
      * @readonly
      * @since beta-1
      */
-    /**
-     * To look up Archiver/UnArchiver implementations
-     *
-     * @component
-     */
     private ArchiverManager archiverManager;
     
     
