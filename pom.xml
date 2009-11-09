@@ -29,10 +29,11 @@
   <name>DITA Open Toolkit Maven Plugin</name>
 
   <description>
-    The DITA Open Toolkit is an implementation of the OASIS DITA XML Specification. The Toolkit transforms DITA content into many deliverable formats
+    The DITA Open Toolkit is an implementation of the OASIS DITA XML Specification. 
+    The Toolkit transforms DITA content into many deliverable formats.
   </description>
 
-  <url>http://mojo.codehaus.org/dita-ot-maven-plugin/</url>
+  <url>http://mojo.codehaus.org/dita-maven-plugin/</url>
   <inceptionYear>2009</inceptionYear>
 
   <prerequisites>
@@ -49,7 +50,7 @@
 
   <scm>
     <connection>scm:svn:http://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin</connection>
-    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/trunk/mojo/dita--maven-plugin</developerConnection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin</developerConnection>
     <url>http://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin</url>
   </scm>
 
@@ -130,7 +131,7 @@
       <exclusions>
         <exclusion>
           <groupId>org.codehaus.plexus</groupId>
-          <artifactId>plexus-component-api</artifactId>        
+          <artifactId>plexus-component-api</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
