@@ -1,7 +1,6 @@
 package org.codehaus.mojo.dita;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,8 +9,8 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
-import org.codehaus.mojo.truezip.Fileset;
-import org.codehaus.mojo.truezip.util.TrueZip;
+import org.codehaus.plexus.archiver.Archiver;
+import org.codehaus.plexus.archiver.manager.ArchiverManager;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
@@ -71,7 +70,12 @@ public abstract class AbstractProjectMojo
      * @readonly
      * @since beta-1
      */
-    protected TrueZip truezip;
+    /**
+     * To look up Archiver/UnArchiver implementations
+     *
+     * @component
+     */
+    private ArchiverManager archiverManager;
     
     
     protected void executeCommandline( Commandline cl )
@@ -113,16 +117,16 @@ public abstract class AbstractProjectMojo
 
         File archiveOutputFile = new File( this.project.getBuild().getDirectory(), archiveOutputFileName );
 
-        checkForDuplicateAttachArtifact( archiveOutputFile );
+        this.checkForDuplicateAttachArtifact( archiveOutputFile );
 
-        Fileset fileset = new Fileset();
-        fileset.setDirectory( outputDirectory.getAbsolutePath() );
-        fileset.setOutputDirectory( archiveOutputFile.getAbsolutePath() );
         try
         {
-            truezip.copy( fileset );
+            Archiver archiver = this.archiverManager.getArchiver( archiveOutputFile );
+            archiver.addDirectory( outputDirectory );
+            archiver.setDestFile( archiveOutputFile );
+            archiver.createArchive();
         }
-        catch ( IOException e )
+        catch ( Exception e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }

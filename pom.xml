@@ -124,9 +124,15 @@
 
     <!--  use the internal plexus component in this dependency for archiving purpose -->
     <dependency>
-      <groupId>org.codehaus.mojo</groupId>
-      <artifactId>truezip-maven-plugin</artifactId>
-      <version>1.0-beta-3</version>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-archiver</artifactId>
+      <version>1.0-alpha-9</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.codehaus.plexus</groupId>
+          <artifactId>plexus-component-api</artifactId>        
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
