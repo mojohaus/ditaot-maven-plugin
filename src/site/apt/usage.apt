@@ -11,9 +11,9 @@ Usage
 
   The following contains a list of requirements in order to use this plugin.
   
-  * A full version of DITA Open Toolkit 1.4.3+  must be installed on your
-    build host.  You can pass the installation path to plugin configuration directly 
-    or through environment variable <DITA_OT>.
+  * A DITA Open Toolkit 1.5+ with all required plugins.  The easiest way is to use the full version.
+    However, if mininum or standard package is used, you will need to configure all require dependencies
+    via Maven dependencies.
 
 * DITA to PDF
 
@@ -25,6 +25,41 @@ Usage
 <project>
   [...] 
   <packaging>pom</packaging>
+  [...]
+  <!-- Turn this on if using minimum or standard DITA-OT package -->
+  <!-- As of this writting, saxon 9.x artifacts are not available at central repository yet -->
+  <dependencies>
+  
+    <dependency>
+      <groupId>net.sourceforge.saxon</groupId>
+      <artifactId>saxon</artifactId>
+      <version>9.1.0.7</version>
+      <optional>true</optional>
+    </dependency>
+    
+    <dependency>
+      <groupId>net.sourceforge.saxon</groupId>
+      <artifactId>saxon</artifactId>
+      <classifier>dom</classifier>
+      <version>9.1.0.7</version>
+      <optional>true</optional>
+    </dependency>
+  
+    <dependency>
+      <groupId>com.ibm.icu</groupId>
+      <artifactId>icu4j</artifactId>
+      <version>3.4.4</version>
+      <optional>true</optional>
+    </dependency>
+    
+    <!-- only need this to generate PDF -->
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>fop</artifactId>
+      <version>0.95-1</version>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
   [...]
   <build>
     [...]
@@ -44,7 +79,7 @@ Usage
             <configuration>
               <antProperties>
                 <output.dir>${project.build.directory}/dita/pdf</output.dir>
-                <args.input>${env.DITA_OT}/doc/DITA-readme.ditamap</arg.input>
+                <args.input>${env.DITA_HOME}/doc/DITA-readme.ditamap</arg.input>
                 <transtype>pdf</transtype>
               </antProperties>
             </configuration>
@@ -64,7 +99,7 @@ Usage
 
   The following shows an example on how to transform your DITA source to a web format, by having
   DITA Open Toolkit to transform your dita files to Microsoft CHM file, then use <chm2web> goal to convert
-  CHM file to HTML files, zip the produced html files, and setup maven to deploy it
+  CHM file to HTML files, zip the produced html files, and setup Maven to deploy it
   
   Additional external tools are required for this example:
   
@@ -99,7 +134,7 @@ Usage
             <configuration>
               <antProperties>
                 <output.dir>${project.build.directory}/dita/htmlhelp</output.dir>
-                <args.input>${env.DITA_OT}/doc/DITA-readme.ditamap</args.input>
+                <args.input>${env.DITA_HOME}/doc/DITA-readme.ditamap</args.input>
                 <transtype>htmlhelp</transtype>
               </antProperties>
             </configuration>
