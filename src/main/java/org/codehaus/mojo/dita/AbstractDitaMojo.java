@@ -62,8 +62,6 @@ public abstract class AbstractDitaMojo
      *   <li>dita.temp.dir=${project.build.directory}/dita/temp</li>
      *   <li>args.logdir=${project.build.directory}/dita/log</li>
      *   <li>args.input=${project.basedir}/src/main/dita/${artifactId}.ditamap</li>
-     *   <li>transtype=pdf</li>
-     *   <li>failonerror=true</li>
      *   </ul>
      *   
      * @parameter

@@ -60,8 +60,6 @@ public class DitaRunMojo
 
     private static final String DITA_TRANSTYPE = "transtype";
     
-    private static final String DITA_FAILONERROR = "failonerror";
-
     /**
      * Use DITA Open Toolkit's tools/ant
      * 
@@ -91,7 +89,7 @@ public class DitaRunMojo
     private String antArguments;
 
     /**
-     * Equivalent with ANT_OPTS environement. This parameter overrides the current env.ANT_OPTS if given. 
+     * Equivalent with ANT_OPTS environment. This parameter overrides the current env.ANT_OPTS if given. 
      * Typical usage is to setup JVM's heap space ( example -Xmx500m )
      * 
      * @parameter expression="${dita.antOpts}"
@@ -186,8 +184,6 @@ public class DitaRunMojo
         setupDefaultAntDirectory( DITA_OUT_DIR, new File( ditaBuildDir, "out" ) );
         setupDefaultAntDirectory( DITA_TMP_DIR, new File( ditaBuildDir, "temp" ) );
         setupDefaultAntDirectory( DITA_LOG_DIR, new File( ditaBuildDir, "log" ) );
-        setupDefaultAntProperty( DITA_TRANSTYPE, "pdf" );
-        setupDefaultAntProperty( DITA_FAILONERROR, "true" );
 
         File defaultDitaMapFile = new File( project.getBasedir(), "/src/main/dita/" + project.getArtifactId()
             + ".ditamap" );
