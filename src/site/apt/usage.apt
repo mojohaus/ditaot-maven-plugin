@@ -108,8 +108,8 @@ Usage
     
   * chm2web utility 
   
-  Full working example is at {{{https://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin/src/it/dita-to-htmlhelp-to-web}
-  https://svn.codehaus.org/mojo/trunk/sandbox/dita-maven-plugin/src/it/dita-to-htmlhelp-to-web}}
+  Full working example is at {{{https://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin/src/it/dita-to-htmlhelp-to-web}
+  https://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin/src/it/dita-to-htmlhelp-to-web}}
    
 ---------------------------
 <project>
