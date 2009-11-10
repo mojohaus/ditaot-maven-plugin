@@ -78,6 +78,7 @@
               <antArguments></antArguments>
               <antProperties>
               <args.input>${env.DITA_HOME}/samples/taskbook.ditamap</args.input>
+                <fop.home>${basedir}/src/main/fop</fop.home>
                 <transtype>pdf2</transtype>
                 <dita.extname>dita</dita.extname>
                 <customization.dir>${basedir}/src/main/fo/cfg</customization.dir>
