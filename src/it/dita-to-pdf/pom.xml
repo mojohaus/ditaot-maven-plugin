@@ -24,11 +24,20 @@
   <name>DITA Open Toolkit Sample - TaskBook </name>
   
   <description>
-    This example shows how to transform DITA to PDF, and how to customer DITA-OT FO plugin  
+    This example shows how to transform DITA to PDF, and how to customize DITA-OT FO plugin  
   </description>
   
-  <!--  add this if using standard package 
+  <scm>
+    <connection>scm:svn:http://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin/src/it/dita-to-pdf</connection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin/src/it/dita-to-pdf</developerConnection>
+    <url>http://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin/src/it/dita-to-pdf</url>
+  </scm>
+  
+  
   <dependencies>
+  
+    <!--  add this if using standard or minimum package 
+
     <dependency>
       <groupId>net.sourceforge.saxon</groupId>
       <artifactId>saxon</artifactId>
@@ -48,20 +57,93 @@
       <version>3.4.4</version>
       <optional>true</optional>
     </dependency>
+    
     <dependency>
       <groupId>org.apache.xmlgraphics</groupId>
       <artifactId>fop</artifactId>
       <version>0.95-1</version>
       <optional>true</optional>
     </dependency>
+
+    -->
+    
+    <!-- not fop.jar must always after saxon -->
     
   </dependencies>
   
- -->
  
   <build>
     <defaultGoal>package</defaultGoal>
     <plugins>
+
+
+      <!--  load ${timestamp} -->        
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+        <version>1.0-beta-2</version>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+            <configuration>
+              <timestampFormat>{0,date,MMMMM dd yyyy}</timestampFormat>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- put build properties into an xsl file to be consumed by custom.xsl -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>make-doc-date</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <resources>
+                <resource>
+                  <directory>src/main/resources</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+              <outputDirectory>${project.build.directory}/dita/resources</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- copy over DITA-OT's sample project to be taylored and built -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.2</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <copy todir="${project.build.directory}/dita/samples">
+                  <fileset dir="${env.DITA_HOME}/samples"/>
+                </copy>
+                <copy todir="${project.build.directory}/dita/samples">
+                  <fileset dir="${basedir}/src/main/dita"/>
+                </copy>
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>dita-maven-plugin</artifactId>
@@ -77,8 +159,9 @@
               <useDitaAnt>true</useDitaAnt>
               <antArguments></antArguments>
               <antProperties>
-              <args.input>${env.DITA_HOME}/samples/taskbook.ditamap</args.input>
-                <fop.home>${basedir}/src/main/fop</fop.home>
+              <args.input>${project.build.directory}/dita/samples/taskbook-sample.ditamap</args.input>
+                <!--dont turn this on unless you are using minimum or standard DITA-OT package-->
+                <!--fop.home>${basedir}/src/main/fop</fop.home-->
                 <transtype>pdf2</transtype>
                 <dita.extname>dita</dita.extname>
                 <customization.dir>${basedir}/src/main/fo/cfg</customization.dir>

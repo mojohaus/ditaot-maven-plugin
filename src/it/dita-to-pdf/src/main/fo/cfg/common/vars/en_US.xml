@@ -4,23 +4,29 @@
 
 
     <!-- 
+       Strings used in the headers and footers of pages.
+    -->
+
+    <!-- 
        Newly added Strings
     -->
     <variable id="trademarkChar">™</variable>
     <variable id="trademarksStr">Trademarks</variable>
     <variable id="versionStr">Version</variable>
     <variable id="feedbackStr">Feedback</variable>
-    <variable id="productVersion">1.0</variable>
-    <variable id="bookId">15-32X00-79408-200Y0311</variable>
+    <variable id="bookId">15-3A100-79B08-2009C311</variable>
     
     <variable id="notices.copyright.text">
-      Add your copy right text here
+      © Copyright 2009 Codehaus, Inc. All rights reserved. No part of this publication including text, examples, diagrams
+      or illustrations may be reproduced, transmitted, or translated in any form or by any means, electronic, mechanical,
+      manual, optical or otherwise, for any purpose, without prior written permission of Codehaus, Inc.    
     </variable>
     
     <variable id="notices.trademarks.label">Trademarks</variable>
     
     <variable id="notices.trademarks.text">
-      Add your trademarks text here
+      The names of actual companies and products mentioned herein may be the
+      trademarks of their respective owners.
     </variable>
     
     <variable id="notices.regulatoryCompliance.label">Regulatory compliance</variable>
