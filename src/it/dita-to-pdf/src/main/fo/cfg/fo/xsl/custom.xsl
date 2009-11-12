@@ -78,7 +78,7 @@
           <xsl:value-of select="$bookName" />
         </fo:block>
 
-        <!-- set fortinet logo -->
+        <!-- set codehaus logo -->
         <fo:block xsl:use-attribute-sets="__frontmatter__company__logo" break-after="page">
           <fo:inline id=""><fo:external-graphic 
             src="url({concat($artworkPrefix, '/Customization/OpenTopic/common/artwork/codehaus-logo-small.png')})"/>    
