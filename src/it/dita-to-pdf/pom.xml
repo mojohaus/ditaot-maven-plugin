@@ -99,6 +99,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
+        <version>2.4.1</version>
         <executions>
           <execution>
             <id>make-doc-date</id>
@@ -164,7 +165,7 @@
                 <!--fop.home>${basedir}/src/main/fop</fop.home-->
                 <transtype>pdf2</transtype>
                 <dita.extname>dita</dita.extname>
-                <customization.dir>${basedir}/src/main/fo/cfg</customization.dir>
+                <customization.dir>${customization.dir}</customization.dir>
                 <clean.temp>yes</clean.temp>
               </antProperties>
               <antOpts>-Xmx500m</antOpts>
@@ -175,6 +176,10 @@
 
     </plugins>
   </build>
+  
+  <properties>
+    <customization.dir>${basedir}/src/main/fo/cfg</customization.dir>
+  </properties>
 
 
 
