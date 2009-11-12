@@ -59,7 +59,9 @@
       <fo:flow flow-name="xsl-region-body">
 
         <fo:block xsl:use-attribute-sets="__frontmatter__banner__image">
-          <fo:inline id=""><fo:external-graphic src="url(images/mojo-logo.png)"/></fo:inline>
+          <fo:inline id=""><fo:external-graphic 
+            src="url({concat($artworkPrefix, '/Customization/OpenTopic/common/artwork/mojo-logo.png')})"/>    
+          </fo:inline>      
         </fo:block>
 
         <!-- set the product name -->
@@ -78,7 +80,9 @@
 
         <!-- set fortinet logo -->
         <fo:block xsl:use-attribute-sets="__frontmatter__company__logo" break-after="page">
-          <fo:inline id=""><fo:external-graphic src="url(images/codehaus-logo-small.png)"/></fo:inline>
+          <fo:inline id=""><fo:external-graphic 
+            src="url({concat($artworkPrefix, '/Customization/OpenTopic/common/artwork/codehaus-logo-small.png')})"/>    
+          </fo:inline>      
         </fo:block>
 
         <xsl:call-template name="insertNotices" />

@@ -7,11 +7,6 @@
     <booklibrary>Retro Tools</booklibrary>
     <mainbooktitle>Product tasks</mainbooktitle>
     <booktitlealt>
-      <!--  to image are here so that DITA-OT will copy them to ${output.dir} to be picked up by
-            the custom cover page in custom.xsl
-      -->
-      <image href="images/mojo-logo.png" />
-      <image href="images/codehaus-logo-small.png" />
       <ph>Tasks and what they can do</ph>
     </booktitlealt>
   </booktitle>
