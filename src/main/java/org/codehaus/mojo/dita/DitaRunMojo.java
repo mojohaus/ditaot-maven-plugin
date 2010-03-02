@@ -339,13 +339,13 @@ public class DitaRunMojo
         {
             AntOutputConsumer stdout = new AntOutputConsumer();
 
-            AntOutputConsumer stderr = stdout;
+            AntOutputConsumer stderr = new AntOutputConsumer();;
 
             this.getLog().debug( cl.toString() );
 
             ok = CommandLineUtils.executeCommandLine( cl, stdout, stderr );
 
-            if ( stdout.isFailure() )
+            if ( stdout.isFailure() || stderr.isFailure() )
             {
                 throw new MojoExecutionException( "BUILD FAILED" );
             }
@@ -371,11 +371,11 @@ public class DitaRunMojo
 
         if ( "pdf".equals( transtype ) || "pdf2".equals( transtype ) || "legacypdf".equals( transtype ) )
         {
-            attachSingleOuput( attachClassifier, "pdf", outputDir );
+            attachSingleOutput( attachClassifier, "pdf", outputDir );
         }
         else if ( "htmlhelp".equals( transtype ) )
         {
-            attachSingleOuput( attachClassifier, "chm", outputDir );
+            attachSingleOutput( attachClassifier, "chm", outputDir );
         }
         else
         {
@@ -383,7 +383,7 @@ public class DitaRunMojo
         }
     }
 
-    private void attachSingleOuput( String classifier, String type, File outputDir )
+    private void attachSingleOutput( String classifier, String type, File outputDir )
         throws MojoExecutionException
     {
         File ditamap = new File( antProperties.get( DITA_MAP ) );
@@ -397,7 +397,7 @@ public class DitaRunMojo
         fileName += type;
 
         File ditaOutputFile = new File( outputDir, fileName );
-        checkForDuplicateAttachArtifact( ditaOutputFile );
+        isAttachYet( ditaOutputFile );
         attachArtifact( classifier, type, ditaOutputFile );
 
     }

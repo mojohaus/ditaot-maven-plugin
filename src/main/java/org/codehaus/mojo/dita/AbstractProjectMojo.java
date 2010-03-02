@@ -71,8 +71,7 @@ public abstract class AbstractProjectMojo
      * @since beta-1
      */
     private ArchiverManager archiverManager;
-    
-    
+
     protected void executeCommandline( Commandline cl )
         throws MojoExecutionException
     {
@@ -104,7 +103,7 @@ public abstract class AbstractProjectMojo
         throws MojoExecutionException
     {
         String archiveOutputFileName = this.project.getArtifactId();
-        if ( ! StringUtils.isBlank( classifier ) )
+        if ( !StringUtils.isBlank( classifier ) )
         {
             archiveOutputFileName += "-" + classifier;
         }
@@ -112,24 +111,26 @@ public abstract class AbstractProjectMojo
 
         File archiveOutputFile = new File( this.project.getBuild().getDirectory(), archiveOutputFileName );
 
-        this.checkForDuplicateAttachArtifact( archiveOutputFile );
-
-        try
+        if ( !this.isAttachYet( archiveOutputFile ) )
         {
-            Archiver archiver = this.archiverManager.getArchiver( archiveOutputFile );
-            archiver.addDirectory( outputDirectory );
-            archiver.setDestFile( archiveOutputFile );
-            archiver.createArchive();
-        }
-        catch ( Exception e )
-        {
-            throw new MojoExecutionException( e.getMessage(), e );
-        }
+            //we dont want to attach duplicate artifacts like in the case of site plugin where dita goal got run twice
+            try
+            {
+                Archiver archiver = this.archiverManager.getArchiver( archiveOutputFile );
+                archiver.addDirectory( outputDirectory );
+                archiver.setDestFile( archiveOutputFile );
+                archiver.createArchive();
+            }
+            catch ( Exception e )
+            {
+                throw new MojoExecutionException( e.getMessage(), e );
+            }
 
-        attachArtifact( classifier, type, archiveOutputFile );
+            attachArtifact( classifier, type, archiveOutputFile );
+        }
 
     }
-    
+
     protected void attachArtifact( String classifier, String type, File file )
     {
         if ( StringUtils.isBlank( classifier ) )
@@ -143,10 +144,10 @@ public abstract class AbstractProjectMojo
     }
 
     @SuppressWarnings("unchecked")
-    protected void checkForDuplicateAttachArtifact( File attachFile )
+    protected boolean isAttachYet( File attachFile )
         throws MojoExecutionException
     {
-        List<Artifact> attachedArtifacts = ( List<Artifact> )project.getAttachedArtifacts();
+        List<Artifact> attachedArtifacts = (List<Artifact>) project.getAttachedArtifacts();
 
         Iterator<Artifact> iter = attachedArtifacts.iterator();
 
@@ -155,9 +156,11 @@ public abstract class AbstractProjectMojo
             Artifact artifact = (Artifact) iter.next();
             if ( attachFile.equals( artifact.getFile() ) )
             {
-                throw new MojoExecutionException( "Duplicate file attachment found: " + attachFile );
+                return true;
             }
         }
+
+        return false;
     }
 
 }
