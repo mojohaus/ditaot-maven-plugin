@@ -27,13 +27,12 @@ Usage
   <packaging>pom</packaging>
   [...]
   <!-- Turn this on if using minimum or standard DITA-OT package -->
-  <!-- As of this writing, saxon 9.x artifacts are not available at central repository yet -->
   <dependencies>
   
     <dependency>
       <groupId>net.sourceforge.saxon</groupId>
       <artifactId>saxon</artifactId>
-      <version>9.1.0.7</version>
+      <version>9.1.0.8</version>
       <optional>true</optional>
     </dependency>
     
@@ -41,7 +40,7 @@ Usage
       <groupId>net.sourceforge.saxon</groupId>
       <artifactId>saxon</artifactId>
       <classifier>dom</classifier>
-      <version>9.1.0.7</version>
+      <version>9.1.0.8</version>
       <optional>true</optional>
     </dependency>
   

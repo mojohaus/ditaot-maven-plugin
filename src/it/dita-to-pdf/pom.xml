@@ -36,19 +36,17 @@
   
   <dependencies>
   
-    <!--  add this if using standard or minimum package 
-
     <dependency>
       <groupId>net.sourceforge.saxon</groupId>
       <artifactId>saxon</artifactId>
-      <version>9.1.0.7</version>
+      <version>9.1.0.8</version>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.saxon</groupId>
       <artifactId>saxon</artifactId>
       <classifier>dom</classifier>
-      <version>9.1.0.7</version>
+      <version>9.1.0.8</version>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -65,7 +63,6 @@
       <optional>true</optional>
     </dependency>
 
-    -->
     
     <!-- not fop.jar must always after saxon -->
     

@@ -125,9 +125,9 @@ Maven Build Infrastructure.
               <artifactItems>
                 <artifactItem>
                   <groupId>net.sourceforge.dita-ot</groupId>
-                  <artifactId>fortidb-dita-ot</artifactId>
+                  <artifactId>dita-ot</artifactId>
                   <type>tgz</type>
-                  <version>1.5-M22</version>
+                  <version>1.5</version>
                 </artifactItem>
               </artifactItems>
               <markersDirectory>${dita.dir}</markersDirectory>
