@@ -64,7 +64,7 @@
     </dependency>
 
     
-    <!-- not fop.jar must always after saxon -->
+    <!-- note: fop.jar must always after saxon -->
     
   </dependencies>
   
@@ -117,35 +117,10 @@
         </executions>
       </plugin>
 
-      <!-- copy over DITA-OT's sample project to be taylored and built -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.2</version>
-        <executions>
-          <execution>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <tasks>
-                <copy todir="${project.build.directory}/dita/samples">
-                  <fileset dir="${env.DITA_HOME}/samples"/>
-                </copy>
-                <copy todir="${project.build.directory}/dita/samples">
-                  <fileset dir="${basedir}/src/main/dita"/>
-                </copy>
-              </tasks>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>dita-maven-plugin</artifactId>
-        <version>1.0-beta-1</version>
+        <version>1.0-beta-2</version>
         <executions>
           <execution>
             <id>dita2pdf</id>
@@ -154,12 +129,12 @@
               <goal>run</goal>
             </goals>
             <configuration>
-              <useDitaAnt>true</useDitaAnt>
+              <useDitaAnt>false</useDitaAnt>
               <antArguments></antArguments>
               <antProperties>
-              <args.input>${project.build.directory}/dita/samples/taskbook-sample.ditamap</args.input>
+                <args.input>${basedir}/src/main/dita/taskbook-sample.ditamap</args.input>
                 <!--dont turn this on unless you are using minimum or standard DITA-OT package-->
-                <!--fop.home>${basedir}/src/main/fop</fop.home-->
+                <fop.home>${basedir}/src/main/fop</fop.home>
                 <transtype>pdf2</transtype>
                 <dita.extname>dita</dita.extname>
                 <customization.dir>${customization.dir}</customization.dir>

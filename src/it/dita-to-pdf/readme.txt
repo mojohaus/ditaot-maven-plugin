@@ -1,6 +1,7 @@
 Prerequisite:
 
-   DITA_HOME env point to a full version of DITA_OT 1.5+
+   DITA_HOME env points to a DITA_OT mininum 1.5+ directory
+   ANT_HOME env points to a ANT 1.7+ directory
    
    
 To run with custom PDF skin
