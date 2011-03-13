@@ -469,5 +469,15 @@
     <xsl:attribute name="border-bottom-style">solid</xsl:attribute>
     <xsl:attribute name="border-bottom-color">black</xsl:attribute>
   </xsl:attribute-set>
+  
+  <!-- ============================================================================= -->
+  <!-- TOC numbering alignment, should move this back to DITAOT.                     -->
+  <!-- ============================================================================= -->
+  
+  <!-- override -->
+  <xsl:attribute-set name="__toc__topic__content">
+    <xsl:attribute name="text-align">justify</xsl:attribute>
+  </xsl:attribute-set>
+  
 
 </xsl:stylesheet>
