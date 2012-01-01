@@ -34,6 +34,17 @@
   </scm>
   
   
+  <properties>
+    <customization.dir>${basedir}/src/main/fo/cfg</customization.dir>
+    <clean.temp>yes</clean.temp>
+    <external.resource.dir>${basedir}/external-resources</external.resource.dir>
+    <ant.version>1.8.1</ant.version>
+    <ant.dir>${external.resource.dir}/apache-ant-${ant.version}</ant.dir>
+    <ditaot.version>1.5.2</ditaot.version>
+    <dita.dir>${external.resource.dir}/DITA-OT${ditaot.version}</dita.dir>
+  </properties>
+
+  
   <dependencies>
   
     <dependency>
@@ -59,11 +70,17 @@
     <dependency>
       <groupId>org.apache.xmlgraphics</groupId>
       <artifactId>fop</artifactId>
-      <version>0.95-1</version>
+      <version>1.0</version>
       <optional>true</optional>
     </dependency>
 
-    
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <version>2.9.1</version>
+      <optional>true</optional>
+    </dependency>
+        
     <!-- note: fop.jar must always after saxon -->
     
   </dependencies>
@@ -91,6 +108,54 @@
           </execution>
         </executions>
       </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-ant-ifneeded</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${external.resource.dir}</outputDirectory>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.ant</groupId>
+                  <artifactId>apache-ant</artifactId>
+                  <type>tar.gz</type>
+                  <classifier>bin</classifier>
+                  <version>${ant.version}</version>
+                </artifactItem>
+              </artifactItems>
+              <markersDirectory>${ant.dir}</markersDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>unpack-ditaot-ifneeded</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${external.resource.dir}</outputDirectory>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>net.sourceforge.dita-ot</groupId>
+                  <artifactId>DITA-OT</artifactId>
+                  <type>tar.gz</type>
+                  <classifier>minimal</classifier>
+                  <version>${ditaot.version}</version>
+                </artifactItem>
+              </artifactItems>
+              <markersDirectory>${dita.dir}</markersDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      
 
       <!-- put build properties into an xsl file to be consumed by custom.xsl -->
       <plugin>
@@ -138,7 +203,9 @@
                 <transtype>pdf2</transtype>
                 <dita.extname>dita</dita.extname>
                 <customization.dir>${customization.dir}</customization.dir>
-                <clean.temp>yes</clean.temp>
+                <clean.temp>${clean.temp}</clean.temp>
+                <dita.dir>${dita.dir}</dita.dir>
+                <antHome>${ant.dir}</antHome>
               </antProperties>
               <antOpts>-Xmx500m</antOpts>
             </configuration>
@@ -149,10 +216,6 @@
     </plugins>
   </build>
   
-  <properties>
-    <customization.dir>${basedir}/src/main/fo/cfg</customization.dir>
-  </properties>
-
 
 
 </project>
