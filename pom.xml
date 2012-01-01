@@ -17,7 +17,7 @@
   <parent>
     <groupId>org.codehaus.mojo</groupId>
     <artifactId>mojo-parent</artifactId>
-    <version>22</version>
+    <version>29</version>
   </parent>
 
   <groupId>org.codehaus.mojo</groupId>
@@ -73,7 +73,7 @@
   </developers>
 
   <properties>
-    <project.build.java.target>1.5</project.build.java.target>
+    <mojo.java.target>1.5</mojo.java.target>
   </properties>
 
   <build>
