@@ -124,6 +124,10 @@ public abstract class AbstractDitaMojo
             String cpElement = it.next();
             classpath.append( cpElement ).append( File.pathSeparator );
         }
+        
+        //starting ditaot 1.5.4, dita.dir/lib must be on classpath to pickup configuration's files
+        File ditaLibDir = new File( this.ditaDirectory.getAbsolutePath(), "lib" );
+        classpath.append( ditaLibDir.getAbsolutePath() ).append( File.pathSeparator );
 
         if ( this.useDitaClasspath )
         {
