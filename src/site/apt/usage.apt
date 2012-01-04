@@ -55,9 +55,17 @@ Usage
     <dependency>
       <groupId>org.apache.xmlgraphics</groupId>
       <artifactId>fop</artifactId>
-      <version>0.95-1</version>
+      <version>1.0</version>
       <optional>true</optional>
     </dependency>
+    
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <version>2.9.1</version>
+      <optional>true</optional>
+    </dependency>
+        
   </dependencies>
   [...]
   <build>
@@ -67,7 +75,7 @@ Usage
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>dita-maven-plugin</artifactId>
-        <version>1.0-beta-1</version>
+        <version>1.0-beta-3</version>
         <executions>
           <execution>
             <id>dita2chm</dita>
@@ -94,7 +102,7 @@ Usage
 </project>
 ---------------------------
   
-* DITA to CHM to HTML
+* DITA to CHM and from CHM to Web Help
 
   The following shows an example on how to transform your DITA source to a web format, by having
   DITA Open Toolkit to transform your DITA files to Microsoft CHM file, then use <dita:chm2web> goal to convert
@@ -103,7 +111,7 @@ Usage
   Additional external tools are required for this example:
   
   * Microsoft's HTML Help Workshop on your execution path to generate Microsoft help
-    format ( transtype=htmlhelp ),or CHM type file.
+    format ( transtype=htmlhelp ), or CHM type file.
     
   * chm2web utility 
   
@@ -122,7 +130,7 @@ Usage
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>dita-maven-plugin</artifactId>
-        <version>1.0-beta-1</version>
+        <version>1.0-beta-3</version>
         <executions>
           <execution>
             <id>dita2chm</dita>

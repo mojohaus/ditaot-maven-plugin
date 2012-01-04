@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<document>
+  <properties>
+    <title>DiTA Maven Plugin</title>
+    <author email="dantran@gamil.com">Dan T. Tran</author>
+  </properties>
+  <body>
+  
+    <release version="1.0-beta-3" date="2012-01-04" description="Bug fixes">
+      <action dev="dtran" type="fix" issue="MOJO-1798">
+        Add ${dita.dir}/lib to generated classpath environement to pick build configuration required by DITA-OT 1.5.4
+      </action>
+    </release>
+    
+    <release version="1.0-beta-2" date="2010-03-07" description="Bug fixes">
+      <action dev="dtran" type="fix" issue="MOJO-1798">
+        prevent duplicate attachment
+      </action>
+      <action dev="dtran" type="fix" issue="MOJO-1481">
+        prevent ANT run lock having separate command streams for stderr and stdout
+      </action>
+    </release>
+    
+  </body>
+</document>
