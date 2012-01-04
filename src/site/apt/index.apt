@@ -14,16 +14,16 @@ DITA Open Toolkit Maven Plugin
 
 * Goals Overview
 
-  * {{{run-mojo.html}dita:run}} Execute Dita build.
+  * {{{./run-mojo.html}dita:run}} Execute Dita build.
 
-  * {{{version-mojo.html}dita:version}} Display DITA Open Toolkit's version.
+  * {{{./version-mojo.html}dita:version}} Display DITA Open Toolkit's version.
 
-  * {{{print-help-mojo.html}dita:print-help}} Display DITA Open Toolkit's common Ant properties usage.
+  * {{{./print-help-mojo.html}dita:print-help}} Display DITA Open Toolkit's common Ant properties usage.
 
-  * {{{chm2web-mojo.html}dita:chm2web}} Convert DITA Open Toolkit's Microsoft CHM output file, produced by htmlhelp transtype, 
+  * {{{./chm2web-mojo.html}dita:chm2web}} Convert DITA Open Toolkit's Microsoft CHM output file, produced by htmlhelp transtype, 
     to pure HTML set of files. Require commercial chm2web utility from {{{http://chm2web.aklabs.com}A!K Research Labs}}
 
-  * {{{print-help-mojo.html}dita:eclipse}} Generate {{{http://www.dita-op.org}DITA Open Plaform }} Eclipse configuration
+  * {{{./print-help-mojo.html}dita:eclipse}} Generate {{{http://www.dita-op.org}DITA Open Plaform }} Eclipse configuration
     to allow editing, previewing, and building DITA with DITA Open Tookit.
 
   []
