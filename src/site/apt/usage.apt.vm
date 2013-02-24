@@ -21,7 +21,7 @@ Usage
 
 	The following example show how to configure dita runtime dependencies if minimum or standard package is ured.
 
----------------------------
++---------------------------
 <project>
   [...] 
   <packaging>pom</packaging>
@@ -32,7 +32,7 @@ Usage
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>dita-maven-plugin</artifactId>
-          <version>1.0-beta-4</version>
+          <version>${project.version}</version>
           <!-- common config for all dita builds -->
           <configuration>
             <useDitaAnt>false</useDitaAnt>
@@ -82,14 +82,14 @@ Usage
   </build>
 </project
     
------------------------------
++-----------------------------
     
 
 * DITA to PDF
 
   The following shows a example on how to transform your DITA source to a PDF format
   
----------------------------
++---------------------------
 <project>
   [...] 
   <packaging>pom</packaging>
@@ -102,7 +102,7 @@ Usage
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>dita-maven-plugin</artifactId>
-        <version>1.0-beta-4</version>
+        <version>${project.version}</version>
         <executions>
           <execution>
             <id>dita2chm</dita>
@@ -112,8 +112,8 @@ Usage
             </goals>
             <configuration>
               <antProperties>
-                <output.dir>${project.build.directory}/dita/pdf</output.dir>
-                <args.input>${env.DITA_HOME}/doc/DITA-readme.ditamap</arg.input>
+                <output.dir>${esc.dollar}{project.build.directory}/dita/pdf</output.dir>
+                <args.input>${esc.dollar}{env.DITA_HOME}/doc/DITA-readme.ditamap</arg.input>
                 <transtype>pdf</transtype>
               </antProperties>
             </configuration>
@@ -127,7 +127,7 @@ Usage
   </build>
   [...]
 </project>
----------------------------
++---------------------------
   
 * DITA to CHM and from CHM to Web Help
 
@@ -145,7 +145,7 @@ Usage
   Full working example is at {{{https://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin/src/it/dita-to-htmlhelp-to-web}
   https://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin/src/it/dita-to-htmlhelp-to-web}}
    
----------------------------
++---------------------------
 <project>
   [...] 
   <packaging>pom</packaging>
@@ -157,7 +157,7 @@ Usage
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>dita-maven-plugin</artifactId>
-        <version>1.0-beta-4</version>
+        <version>${project.version}</version>
         <executions>
           <execution>
             <id>dita2chm</dita>
@@ -167,8 +167,8 @@ Usage
             </goals>
             <configuration>
               <antProperties>
-                <output.dir>${project.build.directory}/dita/htmlhelp</output.dir>
-                <args.input>${env.DITA_HOME}/doc/DITA-readme.ditamap</args.input>
+                <output.dir>${esc.dollar}{project.build.directory}/dita/htmlhelp</output.dir>
+                <args.input>${esc.dollar}{env.DITA_HOME}/doc/DITA-readme.ditamap</args.input>
                 <transtype>htmlhelp</transtype>
               </antProperties>
             </configuration>
@@ -195,4 +195,4 @@ Usage
   </build>
   [...]
 </project>
----------------------------
++---------------------------
