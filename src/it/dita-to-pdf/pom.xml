@@ -95,7 +95,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>buildnumber-maven-plugin</artifactId>
-        <version>1.0-beta-2</version>
+        <version>1.0-beta-4-SNAPSHOT</version>
         <executions>
           <execution>
             <phase>validate</phase>
@@ -185,7 +185,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>dita-maven-plugin</artifactId>
-        <version>1.0-beta-2</version>
+        <version>1.0-beta-4-SNAPSHOT</version>
         <executions>
           <execution>
             <id>dita2pdf</id>
