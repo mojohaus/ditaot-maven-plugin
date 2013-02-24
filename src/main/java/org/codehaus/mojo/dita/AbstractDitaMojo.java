@@ -122,7 +122,7 @@ public abstract class AbstractDitaMojo
         while ( it.hasNext() )
         {
             String cpElement = it.next();
-            if ( it.next().endsWith( ".jar" ) ) {
+            if ( cpElement.endsWith( ".jar" ) ) {
                 classpath.append( cpElement ).append( File.pathSeparator );
             }
         }
