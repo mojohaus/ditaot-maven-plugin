@@ -35,20 +35,3 @@
 
   </body>
 </document>
-Revision: 17953
-Author: dantran
-Date: Sunday, February 24, 2013 10:36:45 AM
-Message:
-[MOJO-1534] Add plugin's dependencies to ANT classpath. Maven 2.2.1 is now required
-----
-Modified : /trunk/mojo/dita-maven-plugin/pom.xml
-Modified : /trunk/mojo/dita-maven-plugin/src/main/java/org/codehaus/mojo/dita/AbstractDitaMojo.java
-
-Revision: 17951
-Author: dantran
-Date: Saturday, February 23, 2013 11:31:58 PM
-Message:
-[MOJO-1847] pickup only jar dependencies for classpath construction before invoking ant. 
-----
-Modified : /trunk/mojo/dita-maven-plugin/src/main/java/org/codehaus/mojo/dita/AbstractDitaMojo.java
-
