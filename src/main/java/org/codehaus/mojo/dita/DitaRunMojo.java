@@ -68,7 +68,7 @@ public class DitaRunMojo
     /**
      * Use DITA Open Toolkit's tools/ant
      * 
-     * @parameter expression="${dita.useDitaAnt}" default-value="true"
+     * @parameter property="dita.useDitaAnt" default-value="true"
      * @since since 1.0-beta-1
      * 
      */
@@ -78,7 +78,7 @@ public class DitaRunMojo
      * Point to Ant installation directory. If given, it will override <i>useDitaAnt</i> and
      * ${env.ANT_HOME}
      * 
-     * @parameter expression="${dita.antHome}" 
+     * @parameter property="dita.antHome" 
      * @since since 1.0-beta-1
      * 
      */
@@ -87,7 +87,7 @@ public class DitaRunMojo
     /**
      * If given, will be added to Ant command line. Use this for trouble shooting purpose
      * 
-     * @parameter expression="${dita.antArguments}"
+     * @parameter property="dita.antArguments"
      * @since since 1.0-beta-1
      * 
      */
@@ -97,7 +97,7 @@ public class DitaRunMojo
      * Equivalent with ANT_OPTS environment. This parameter overrides the current env.ANT_OPTS if given. 
      * Typical usage is to setup JVM's heap space ( example -Xmx500m )
      * 
-     * @parameter expression="${dita.antOpts}"
+     * @parameter property="dita.antOpts"
      * @since since 1.0-beta-1
      * 
      */
@@ -107,7 +107,7 @@ public class DitaRunMojo
      * Controls whether this goal tries to compress the output directory and attach compressed
      * output file to the project for install and deploy purposes.
      * 
-     * @parameter expression="${dita.attach}" default-value="false"
+     * @parameter property="dita.attach" default-value="false"
      * @since since 1.0-beta-1
      */
     private boolean attach = false;
@@ -115,7 +115,7 @@ public class DitaRunMojo
     /**
      * Output file classifier to be attached to the project.
      * 
-     * @parameter expression="${dita.attachClassifier}"
+     * @parameter property="dita.attachClassifier"
      * @since since 1.0-beta-1
      */
     private String attachClassifier;
@@ -124,7 +124,7 @@ public class DitaRunMojo
      * Output file extension to be attached to the project. When transtype is one of the pdf types or
      * <i>htmlhelp</i>, the attachType will be hard coded to <i>pdf</i> and <i>chm</i> respectively.
      * 
-     * @parameter expression="${dita.attachType}" default-value="jar"
+     * @parameter property="dita.attachType" default-value="jar"
      * @since since 1.0-beta-1
      */
     private String attachType;

@@ -47,7 +47,7 @@ public abstract class AbstractProjectMojo
     /**
      * Skip the execution
      * 
-     * @parameter expression="${dita.skip}" default-value="false"
+     * @parameter property="dita.skip" default-value="false"
      * @since 1.0-beta-1
      */
     protected boolean skip;
@@ -55,7 +55,7 @@ public abstract class AbstractProjectMojo
     /**
      * Internal
      * 
-     * @parameter expression="${project}"
+     * @parameter property="project"
      * @readonly
      * @since 1.0-beta-1
      */

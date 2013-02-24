@@ -45,7 +45,7 @@ public class DitaVersionMojo
     /**
      * Maven project property name to store custom version value
      * 
-     * @parameter expression="${dita.versionName}" default-value="dita.custom.version"
+     * @parameter property="dita.versionName" default-value="dita.custom.version"
      * @since 1.0-beta-1
      * 
      */
@@ -54,7 +54,7 @@ public class DitaVersionMojo
     /**
      * Display DITA Open Toolkit's built-in version
      * 
-     * @parameter expression="${dita.displayDitaOTVersion}" default-value="true"
+     * @parameter property="dita.displayDitaOTVersion" default-value="true"
      * @since 1.0-beta-1
      * 
      */
@@ -63,7 +63,7 @@ public class DitaVersionMojo
     /**
      * Relative path to DITA-OT custom version properties file path 
      * 
-     * @parameter expression="${dita.displayDitaOTVersion}" default-value="custom.version.properties"
+     * @parameter property="dita.displayDitaOTVersion" default-value="custom.version.properties"
      * @since 1.0-beta-1
      * 
      */

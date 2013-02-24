@@ -43,7 +43,7 @@ public abstract class AbstractDitaMojo
     /**
      * Add jar files under DITA Open Toolkit's lib directory to execution classpath
      * 
-     * @parameter expression="${dita.useDitaClasspath}" default-value="true"
+     * @parameter property="dita.useDitaClasspath" default-value="true"
      * @since 1.0-beta-1
      */
     protected boolean useDitaClasspath;
@@ -76,14 +76,14 @@ public abstract class AbstractDitaMojo
 
     /**
      * Internal. Compile time project dependencies to be added to Ant's classpath
-     * @parameter expression="${project.compileClasspathElements}"
+     * @parameter property="project.compileClasspathElements"
      * @since 1.0-beta-1
      */
     private List<String> classpathElements;
     
     /**
      * Internal. Plugin's dependencies to be added to Ant's classpath
-     * @parameter expression="${plugin}"
+     * @parameter property="plugin"
      * @since 1.0-beta-4
      */
     private PluginDescriptor plugin;

@@ -48,7 +48,7 @@ public class DitaEclipseMojo
     /**
      * If given, will be added to Ant command line
      * 
-     * @parameter expression="${dita.projectName}" default-value="${project.artifactId}"
+     * @parameter property="dita.projectName" default-value="${project.artifactId}"
      * @since since 1.0-beta-1
      * 
      */
