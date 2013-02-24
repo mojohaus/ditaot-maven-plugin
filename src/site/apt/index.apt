@@ -31,7 +31,7 @@ DITA Open Toolkit Maven Plugin
 
 * Usage
 
-  Instructions on how to use the DITA Open Toolkit Maven Plugin can be found on the {{{usage.html}usage page}}.
+  Instructions on how to use the DITA Open Toolkit Maven Plugin can be found on the {{{./usage.html}usage page}}.
 
 
 * Examples
