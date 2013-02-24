@@ -122,7 +122,9 @@ public abstract class AbstractDitaMojo
         while ( it.hasNext() )
         {
             String cpElement = it.next();
-            classpath.append( cpElement ).append( File.pathSeparator );
+            if ( it.next().endsWith( ".jar" ) ) {
+                classpath.append( cpElement ).append( File.pathSeparator );
+            }
         }
         
         //starting ditaot 1.5.4, dita.dir/lib must be on classpath to pickup configuration's files
