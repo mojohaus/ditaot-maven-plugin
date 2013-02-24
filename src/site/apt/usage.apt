@@ -12,61 +12,89 @@ Usage
   The following contains a list of requirements in order to use this plugin.
   
   * A DITA Open Toolkit 1.5+ with all required plugins.  The easiest way is to use the full version.
-    However, if minimum or standard package is used, you will need to configure all require dependencies
-    via Maven dependencies.
+    However, if minimum or standard package are preferred, you will need to configure all require dependencies
+    via this plugin dependencies settings
+
+* Configure Plugin Dependencies
+
+	 if DITAOT minimum or standard package are ured, you will need to configure all require dependencies
+     via this plugin dependencies settings
+
+---------------------------
+<project>
+  [...] 
+  <packaging>pom</packaging>
+  [...]
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>dita-maven-plugin</artifactId>
+          <version>1.0-beta-4-SNAPSHOT</version>
+          <!-- common config for all dita builds -->
+          <configuration>
+            <useDitaAnt>false</useDitaAnt>
+            <antHome>${ant.dir}</antHome>
+            <antOpts>-Xmx500m</antOpts>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>net.sourceforge.saxon</groupId>
+              <artifactId>saxon</artifactId>
+              <version>9.1.0.8</version>
+              <optional>true</optional>
+            </dependency>
+
+            <dependency>
+              <groupId>net.sourceforge.saxon</groupId>
+              <artifactId>saxon</artifactId>
+              <classifier>dom</classifier>
+              <version>9.1.0.8</version>
+              <optional>true</optional>
+            </dependency>
+
+            <dependency>
+              <groupId>com.ibm.icu</groupId>
+              <artifactId>icu4j</artifactId>
+              <version>49.1</version>
+              <optional>true</optional>
+            </dependency>
+
+            <dependency>
+              <groupId>org.apache.xmlgraphics</groupId>
+              <artifactId>fop</artifactId>
+              <version>1.0</version>
+              <optional>true</optional>
+            </dependency>
+
+            <dependency>
+              <groupId>xerces</groupId>
+              <artifactId>xercesImpl</artifactId>
+              <version>2.10.0</version>
+              <optional>true</optional>
+            </dependency>
+          </dependencies>
+        </plugin>
+        [....]
+      </plugins>
+    </pluginManagement>
+    [...]
+  </build>
+</project
+    
+-----------------------------
+    
 
 * DITA to PDF
 
   The following shows a example on how to transform your DITA source to a PDF format
-  
-  Replace <transtype> for xhtml for xhtml format
   
 ---------------------------
 <project>
   [...] 
   <packaging>pom</packaging>
   [...]
-  <!-- Turn this on if using minimum or standard DITA-OT package -->
-  <dependencies>
-  
-    <dependency>
-      <groupId>net.sourceforge.saxon</groupId>
-      <artifactId>saxon</artifactId>
-      <version>9.1.0.8</version>
-      <optional>true</optional>
-    </dependency>
-    
-    <dependency>
-      <groupId>net.sourceforge.saxon</groupId>
-      <artifactId>saxon</artifactId>
-      <classifier>dom</classifier>
-      <version>9.1.0.8</version>
-      <optional>true</optional>
-    </dependency>
-  
-    <dependency>
-      <groupId>com.ibm.icu</groupId>
-      <artifactId>icu4j</artifactId>
-      <version>3.4.4</version>
-      <optional>true</optional>
-    </dependency>
-    
-    <!-- only need this to generate PDF -->
-    <dependency>
-      <groupId>org.apache.xmlgraphics</groupId>
-      <artifactId>fop</artifactId>
-      <version>1.0</version>
-      <optional>true</optional>
-    </dependency>
-    
-    <dependency>
-      <groupId>xerces</groupId>
-      <artifactId>xercesImpl</artifactId>
-      <version>2.9.1</version>
-      <optional>true</optional>
-    </dependency>
-        
-  </dependencies>
   [...]
   <build>
     [...]
