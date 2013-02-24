@@ -128,6 +128,7 @@ public abstract class AbstractDitaMojo
      * 
      * @return String
      */
+    @SuppressWarnings("unchecked")
     protected String buildClasspathString()
     {
 

@@ -100,6 +100,7 @@ public class DitaEclipseMojo
 
     }
 
+    @SuppressWarnings("rawtypes")
     private void addDitaBuildCommand( Document doc )
     {
         Element buildSpec = (Element) doc.selectSingleNode( "//projectDescription/buildSpec" );
@@ -136,6 +137,7 @@ public class DitaEclipseMojo
         buildCommand.addElement( "arguments" );
     }
     
+    @SuppressWarnings("rawtypes")
     private void addDitaBuildNature( Document doc )
     {
         Element natures = (Element) doc.selectSingleNode( "//projectDescription/natures" );
