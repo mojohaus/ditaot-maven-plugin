@@ -6,21 +6,49 @@
     <author email="dantran@gmail.com">Dan T. Tran</author>
   </properties>
   <body>
-  
-    <release version="1.0-beta-3" date="2012-01-29" description="Bug fixes">
-      <action dev="dtran" type="fix" issue="MOJO-1798">
-        Add ${dita.dir}/lib to the generated classpath environment to pick up ANT build configurations required by DITA-OT 1.5.4
+
+    <release version="1.0-beta-4" date="2013-03-01" description="Bug fixes">
+      <action dev="dtran" type="fix" issue="MOJO-1534">
+        Add plugin's dependencies to ANT classpath.
+      </action>
+      <action dev="dtran" type="fix" issue="MOJO-1847">
+        pickup only jar dependencies for classpath construction before invoking ant
       </action>
     </release>
-    
+
+    <release version="1.0-beta-3" date="2012-01-29" description="Bug fixes">
+      <action dev="dtran" type="fix" issue="MOJO-1798">
+        Add ${dita.dir}/lib to the generated classpath environment to pick up
+        ANT build configurations required by DITA-OT 1.5.4
+      </action>
+    </release>
+
     <release version="1.0-beta-2" date="2010-03-07" description="Bug fixes">
       <action dev="dtran" type="fix" issue="MOJO-1798">
         prevent duplicate attachment
       </action>
       <action dev="dtran" type="fix" issue="MOJO-1481">
-        prevent ANT run lock having separate command streams for stderr and stdout
+        prevent ANT run lock having separate command streams for stderr and
+        stdout
       </action>
     </release>
-    
+
   </body>
 </document>
+Revision: 17953
+Author: dantran
+Date: Sunday, February 24, 2013 10:36:45 AM
+Message:
+[MOJO-1534] Add plugin's dependencies to ANT classpath. Maven 2.2.1 is now required
+----
+Modified : /trunk/mojo/dita-maven-plugin/pom.xml
+Modified : /trunk/mojo/dita-maven-plugin/src/main/java/org/codehaus/mojo/dita/AbstractDitaMojo.java
+
+Revision: 17951
+Author: dantran
+Date: Saturday, February 23, 2013 11:31:58 PM
+Message:
+[MOJO-1847] pickup only jar dependencies for classpath construction before invoking ant. 
+----
+Modified : /trunk/mojo/dita-maven-plugin/src/main/java/org/codehaus/mojo/dita/AbstractDitaMojo.java
+
