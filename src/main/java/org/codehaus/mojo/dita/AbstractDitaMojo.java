@@ -76,14 +76,16 @@ public abstract class AbstractDitaMojo
 
     /**
      * Internal. Compile time project dependencies to be added to Ant's classpath
-     * @parameter property="project.compileClasspathElements"
+     * @parameter default-value="${project.compileClasspathElements}"
+     * @readonly
      * @since 1.0-beta-1
      */
     private List<String> classpathElements;
     
     /**
      * Internal. Plugin's dependencies to be added to Ant's classpath
-     * @parameter property="plugin"
+     * @parameter default-value="${plugin}"
+     * @readonly
      * @since 1.0-beta-4
      */
     private PluginDescriptor plugin;

@@ -55,7 +55,7 @@ public abstract class AbstractProjectMojo
     /**
      * Internal
      * 
-     * @parameter property="project"
+     * @parameter default-value="${project}"
      * @readonly
      * @since 1.0-beta-1
      */
