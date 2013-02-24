@@ -7,7 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.descriptor.PluginDescriptor;
 import org.apache.maven.shared.model.fileset.FileSet;
 import org.apache.maven.shared.model.fileset.util.FileSetManager;
 import org.codehaus.plexus.util.cli.Commandline;
@@ -40,13 +42,6 @@ public abstract class AbstractDitaMojo
      */
     protected boolean useDitaClasspath;
     
-    /**
-     * Internal. Compile time project dependencies to be add ed to Ant's classpath
-     * @parameter expression="${project.compileClasspathElements}"
-     * @since 1.0-beta-1
-     */
-    protected List<String> classpathElements;
-
     
     /**
      * Ant key/value pair properties. 
@@ -72,6 +67,21 @@ public abstract class AbstractDitaMojo
     ////////////////////////////////////////////////////////////////////////
     // internal
     ////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Internal. Compile time project dependencies to be added to Ant's classpath
+     * @parameter expression="${project.compileClasspathElements}"
+     * @since 1.0-beta-1
+     */
+    private List<String> classpathElements;
+    
+    /**
+     * Internal. Plugin's dependencies to be added to Ant's classpath
+     * @parameter expression="${plugin}"
+     * @since 1.0-beta-4
+     */
+    private PluginDescriptor plugin;
+    
     protected File ditaDirectory;
     
     protected void setupDitaDirectory()
@@ -116,6 +126,11 @@ public abstract class AbstractDitaMojo
     {
 
         StringBuilder classpath = new StringBuilder();
+        
+        //Pick up dependency list from plugin configuration 
+        for ( Artifact artifact: (List<Artifact>) plugin.getArtifacts() ) {
+            classpath.append( artifact.getFile() ).append( File.pathSeparator );
+        }
 
         //Pick up dependency list. 
         Iterator<String> it = classpathElements.iterator();
