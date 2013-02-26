@@ -27,8 +27,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.maven.artifact.Artifact;
+import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.descriptor.PluginDescriptor;
 import org.apache.maven.shared.model.fileset.FileSet;
 import org.apache.maven.shared.model.fileset.util.FileSetManager;
 import org.codehaus.plexus.util.cli.Commandline;
@@ -83,12 +83,12 @@ public abstract class AbstractDitaMojo
     private List<String> classpathElements;
     
     /**
-     * Internal. Plugin's dependencies to be added to Ant's classpath
-     * @parameter default-value="${plugin}"
+     * Internal. 
+     * @parameter default-value="${mojoExecution}"
      * @readonly
      * @since 1.0-beta-4
      */
-    private PluginDescriptor plugin;
+    private MojoExecution mojoExecution;
     
     protected File ditaDirectory;
     
@@ -122,7 +122,7 @@ public abstract class AbstractDitaMojo
     {
         String classpath = this.buildClasspathString();
         cl.addEnvironment( "CLASSPATH", classpath );
-        this.getLog().debug( "CLASSPATH: " + classpath );
+        this.getLog().info( "CLASSPATH: " + classpath );
     }
 
     /**
@@ -137,12 +137,9 @@ public abstract class AbstractDitaMojo
         StringBuilder classpath = new StringBuilder();
         
         //Pick up dependency list from plugin configuration 
-        // maven2 user will need to use compile dependency since getArtifacts() return null
-        if ( plugin.getArtifacts() != null ) {
-          for ( Artifact artifact: (List<Artifact>) plugin.getArtifacts() ) 
-          {
-              classpath.append( artifact.getFile() ).append( File.pathSeparator );
-          }
+        List<Artifact> artifacts = (List<Artifact>) mojoExecution.getMojoDescriptor().getPluginDescriptor().getArtifacts();
+        for ( Artifact artifact : (List<Artifact>) artifacts ) {
+            classpath.append( artifact.getFile() ).append( File.pathSeparator );
         }
 
         //Pick up dependency list. 
