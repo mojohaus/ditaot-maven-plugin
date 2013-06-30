@@ -23,13 +23,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
+  
   <parent>
     <groupId>org.codehaus.mojo</groupId>
     <artifactId>mojo-parent</artifactId>
     <version>31</version>
   </parent>
 
-  <artifactId>dita-maven-plugin</artifactId>
+  <artifactId>ditaot-maven-plugin</artifactId>
   <version>1.0-beta-4-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
 
@@ -40,7 +41,7 @@
     The Toolkit transforms DITA content into many deliverable formats.
   </description>
 
-  <url>http://mojo.codehaus.org/dita-maven-plugin/</url>
+  <url>http://mojo.codehaus.org/ditaot-maven-plugin/</url>
   <inceptionYear>2009</inceptionYear>
 
   <prerequisites>
@@ -56,9 +57,9 @@
   </licenses>
 
   <scm>
-    <connection>scm:svn:http://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin</connection>
-    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin</developerConnection>
-    <url>http://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin</url>
+    <connection>scm:svn:http://svn.codehaus.org/mojo/trunk/mojo/ditaot-maven-plugin</connection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/trunk/mojo/ditaot-maven-plugin</developerConnection>
+    <url>http://svn.codehaus.org/mojo/trunk/mojo/ditaot-maven-plugin</url>
   </scm>
 
   <issueManagement>

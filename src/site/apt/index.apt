@@ -49,11 +49,11 @@ DITA Open Toolkit Maven Plugin
 
 * Examples
 
-  * {{{https://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin/src/it/dita-to-htmlhelp-to-web}  Transform DITA to Microsoft Help, then to HTML example.}}
+  * {{{https://svn.codehaus.org/mojo/trunk/mojo/ditaot-maven-plugin/src/it/dita-to-htmlhelp-to-web}  Transform DITA to Microsoft Help, then to HTML example.}}
 
-  * {{{https://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin/src/it/dita-to-pdf}  Transform DITA to PDF.}}
+  * {{{https://svn.codehaus.org/mojo/trunk/mojo/ditaot-maven-plugin/src/it/dita-to-pdf}  Transform DITA to PDF.}}
 
-  * {{{https://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin/src/it/validate-dita-ot-custom-version}  Validate DITA-OT version.}}
+  * {{{https://svn.codehaus.org/mojo/trunk/mojo/ditaot-maven-plugin/src/it/validate-dita-ot-custom-version}  Validate DITA-OT version.}}
 
   []
 

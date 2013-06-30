@@ -193,7 +193,7 @@
 
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
-        <artifactId>dita-maven-plugin</artifactId>
+        <artifactId>ditaot-maven-plugin</artifactId>
         <version>1.0-beta-4-SNAPSHOT</version>
         <executions>
           <execution>

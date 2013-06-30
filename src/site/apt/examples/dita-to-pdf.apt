@@ -43,7 +43,7 @@ Build the example
 	  
 	* Setup DITA_HOME environment variable to point to your installed DITA-OT directory
 	
-	* SVN check out {{{https://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin/src/it/dita-to-pdf} dita-to-pdf example}}
+	* SVN check out {{{https://svn.codehaus.org/mojo/trunk/mojo/ditaot-maven-plugin/src/it/dita-to-pdf} dita-to-pdf example}}
 	
 	* Run < mvn install > 
 
