@@ -31,7 +31,7 @@
   </parent>
 
   <artifactId>ditaot-maven-plugin</artifactId>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
 
   <name>DITA Open Toolkit Maven Plugin</name>
@@ -57,9 +57,9 @@
   </licenses>
 
   <scm>
-    <connection>scm:svn:http://svn.codehaus.org/mojo/tags/ditaot-maven-plugin-1.0</connection>
-    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/tags/ditaot-maven-plugin-1.0</developerConnection>
-    <url>http://svn.codehaus.org/mojo/tags/ditaot-maven-plugin-1.0</url>
+    <connection>scm:svn:http://svn.codehaus.org/mojo/trunk/mojo/ditaot-maven-plugin</connection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/trunk/mojo/ditaot-maven-plugin</developerConnection>
+    <url>http://svn.codehaus.org/mojo/trunk/mojo/ditaot-maven-plugin</url>
   </scm>
 
   <issueManagement>
