@@ -26,7 +26,10 @@
   </properties>
   <body>
 
-    <release version="1.0-beta-4" date="2013-07-04" description="Bug fixes">
+    <release version="1.0-beta-4" date="2013-07-04" description="Task">
+      <action dev="dtran" type="update" issue="MOJO-1947">
+        Eename dita-maven-plugin to ditaot-maven-plugin
+      </action>
       <action dev="dtran" type="fix" issue="MOJO-1534">
         Add plugin's dependencies to ANT classpath.
       </action>
