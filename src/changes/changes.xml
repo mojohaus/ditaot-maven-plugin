@@ -26,12 +26,12 @@
   </properties>
   <body>
 
-    <release version="1.0-beta-4" date="2013-03-01" description="Bug fixes">
+    <release version="1.0-beta-4" date="2013-07-04" description="Bug fixes">
       <action dev="dtran" type="fix" issue="MOJO-1534">
         Add plugin's dependencies to ANT classpath.
       </action>
       <action dev="dtran" type="fix" issue="MOJO-1847">
-        pickup only jar dependencies for classpath construction before invoking ant
+        Pickup only jar dependencies for classpath construction before invoking ant
       </action>
     </release>
 
