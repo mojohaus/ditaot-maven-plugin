@@ -31,7 +31,7 @@ Usage
       <plugins>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
-          <artifactId>dita-maven-plugin</artifactId>
+          <artifactId>ditaot-maven-plugin</artifactId>
           <version>${project.version}</version>
           <!-- common config for all dita builds -->
           <configuration>
@@ -142,8 +142,8 @@ Usage
     
   * chm2web utility 
   
-  Full working example is at {{{https://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin/src/it/dita-to-htmlhelp-to-web}
-  https://svn.codehaus.org/mojo/trunk/mojo/dita-maven-plugin/src/it/dita-to-htmlhelp-to-web}}
+  Full working example is at {{{https://svn.codehaus.org/mojo/trunk/mojo/ditaot-maven-plugin/src/it/dita-to-htmlhelp-to-web}
+  https://svn.codehaus.org/mojo/trunk/mojo/ditaot-maven-plugin/src/it/dita-to-htmlhelp-to-web}}
    
 +---------------------------
 <project>
