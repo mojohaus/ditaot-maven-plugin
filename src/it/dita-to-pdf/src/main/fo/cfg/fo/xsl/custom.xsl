@@ -11,8 +11,8 @@
   <xsl:variable name="page-margin-bottom" select="'30mm'"/>
 
   <!-- ============================================================================= -->
-  <!--  Override default font-familty from Sans to Helvetica which is very closed to Arial -->
-  <!--  Note latest version of Adobe reader map Helvetica to Arial                   -->
+  <!--  Override default font-familty from Sans to Helvetica which is very close to Arial -->
+  <!--  Note latest version of Adobe reader maps Helvetica to Arial                  -->
   <!-- ============================================================================= -->
   <xsl:attribute-set name="__fo__root">
     <xsl:attribute name="font-family">Sans</xsl:attribute>
