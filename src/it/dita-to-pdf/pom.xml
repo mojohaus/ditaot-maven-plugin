@@ -36,9 +36,9 @@
     <customization.dir>${basedir}/src/main/fo/cfg</customization.dir>
     <clean.temp>yes</clean.temp>
     <external.resource.dir>${basedir}/.external-resources</external.resource.dir>
-    <ant.version>1.8.1</ant.version>
+    <ant.version>1.9.2</ant.version>
     <ant.dir>${external.resource.dir}/apache-ant-${ant.version}</ant.dir>
-    <ditaot.version>1.7.4</ditaot.version>
+    <ditaot.version>1.8.2</ditaot.version>
     <dita.dir>${external.resource.dir}/DITA-OT${ditaot.version}</dita.dir>
   </properties>
 
@@ -130,10 +130,9 @@
               <outputDirectory>${external.resource.dir}</outputDirectory>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.apache.ant</groupId>
+                  <groupId>com.github.dita-ot</groupId>
                   <artifactId>apache-ant</artifactId>
-                  <type>tar.gz</type>
-                  <classifier>bin</classifier>
+                  <type>zip</type>
                   <version>${ant.version}</version>
                 </artifactItem>
               </artifactItems>
@@ -150,10 +149,9 @@
               <outputDirectory>${external.resource.dir}</outputDirectory>
               <artifactItems>
                 <artifactItem>
-                  <groupId>net.sourceforge.dita-ot</groupId>
-                  <artifactId>DITA-OT</artifactId>
-                  <classifier>minimal</classifier>
-                  <type>tar.gz</type>
+                  <groupId>com.github.dita-ot</groupId>
+                  <artifactId>dita-ot-minimal</artifactId>
+                  <type>zip</type>
                   <version>${ditaot.version}</version>
                 </artifactItem>
               </artifactItems>
@@ -210,7 +208,7 @@
                 <dita.extname>dita</dita.extname>
                 <customization.dir>${customization.dir}</customization.dir>
                 <clean.temp>${clean.temp}</clean.temp>
-                <dita.dir>${dita.dir}</dita.dir>
+                <dita.dir>${dita.dir}/../DITA-OT1.8.M2</dita.dir> <!--bug in maven dita distribution -->
               </antProperties>
               <antOpts>-Xmx500m</antOpts>
             </configuration>
