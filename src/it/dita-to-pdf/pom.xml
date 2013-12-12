@@ -39,7 +39,7 @@
     <ant.version>1.9.2</ant.version>
     <ant.dir>${external.resource.dir}/apache-ant-${ant.version}</ant.dir>
     <ditaot.version>1.8.2</ditaot.version>
-    <dita.dir>${external.resource.dir}/DITA-OT${ditaot.version}</dita.dir>
+    <dita.dir>${external.resource.dir}/DITA-OT1.8.M2</dita.dir><!--bug in maven dita distribution -->
   </properties>
 
   <build>
@@ -61,34 +61,29 @@
               <groupId>net.sourceforge.saxon</groupId>
               <artifactId>saxon</artifactId>
               <version>9.1.0.8</version>
-              <optional>true</optional>
             </dependency>
             <dependency>
               <groupId>net.sourceforge.saxon</groupId>
               <artifactId>saxon</artifactId>
               <classifier>dom</classifier>
               <version>9.1.0.8</version>
-              <optional>true</optional>
             </dependency>
             <dependency>
               <groupId>com.ibm.icu</groupId>
               <artifactId>icu4j</artifactId>
               <version>3.4.4</version>
-              <optional>true</optional>
             </dependency>
 
             <dependency>
               <groupId>org.apache.xmlgraphics</groupId>
               <artifactId>fop</artifactId>
               <version>1.0</version>
-              <optional>true</optional>
             </dependency>
 
             <dependency>
               <groupId>xerces</groupId>
               <artifactId>xercesImpl</artifactId>
               <version>2.9.1</version>
-              <optional>true</optional>
             </dependency>
             <!-- note: fop.jar must always after saxon -->
           </dependencies>
@@ -208,7 +203,7 @@
                 <dita.extname>dita</dita.extname>
                 <customization.dir>${customization.dir}</customization.dir>
                 <clean.temp>${clean.temp}</clean.temp>
-                <dita.dir>${dita.dir}/../DITA-OT1.8.M2</dita.dir> <!--bug in maven dita distribution -->
+                <dita.dir>${dita.dir}</dita.dir> 
               </antProperties>
               <antOpts>-Xmx500m</antOpts>
             </configuration>
