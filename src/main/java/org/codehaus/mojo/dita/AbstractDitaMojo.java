@@ -42,16 +42,16 @@ public abstract class AbstractDitaMojo
 {
     /**
      * Add jar files under DITA Open Toolkit's lib directory to execution classpath
-     * 
+     *
      * @parameter property="dita.useDitaClasspath" default-value="true"
      * @since 1.0-beta-1
      */
     protected boolean useDitaClasspath;
-    
-    
+
+
     /**
-     * Ant key/value pair properties. 
-     * 
+     * Ant key/value pair properties.
+     *
      * Default properties for all dita's goals
      *   <ul>
      *     <li>dita.dir=${env.DITA_HOME}</li>
@@ -64,12 +64,12 @@ public abstract class AbstractDitaMojo
      *   <li>args.logdir=${project.build.directory}/dita/log</li>
      *   <li>args.input=${project.basedir}/src/main/dita/${artifactId}.ditamap</li>
      *   </ul>
-     *   
+     *
      * @parameter
      * @since 1.0-beta-1
      */
     protected Map<String, String> antProperties = new HashMap<String, String>();
-    
+
     ////////////////////////////////////////////////////////////////////////
     // internal
     ////////////////////////////////////////////////////////////////////////
@@ -81,17 +81,17 @@ public abstract class AbstractDitaMojo
      * @since 1.0-beta-1
      */
     private List<String> classpathElements;
-    
+
     /**
-     * Internal. 
+     * Internal.
      * @parameter default-value="${mojoExecution}"
      * @readonly
      * @since 1.0-beta-4
      */
     private MojoExecution mojoExecution;
-    
+
     protected File ditaDirectory;
-    
+
     protected void setupDitaDirectory()
       throws MojoExecutionException
     {
@@ -104,7 +104,7 @@ public abstract class AbstractDitaMojo
         {
             throw new MojoExecutionException( "antProperties' dita.dir or env.DITA_HOME configuration not set." );
         }
-        
+
         this.ditaDirectory = new File( antProperties.get( "dita.dir" ) );
 
         if ( !ditaDirectory.isDirectory() )
@@ -115,7 +115,7 @@ public abstract class AbstractDitaMojo
 
     /**
      * setup CLASSPATH env so that Ant can use it
-     * 
+     *
      * @param cl
      */
     protected void setupClasspathEnv( Commandline cl )
@@ -127,7 +127,7 @@ public abstract class AbstractDitaMojo
 
     /**
      * Create classpath value
-     * 
+     *
      * @return String
      */
     @SuppressWarnings("unchecked")
@@ -135,23 +135,13 @@ public abstract class AbstractDitaMojo
     {
 
         StringBuilder classpath = new StringBuilder();
-        
-        //Pick up dependency list from plugin configuration 
+
+        //Pick up dependency list from plugin configuration
         List<Artifact> artifacts = (List<Artifact>) mojoExecution.getMojoDescriptor().getPluginDescriptor().getArtifacts();
         for ( Artifact artifact : (List<Artifact>) artifacts ) {
             classpath.append( artifact.getFile() ).append( File.pathSeparator );
         }
 
-        //Pick up dependency list. 
-        Iterator<String> it = classpathElements.iterator();
-        while ( it.hasNext() )
-        {
-            String cpElement = it.next();
-            if ( cpElement.endsWith( ".jar" ) ) {
-                classpath.append( cpElement ).append( File.pathSeparator );
-            }
-        }
-        
         //starting ditaot 1.5.4, dita.dir/lib must be on classpath to pickup configuration's files
         File ditaLibDir = new File( this.ditaDirectory.getAbsolutePath(), "lib" );
         classpath.append( ditaLibDir.getAbsolutePath() ).append( File.pathSeparator );
@@ -174,7 +164,19 @@ public abstract class AbstractDitaMojo
                 classpath.append( jarFile.getAbsolutePath() ).append( File.pathSeparator );
             }
         }
-        
+
+        //Pick up dependency list. This is deprecated, all dependencies must be under plugin
+        Iterator<String> it = classpathElements.iterator();
+        while ( it.hasNext() )
+        {
+            String cpElement = it.next();
+            if ( cpElement.endsWith( ".jar" ) ) {
+                classpath.append( cpElement ).append( File.pathSeparator );
+            }
+        }
+
+
+
         return classpath.toString();
     }
 

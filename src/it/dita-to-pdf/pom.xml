@@ -74,6 +74,12 @@
               <version>3.4.4</version>
             </dependency>
 
+            <dependency>
+              <groupId>xerces</groupId>
+              <artifactId>xercesImpl</artifactId>
+              <version>2.9.1</version>
+            </dependency>
+
             <!-- override the one used by fop 1.1 which are not at maven repo. Must be before fop-->
             <dependency>
               <groupId>org.apache.avalon.framework</groupId>
@@ -81,18 +87,13 @@
               <version>4.3.1</version>
             </dependency>
 
+            <!-- note: fop.jar must always after saxon -->
             <dependency>
               <groupId>org.apache.xmlgraphics</groupId>
               <artifactId>fop</artifactId>
               <version>1.1</version>
             </dependency>
 
-            <dependency>
-              <groupId>xerces</groupId>
-              <artifactId>xercesImpl</artifactId>
-              <version>2.9.1</version>
-            </dependency>
-            <!-- note: fop.jar must always after saxon -->
           </dependencies>
         </plugin>
       </plugins>
