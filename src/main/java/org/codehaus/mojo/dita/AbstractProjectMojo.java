@@ -45,7 +45,7 @@ public abstract class AbstractProjectMojo
 
     /**
      * Skip the execution
-     * 
+     *
      * @parameter property="dita.skip" default-value="false"
      * @since 1.0-beta-1
      */
@@ -53,7 +53,7 @@ public abstract class AbstractProjectMojo
 
     /**
      * Internal
-     * 
+     *
      * @parameter default-value="${project}"
      * @readonly
      * @since 1.0-beta-1
@@ -62,7 +62,7 @@ public abstract class AbstractProjectMojo
 
     /**
      * Internal Maven component to install/deploy the installer(s)
-     * 
+     *
      * @component
      * @readonly
      */
@@ -70,7 +70,7 @@ public abstract class AbstractProjectMojo
 
     /**
      * Internal component for archiving purposes
-     * 
+     *
      * @component
      * @readonly
      * @since beta-1

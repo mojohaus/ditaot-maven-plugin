@@ -20,7 +20,7 @@ package org.codehaus.mojo.dita;
  */
 
 import java.io.File;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -29,8 +29,7 @@ import java.util.Map;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.shared.model.fileset.FileSet;
-import org.apache.maven.shared.model.fileset.util.FileSetManager;
+import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 
 /**
@@ -41,7 +40,7 @@ public abstract class AbstractDitaMojo
 {
     /**
      * Add jar files under DITA Open Toolkit's lib directory to execution classpath
-     * 
+     *
      * @parameter property="dita.useDitaClasspath" default-value="true"
      * @since 1.0-beta-1
      */
@@ -60,7 +59,7 @@ public abstract class AbstractDitaMojo
      * <li>args.logdir=${project.build.directory}/dita/log</li>
      * <li>args.input=${project.basedir}/src/main/dita/${artifactId}.ditamap</li>
      * </ul>
-     * 
+     *
      * @parameter
      * @since 1.0-beta-1
      */
@@ -72,7 +71,7 @@ public abstract class AbstractDitaMojo
 
     /**
      * Internal. Compile time project dependencies to be added to Ant's classpath
-     * 
+     *
      * @parameter default-value="${project.compileClasspathElements}"
      * @readonly
      * @since 1.0-beta-1
@@ -81,7 +80,7 @@ public abstract class AbstractDitaMojo
 
     /**
      * Internal.
-     * 
+     *
      * @parameter default-value="${mojoExecution}"
      * @readonly
      * @since 1.0-beta-4
@@ -113,10 +112,11 @@ public abstract class AbstractDitaMojo
 
     /**
      * setup CLASSPATH env so that Ant can use it
-     * 
+     *
      * @param cl
      */
     protected void setupClasspathEnv( Commandline cl )
+        throws MojoExecutionException
     {
         String classpath = this.buildClasspathString();
         cl.addEnvironment( "CLASSPATH", classpath );
@@ -125,19 +125,19 @@ public abstract class AbstractDitaMojo
 
     /**
      * Create classpath value
-     * 
+     *
      * @return String
      */
     @SuppressWarnings( "unchecked" )
     protected String buildClasspathString()
+        throws MojoExecutionException
     {
-
         StringBuilder classpath = new StringBuilder();
 
         // Pick up dependency list from plugin configuration
         List<Artifact> artifacts =
             (List<Artifact>) mojoExecution.getMojoDescriptor().getPluginDescriptor().getArtifacts();
-        for ( Artifact artifact : (List<Artifact>) artifacts )
+        for ( Artifact artifact : artifacts )
         {
             classpath.append( artifact.getFile() ).append( File.pathSeparator );
         }
@@ -148,20 +148,20 @@ public abstract class AbstractDitaMojo
 
         if ( this.useDitaClasspath )
         {
-            FileSetManager fileSetManager = new FileSetManager( this.getLog(), false );
+            List<File> files = null;
 
-            FileSet fileSet = new FileSet();
-            fileSet.setDirectory( this.ditaDirectory.getAbsolutePath() + "/lib" );
-            ArrayList<String> includes = new ArrayList<String>();
-            includes.add( "**/*.jar" );
-            fileSet.setIncludes( includes );
-
-            String[] files = fileSetManager.getIncludedFiles( fileSet );
-
-            for ( int i = 0; i < files.length; ++i )
+            try
             {
-                File jarFile = new File( fileSet.getDirectory(), files[i] );
-                classpath.append( jarFile.getAbsolutePath() ).append( File.pathSeparator );
+                files = FileUtils.getFiles( this.ditaDirectory, "lib/**/*.jar", null );
+            }
+            catch ( IOException e )
+            {
+                throw new MojoExecutionException( "Unable to retrieve dita-ot artifacts.", e );
+            }
+
+            for ( File file : files )
+            {
+                classpath.append( file.getAbsolutePath() ).append( File.pathSeparator );
             }
         }
 
