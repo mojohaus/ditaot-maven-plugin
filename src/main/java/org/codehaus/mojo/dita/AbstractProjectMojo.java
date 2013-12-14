@@ -36,7 +36,6 @@ import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 import org.codehaus.plexus.util.cli.DefaultConsumer;
 
-
 /**
  * Base class of all dita-maven-plugin's MOJOs
  */
@@ -119,7 +118,7 @@ public abstract class AbstractProjectMojo
 
         if ( !this.isAttachYet( archiveOutputFile ) )
         {
-            //we dont want to attach duplicate artifacts like in the case of site plugin where dita goal got run twice
+            // we dont want to attach duplicate artifacts like in the case of site plugin where dita goal got run twice
             try
             {
                 Archiver archiver = this.archiverManager.getArchiver( archiveOutputFile );
@@ -149,7 +148,7 @@ public abstract class AbstractProjectMojo
         }
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     protected boolean isAttachYet( File attachFile )
         throws MojoExecutionException
     {

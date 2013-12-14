@@ -22,10 +22,9 @@ package org.codehaus.mojo.dita;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.cli.Commandline;
 
-
 /**
- * Display DITA Open Toolkit's common Ant properties usage.
- * This can be used a reference for <i>antProperties</i> used by dita:run goal.
+ * Display DITA Open Toolkit's common Ant properties usage. This can be used a reference for <i>antProperties</i> used
+ * by dita:run goal.
  * 
  * @goal print-help
  * @requiresProject false
@@ -42,28 +41,27 @@ public class DitaShowHelpMojo
             this.getLog().info( "Skipped" );
             return;
         }
-        
-        setupDitaDirectory();        
+
+        setupDitaDirectory();
 
         Commandline cl = new Commandline( "java" );
-        
+
         cl.setWorkingDirectory( project.getBasedir() );
-        
+
         setupDitaMainClass( cl );
-        
+
         setupDitaArguments( cl );
-        
+
         setupClasspathEnv( cl );
-        
+
         executeCommandline( cl );
     }
 
-    
     private void setupDitaArguments( Commandline cl )
         throws MojoExecutionException
     {
         cl.createArg().setValue( "-h" );
         cl.createArg().setValue( "/ditadir:" + this.ditaDirectory );
     }
-    
+
 }

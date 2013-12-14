@@ -38,13 +38,11 @@ import org.codehaus.plexus.util.cli.Commandline;
  * Execute DITA Open Toolkit's Ant command line to transform DITA files to desired output format.
  * </p>
  * <p>
- * Behind the scene, <i>antProperties</i> are temporarily stored under
- * ${dita.temp.dir}/properties.temp to be used with
+ * Behind the scene, <i>antProperties</i> are temporarily stored under ${dita.temp.dir}/properties.temp to be used with
  * </p>
  * <p>
  * ant -f ${dita.dir}/build.xml -propertyFile ${dita.temp.dir}/properties.temp
  * </p>
- * 
  * 
  * @goal run
  * @requiresProject false
@@ -64,23 +62,20 @@ public class DitaRunMojo
     private static final String DITA_MAP = "args.input";
 
     private static final String DITA_TRANSTYPE = "transtype";
-    
+
     /**
      * Use DITA Open Toolkit's tools/ant
      * 
      * @parameter property="dita.useDitaAnt" default-value="true"
      * @since since 1.0-beta-1
-     * 
      */
     private boolean useDitaAnt;
 
     /**
-     * Point to Ant installation directory. If given, it will override <i>useDitaAnt</i> and
-     * ${env.ANT_HOME}
+     * Point to Ant installation directory. If given, it will override <i>useDitaAnt</i> and ${env.ANT_HOME}
      * 
-     * @parameter property="dita.antHome" 
+     * @parameter property="dita.antHome"
      * @since since 1.0-beta-1
-     * 
      */
     private File antHome;
 
@@ -89,23 +84,21 @@ public class DitaRunMojo
      * 
      * @parameter property="dita.antArguments"
      * @since since 1.0-beta-1
-     * 
      */
     private String antArguments;
 
     /**
-     * Equivalent with ANT_OPTS environment. This parameter overrides the current env.ANT_OPTS if given. 
-     * Typical usage is to setup JVM's heap space ( example -Xmx500m )
+     * Equivalent with ANT_OPTS environment. This parameter overrides the current env.ANT_OPTS if given. Typical usage
+     * is to setup JVM's heap space ( example -Xmx500m )
      * 
      * @parameter property="dita.antOpts"
      * @since since 1.0-beta-1
-     * 
      */
     private String antOpts;
 
     /**
-     * Controls whether this goal tries to compress the output directory and attach compressed
-     * output file to the project for install and deploy purposes.
+     * Controls whether this goal tries to compress the output directory and attach compressed output file to the
+     * project for install and deploy purposes.
      * 
      * @parameter property="dita.attach" default-value="false"
      * @since since 1.0-beta-1
@@ -121,8 +114,8 @@ public class DitaRunMojo
     private String attachClassifier;
 
     /**
-     * Output file extension to be attached to the project. When transtype is one of the pdf types or
-     * <i>htmlhelp</i>, the attachType will be hard coded to <i>pdf</i> and <i>chm</i> respectively.
+     * Output file extension to be attached to the project. When transtype is one of the pdf types or <i>htmlhelp</i>,
+     * the attachType will be hard coded to <i>pdf</i> and <i>chm</i> respectively.
      * 
      * @parameter property="dita.attachType" default-value="jar"
      * @since since 1.0-beta-1
@@ -181,7 +174,7 @@ public class DitaRunMojo
         setupDitaDirectory();
 
         setupAntDirectory();
-        
+
         setupDefaultAntDirectory( DITA_BUILD_DIR, project.getBasedir() );
 
         File ditaBuildDir = new File( project.getBuild().getDirectory(), "dita" );
@@ -190,8 +183,8 @@ public class DitaRunMojo
         setupDefaultAntDirectory( DITA_TMP_DIR, new File( ditaBuildDir, "temp" ) );
         setupDefaultAntDirectory( DITA_LOG_DIR, new File( ditaBuildDir, "log" ) );
 
-        File defaultDitaMapFile = new File( project.getBasedir(), "/src/main/dita/" + project.getArtifactId()
-            + ".ditamap" );
+        File defaultDitaMapFile =
+            new File( project.getBasedir(), "/src/main/dita/" + project.getArtifactId() + ".ditamap" );
 
         setupDefaultAntProperty( DITA_MAP, defaultDitaMapFile.getAbsolutePath() );
 
@@ -213,17 +206,17 @@ public class DitaRunMojo
                 {
                     throw new MojoExecutionException( "env.ANT_HOME not found." );
                 }
-                
+
                 antHome = new File( antPath );
-                
+
             }
         }
-        
+
         if ( !antHome.isDirectory() )
         {
             throw new MojoExecutionException( this.getAntPath() + " ditaDirectory not found. " );
         }
-        
+
     }
 
     private void setupAntEnv( Commandline cl )
@@ -255,7 +248,6 @@ public class DitaRunMojo
     }
 
     /**
-     * 
      * @return canonical path to temporary properties ant file
      * @throws MojoExecutionException
      */
@@ -344,7 +336,8 @@ public class DitaRunMojo
         {
             AntOutputConsumer stdout = new AntOutputConsumer();
 
-            AntOutputConsumer stderr = new AntOutputConsumer();;
+            AntOutputConsumer stderr = new AntOutputConsumer();
+            ;
 
             this.getLog().debug( cl.toString() );
 

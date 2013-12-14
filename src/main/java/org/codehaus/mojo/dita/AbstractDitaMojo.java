@@ -33,7 +33,6 @@ import org.apache.maven.shared.model.fileset.FileSet;
 import org.apache.maven.shared.model.fileset.util.FileSetManager;
 import org.codehaus.plexus.util.cli.Commandline;
 
-
 /**
  * Base class of all dita-maven-plugin's DITA specific MOJOs
  */
@@ -42,40 +41,38 @@ public abstract class AbstractDitaMojo
 {
     /**
      * Add jar files under DITA Open Toolkit's lib directory to execution classpath
-     *
+     * 
      * @parameter property="dita.useDitaClasspath" default-value="true"
      * @since 1.0-beta-1
      */
     protected boolean useDitaClasspath;
 
-
     /**
-     * Ant key/value pair properties.
-     *
-     * Default properties for all dita's goals
-     *   <ul>
-     *     <li>dita.dir=${env.DITA_HOME}</li>
-     *   </ul>
+     * Ant key/value pair properties. Default properties for all dita's goals
+     * <ul>
+     * <li>dita.dir=${env.DITA_HOME}</li>
+     * </ul>
      * Default properties for <i>dita:run</i> goal
-     *   <ul>
-     *   <li>basedir=${project.basedir}</li>
-     *   <li>output.dir=${project.build.directory}/dita/out</li>
-     *   <li>dita.temp.dir=${project.build.directory}/dita/temp</li>
-     *   <li>args.logdir=${project.build.directory}/dita/log</li>
-     *   <li>args.input=${project.basedir}/src/main/dita/${artifactId}.ditamap</li>
-     *   </ul>
-     *
+     * <ul>
+     * <li>basedir=${project.basedir}</li>
+     * <li>output.dir=${project.build.directory}/dita/out</li>
+     * <li>dita.temp.dir=${project.build.directory}/dita/temp</li>
+     * <li>args.logdir=${project.build.directory}/dita/log</li>
+     * <li>args.input=${project.basedir}/src/main/dita/${artifactId}.ditamap</li>
+     * </ul>
+     * 
      * @parameter
      * @since 1.0-beta-1
      */
     protected Map<String, String> antProperties = new HashMap<String, String>();
 
-    ////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////
     // internal
-    ////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////
 
     /**
      * Internal. Compile time project dependencies to be added to Ant's classpath
+     * 
      * @parameter default-value="${project.compileClasspathElements}"
      * @readonly
      * @since 1.0-beta-1
@@ -84,6 +81,7 @@ public abstract class AbstractDitaMojo
 
     /**
      * Internal.
+     * 
      * @parameter default-value="${mojoExecution}"
      * @readonly
      * @since 1.0-beta-4
@@ -93,7 +91,7 @@ public abstract class AbstractDitaMojo
     protected File ditaDirectory;
 
     protected void setupDitaDirectory()
-      throws MojoExecutionException
+        throws MojoExecutionException
     {
         if ( antProperties.get( "dita.dir" ) == null )
         {
@@ -115,7 +113,7 @@ public abstract class AbstractDitaMojo
 
     /**
      * setup CLASSPATH env so that Ant can use it
-     *
+     * 
      * @param cl
      */
     protected void setupClasspathEnv( Commandline cl )
@@ -127,22 +125,24 @@ public abstract class AbstractDitaMojo
 
     /**
      * Create classpath value
-     *
+     * 
      * @return String
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     protected String buildClasspathString()
     {
 
         StringBuilder classpath = new StringBuilder();
 
-        //Pick up dependency list from plugin configuration
-        List<Artifact> artifacts = (List<Artifact>) mojoExecution.getMojoDescriptor().getPluginDescriptor().getArtifacts();
-        for ( Artifact artifact : (List<Artifact>) artifacts ) {
+        // Pick up dependency list from plugin configuration
+        List<Artifact> artifacts =
+            (List<Artifact>) mojoExecution.getMojoDescriptor().getPluginDescriptor().getArtifacts();
+        for ( Artifact artifact : (List<Artifact>) artifacts )
+        {
             classpath.append( artifact.getFile() ).append( File.pathSeparator );
         }
 
-        //starting ditaot 1.5.4, dita.dir/lib must be on classpath to pickup configuration's files
+        // starting ditaot 1.5.4, dita.dir/lib must be on classpath to pickup configuration's files
         File ditaLibDir = new File( this.ditaDirectory.getAbsolutePath(), "lib" );
         classpath.append( ditaLibDir.getAbsolutePath() ).append( File.pathSeparator );
 
@@ -165,17 +165,16 @@ public abstract class AbstractDitaMojo
             }
         }
 
-        //Pick up dependency list. This is deprecated, all dependencies must be under plugin
+        // Pick up dependency list. This is deprecated, all dependencies must be under plugin
         Iterator<String> it = classpathElements.iterator();
         while ( it.hasNext() )
         {
             String cpElement = it.next();
-            if ( cpElement.endsWith( ".jar" ) ) {
+            if ( cpElement.endsWith( ".jar" ) )
+            {
                 classpath.append( cpElement ).append( File.pathSeparator );
             }
         }
-
-
 
         return classpath.toString();
     }
@@ -184,6 +183,5 @@ public abstract class AbstractDitaMojo
     {
         cl.createArg().setValue( "org.dita.dost.invoker.CommandLineInvoker" );
     }
-
 
 }

@@ -35,8 +35,8 @@ import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
 /**
- * Generate <a href="DITA Open Platform">http://www.dita-op.org</a>'s Eclipse configuration
- *  to allow editing, previewing DITA under Eclipse IDE.
+ * Generate <a href="DITA Open Platform">http://www.dita-op.org</a>'s Eclipse configuration to allow editing, previewing
+ * DITA under Eclipse IDE.
  * 
  * @goal eclipse
  * @requiresProject false
@@ -50,11 +50,9 @@ public class DitaEclipseMojo
      * 
      * @parameter property="dita.projectName" default-value="${project.artifactId}"
      * @since since 1.0-beta-1
-     * 
      */
     private String projectName;
-    
-    
+
     public void execute()
         throws MojoExecutionException
     {
@@ -100,7 +98,7 @@ public class DitaEclipseMojo
 
     }
 
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings( "rawtypes" )
     private void addDitaBuildCommand( Document doc )
     {
         Element buildSpec = (Element) doc.selectSingleNode( "//projectDescription/buildSpec" );
@@ -136,8 +134,8 @@ public class DitaEclipseMojo
         buildCommand.addElement( "name" ).setText( "org.dita_op.editor.DITAFileValidator" );
         buildCommand.addElement( "arguments" );
     }
-    
-    @SuppressWarnings("rawtypes")
+
+    @SuppressWarnings( "rawtypes" )
     private void addDitaBuildNature( Document doc )
     {
         Element natures = (Element) doc.selectSingleNode( "//projectDescription/natures" );
@@ -167,20 +165,19 @@ public class DitaEclipseMojo
         root.addElement( "name" ).setText( projectName );
         root.addElement( "comment" );
         root.addElement( "projects" );
-        
+
         addDitaBuildCommand( root.addElement( "buildSpec" ) );
-        addDitaBuildNature ( root.addElement( "natures" ) );
+        addDitaBuildNature( root.addElement( "natures" ) );
 
         writeOutEclipseProject( doc, eclipseProjectFile );
 
     }
-    
 
     private void addDitaBuildNature( Element natures )
     {
         natures.addElement( "nature" ).setText( "org.dita_op.editor.DITAProjectNature" );
     }
-    
+
     private void writeOutEclipseProject( Document doc, File file )
         throws MojoExecutionException
     {

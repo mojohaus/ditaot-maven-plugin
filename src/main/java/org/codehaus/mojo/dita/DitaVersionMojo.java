@@ -31,8 +31,9 @@ import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.cli.Commandline;
 
 /**
- * Display DITA Open Toolkit's built-in version, with option to insert a custom version found under ${dita.dir}/ditaotVersionPath, via
- * <i>version</i> property to Maven's <i>${versionName}</i>. It is mainly used with maven-enforcer-plugin for build validation purpose.
+ * Display DITA Open Toolkit's built-in version, with option to insert a custom version found under
+ * ${dita.dir}/ditaotVersionPath, via <i>version</i> property to Maven's <i>${versionName}</i>. It is mainly used with
+ * maven-enforcer-plugin for build validation purpose.
  * 
  * @goal version
  * @requiresProject false
@@ -47,7 +48,6 @@ public class DitaVersionMojo
      * 
      * @parameter property="dita.versionName" default-value="dita.custom.version"
      * @since 1.0-beta-1
-     * 
      */
     private String versionName;
 
@@ -56,16 +56,14 @@ public class DitaVersionMojo
      * 
      * @parameter property="dita.displayDitaOTVersion" default-value="true"
      * @since 1.0-beta-1
-     * 
      */
     private boolean displayDitaOTVersion;
-    
+
     /**
-     * Relative path to DITA-OT custom version properties file path 
+     * Relative path to DITA-OT custom version properties file path
      * 
      * @parameter property="dita.displayDitaOTVersion" default-value="custom.version.properties"
      * @since 1.0-beta-1
-     * 
      */
     private String ditaotVersionPath;
 
@@ -87,9 +85,9 @@ public class DitaVersionMojo
 
         loadCustomVersion();
     }
-    
+
     private void displayDitaOTBuiltinVersion()
-      throws MojoExecutionException
+        throws MojoExecutionException
     {
         Commandline cl = new Commandline( "java" );
 
