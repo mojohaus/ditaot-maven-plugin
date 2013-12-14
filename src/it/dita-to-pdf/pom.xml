@@ -48,8 +48,8 @@ under the License.
     <external.resource.dir>${basedir}/.external-resources</external.resource.dir>
     <ant.version>1.9.2</ant.version>
     <ant.dir>${external.resource.dir}/apache-ant-${ant.version}</ant.dir>
-    <ditaot.version>1.8.2</ditaot.version>
-    <dita.dir>${external.resource.dir}/DITA-OT1.8.M2</dita.dir><!--bug in maven dita distribution -->
+    <ditaot.version>1.6.3</ditaot.version>
+    <dita.dir>${external.resource.dir}/DITA-OT${ditaot.version}</dita.dir>
   </properties>
 
   <build>
@@ -110,25 +110,6 @@ under the License.
     </pluginManagement>
 
     <plugins>
-
-      <!-- load ${timestamp} -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>buildnumber-maven-plugin</artifactId>
-        <version>1.0</version>
-        <executions>
-          <execution>
-            <phase>validate</phase>
-            <goals>
-              <goal>create</goal>
-            </goals>
-            <configuration>
-              <timestampFormat>{0,date,MMMMM dd yyyy}</timestampFormat>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -145,6 +126,8 @@ under the License.
                 <artifactItem>
                   <groupId>com.github.dita-ot</groupId>
                   <artifactId>apache-ant</artifactId>
+                  <!-- the correct type is tar.gz, which has the correct script execute permission -->
+                  <!-- so that this pom works with both windows and unix                           -->
                   <type>zip</type>
                   <version>${ant.version}</version>
                 </artifactItem>
@@ -174,6 +157,23 @@ under the License.
         </executions>
       </plugin>
 
+      <!-- load ${timestamp} -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+        <version>1.0</version>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+            <configuration>
+              <timestampFormat>{0,date,MMMMM dd yyyy}</timestampFormat>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
       <!-- put build properties into an xsl file to be consumed by custom.xsl -->
       <plugin>
@@ -211,7 +211,6 @@ under the License.
               <goal>run</goal>
             </goals>
             <configuration>
-              <useDitaAnt>false</useDitaAnt>
               <antArguments></antArguments>
               <antProperties>
                 <args.input>${basedir}/src/main/dita/taskbook-sample.ditamap</args.input>
@@ -223,7 +222,6 @@ under the License.
                 <clean.temp>${clean.temp}</clean.temp>
                 <dita.dir>${dita.dir}</dita.dir>
               </antProperties>
-              <antOpts>-Xmx500m</antOpts>
             </configuration>
           </execution>
         </executions>

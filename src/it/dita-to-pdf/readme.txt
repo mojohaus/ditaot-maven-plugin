@@ -8,7 +8,10 @@ To run with built-in PDF skin
 
 Output is at target/dita/out/taskbook-sample.pdf
 
-Note: this fails on unix. However, the work around is to make .external-resources/apahe-ant-*/bin's scripts executable
+Note:
+
+  - this fails on unix. However, the work around is to make .external-resources/apahe-ant-*/bin's scripts executable
+  - to run with another version available at maven repository, passin -Ddita.version=xxxx
 
 
 
